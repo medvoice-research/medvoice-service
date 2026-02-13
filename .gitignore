@@ -162,16 +162,18 @@ cython_debug/
 
 # Workspace ignore
 .vscode/
-.clinerules/
-.roo/
-.claude/
-.agent/
 .DS_Store
 .temporal.pid
-
 report/
 misc/
 app/docs/*
+
+## AI Development
+.clinerules/
+.roo/
+.claude/
+.opencode/
+openspec/
 
 AGENTS.md
 CLAUDE.md
