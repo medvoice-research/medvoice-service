@@ -1,0 +1,291 @@
+'use client';
+
+import { useState, useRef } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Upload, FileAudio, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+
+export default function UploadPage() {
+    const [file, setFile] = useState<File | null>(null);
+    const [patientName, setPatientName] = useState('');
+    const [enableMedical, setEnableMedical] = useState(false);
+    const [providerId, setProviderId] = useState('');
+    const [model, setModel] = useState('base');
+    const [language, setLanguage] = useState('en');
+    const [minSpeakers, setMinSpeakers] = useState('');
+    const [maxSpeakers, setMaxSpeakers] = useState('');
+    const [uploading, setUploading] = useState(false);
+    const [result, setResult] = useState<{ workflow_id: string } | null>(null);
+    const [error, setError] = useState<string | null>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    const handleFileDrop = (e: React.DragEvent) => {
+        e.preventDefault();
+        const droppedFile = e.dataTransfer.files[0];
+        if (droppedFile) setFile(droppedFile);
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        if (!file || !patientName.trim()) return;
+
+        setUploading(true);
+        setError(null);
+        setResult(null);
+
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('patient_name', patientName);
+            formData.append('enable_medical_processing', String(enableMedical));
+            if (enableMedical && providerId) formData.append('provider_id', providerId);
+
+            const params = new URLSearchParams({ model, language });
+            if (minSpeakers) params.set('min_speakers', minSpeakers);
+            if (maxSpeakers) params.set('max_speakers', maxSpeakers);
+
+            const res = await fetch(`/api/medvoice/speech-to-text?${params}`, {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (!res.ok) {
+                const errText = await res.text();
+                throw new Error(errText || `Upload failed (${res.status})`);
+            }
+
+            const data = await res.json();
+            setResult(data);
+        } catch (err) {
+            setError((err as Error).message);
+        } finally {
+            setUploading(false);
+        }
+    };
+
+    return (
+        <div className="p-4 sm:p-6 lg:p-8 space-y-6 max-w-3xl">
+            <div>
+                <h1 className="text-2xl sm:text-3xl font-bold tracking-tight">
+                    Upload Consultation
+                </h1>
+                <p className="text-muted-foreground mt-1">
+                    Upload an audio recording for AI-powered transcription and analysis
+                </p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-6">
+                {/* File Drop Zone */}
+                <Card>
+                    <CardContent className="pt-6">
+                        <div
+                            onDragOver={(e) => e.preventDefault()}
+                            onDrop={handleFileDrop}
+                            onClick={() => fileInputRef.current?.click()}
+                            className="border-2 border-dashed border-border rounded-lg p-8 text-center cursor-pointer hover:border-primary/50 hover:bg-accent/30 transition-colors"
+                        >
+                            {file ? (
+                                <div className="flex items-center justify-center gap-3">
+                                    <FileAudio className="w-8 h-8 text-primary" />
+                                    <div className="text-left">
+                                        <p className="font-medium text-sm">{file.name}</p>
+                                        <p className="text-xs text-muted-foreground">
+                                            {(file.size / (1024 * 1024)).toFixed(1)} MB
+                                        </p>
+                                    </div>
+                                    <Button
+                                        type="button"
+                                        variant="ghost"
+                                        size="sm"
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setFile(null);
+                                        }}
+                                    >
+                                        Remove
+                                    </Button>
+                                </div>
+                            ) : (
+                                <>
+                                    <Upload className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
+                                    <p className="text-sm font-medium">
+                                        Drop audio file here or click to browse
+                                    </p>
+                                    <p className="text-xs text-muted-foreground mt-1">
+                                        Supports MP3, WAV, M4A, FLAC, OGG
+                                    </p>
+                                </>
+                            )}
+                            <input
+                                ref={fileInputRef}
+                                type="file"
+                                accept="audio/*"
+                                className="hidden"
+                                onChange={(e) => setFile(e.target.files?.[0] || null)}
+                            />
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* Patient Information */}
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="text-base">Patient Information</CardTitle>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                        <div className="space-y-2">
+                            <Label htmlFor="patientName">Patient Full Name *</Label>
+                            <Input
+                                id="patientName"
+                                value={patientName}
+                                onChange={(e) => setPatientName(e.target.value)}
+                                placeholder="e.g. John Michael Smith"
+                                required
+                            />
+                        </div>
+
+                        <div className="flex items-center gap-3">
+                            <input
+                                type="checkbox"
+                                id="enableMedical"
+                                checked={enableMedical}
+                                onChange={(e) => setEnableMedical(e.target.checked)}
+                                className="w-4 h-4 rounded border-border text-primary focus:ring-primary"
+                            />
+                            <Label htmlFor="enableMedical" className="cursor-pointer">
+                                Enable medical processing (NER, SOAP notes)
+                            </Label>
+                        </div>
+
+                        {enableMedical && (
+                            <div className="space-y-2">
+                                <Label htmlFor="providerId">Provider ID</Label>
+                                <Input
+                                    id="providerId"
+                                    value={providerId}
+                                    onChange={(e) => setProviderId(e.target.value)}
+                                    placeholder="Healthcare provider ID"
+                                />
+                            </div>
+                        )}
+                    </CardContent>
+                </Card>
+
+                {/* Transcription Settings */}
+                <Card>
+                    <CardHeader>
+                        <CardTitle className="text-base">Transcription Settings</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div className="space-y-2">
+                                <Label htmlFor="model">Whisper Model</Label>
+                                <select
+                                    id="model"
+                                    value={model}
+                                    onChange={(e) => setModel(e.target.value)}
+                                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring"
+                                >
+                                    <option value="tiny">tiny</option>
+                                    <option value="base">base</option>
+                                    <option value="small">small</option>
+                                    <option value="medium">medium</option>
+                                    <option value="large-v3">large-v3</option>
+                                </select>
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="language">Language</Label>
+                                <select
+                                    id="language"
+                                    value={language}
+                                    onChange={(e) => setLanguage(e.target.value)}
+                                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring"
+                                >
+                                    <option value="en">English</option>
+                                    <option value="vi">Vietnamese</option>
+                                    <option value="zh">Chinese</option>
+                                    <option value="yue">Cantonese</option>
+                                </select>
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="minSpeakers">Min Speakers</Label>
+                                <Input
+                                    id="minSpeakers"
+                                    type="number"
+                                    min="1"
+                                    max="10"
+                                    value={minSpeakers}
+                                    onChange={(e) => setMinSpeakers(e.target.value)}
+                                    placeholder="Auto"
+                                />
+                            </div>
+
+                            <div className="space-y-2">
+                                <Label htmlFor="maxSpeakers">Max Speakers</Label>
+                                <Input
+                                    id="maxSpeakers"
+                                    type="number"
+                                    min="1"
+                                    max="10"
+                                    value={maxSpeakers}
+                                    onChange={(e) => setMaxSpeakers(e.target.value)}
+                                    placeholder="Auto"
+                                />
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+
+                {/* Result / Error */}
+                {result && (
+                    <div className="flex items-center gap-3 p-4 rounded-lg bg-emerald-50 text-emerald-800">
+                        <CheckCircle2 className="w-5 h-5 shrink-0" />
+                        <div>
+                            <p className="font-medium text-sm">Upload successful!</p>
+                            <p className="text-xs mt-0.5">
+                                Workflow ID:{' '}
+                                <a
+                                    href={`/dashboard/consultations?wf=${result.workflow_id}`}
+                                    className="underline font-mono"
+                                >
+                                    {result.workflow_id}
+                                </a>
+                            </p>
+                        </div>
+                    </div>
+                )}
+
+                {error && (
+                    <div className="flex items-center gap-3 p-4 rounded-lg bg-red-50 text-red-800">
+                        <AlertCircle className="w-5 h-5 shrink-0" />
+                        <p className="text-sm">{error}</p>
+                    </div>
+                )}
+
+                {/* Submit */}
+                <Button
+                    type="submit"
+                    size="lg"
+                    disabled={!file || !patientName.trim() || uploading}
+                    className="w-full sm:w-auto"
+                >
+                    {uploading ? (
+                        <>
+                            <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                            Uploading...
+                        </>
+                    ) : (
+                        <>
+                            <Upload className="w-4 h-4 mr-2" />
+                            Upload & Transcribe
+                        </>
+                    )}
+                </Button>
+            </form>
+        </div>
+    );
+}
