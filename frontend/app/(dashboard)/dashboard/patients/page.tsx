@@ -109,9 +109,9 @@ export default function PatientsPage() {
                             <button
                                 key={patient.patient_hash}
                                 onClick={() => setSelected(patient)}
-                                className={`w-full text-left p-4 rounded-lg border transition-colors ${selected?.patient_hash === patient.patient_hash
-                                        ? 'border-primary bg-accent'
-                                        : 'border-border hover:bg-accent/50'
+                                className={`w-full text-left p-4 rounded-lg border transition-colors cursor-pointer ${selected?.patient_hash === patient.patient_hash
+                                    ? 'border-primary bg-accent'
+                                    : 'border-border hover:bg-accent/50'
                                     }`}
                             >
                                 <div className="flex items-center justify-between">
@@ -172,7 +172,7 @@ export default function PatientsPage() {
                                             <a
                                                 key={wf.workflow_id}
                                                 href={`/dashboard/consultations?wf=${wf.workflow_id}`}
-                                                className="block p-3 rounded-md border border-border hover:bg-accent/50 transition-colors"
+                                                className="block p-3 rounded-md border border-border hover:bg-accent/50 transition-colors cursor-pointer"
                                             >
                                                 <code className="text-xs font-mono break-all">
                                                     {wf.workflow_id}

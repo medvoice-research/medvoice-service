@@ -131,6 +131,7 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
   }
@@ -138,7 +139,7 @@
 
 @layer utilities {
   body {
-    font-family: "Inter", "Manrope", Arial, Helvetica, sans-serif;
+    font-family: "Inter", Arial, Helvetica, sans-serif;
   }
 }
 
@@ -149,12 +150,31 @@ html {
 
 /* Status indicator animations */
 @keyframes pulse-slow {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
 .animate-pulse-slow {
   animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    transition: none;
+  }
+
+  .animate-pulse-slow,
+  .animate-spin {
+    animation: none;
+  }
 }
 
 /* Scrollbar styling */

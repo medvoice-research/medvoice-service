@@ -123,6 +123,7 @@ export default function UploadPage() {
                                 type="file"
                                 accept="audio/*"
                                 className="hidden"
+                                aria-label="Select audio file"
                                 onChange={(e) => setFile(e.target.files?.[0] || null)}
                             />
                         </div>
@@ -186,7 +187,7 @@ export default function UploadPage() {
                                     id="model"
                                     value={model}
                                     onChange={(e) => setModel(e.target.value)}
-                                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring"
+                                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring"
                                 >
                                     <option value="tiny">tiny</option>
                                     <option value="base">base</option>
@@ -202,7 +203,7 @@ export default function UploadPage() {
                                     id="language"
                                     value={language}
                                     onChange={(e) => setLanguage(e.target.value)}
-                                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus:outline-none focus:ring-2 focus:ring-ring"
+                                    className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background cursor-pointer focus:outline-none focus:ring-2 focus:ring-ring"
                                 >
                                     <option value="en">English</option>
                                     <option value="vi">Vietnamese</option>
@@ -242,7 +243,7 @@ export default function UploadPage() {
 
                 {/* Result / Error */}
                 {result && (
-                    <div className="flex items-center gap-3 p-4 rounded-lg bg-emerald-50 text-emerald-800">
+                    <div className="flex items-center gap-3 p-4 rounded-lg bg-emerald-50 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-300">
                         <CheckCircle2 className="w-5 h-5 shrink-0" />
                         <div>
                             <p className="font-medium text-sm">Upload successful!</p>
@@ -260,7 +261,7 @@ export default function UploadPage() {
                 )}
 
                 {error && (
-                    <div className="flex items-center gap-3 p-4 rounded-lg bg-red-50 text-red-800">
+                    <div className="flex items-center gap-3 p-4 rounded-lg bg-red-50 dark:bg-red-950/50 text-red-800 dark:text-red-300">
                         <AlertCircle className="w-5 h-5 shrink-0" />
                         <p className="text-sm">{error}</p>
                     </div>
