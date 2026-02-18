@@ -112,7 +112,7 @@ export default function ConsultationsPage() {
                                 className="pl-10"
                             />
                         </div>
-                        <Button onClick={searchWorkflow} disabled={loading}>
+                        <Button onClick={searchWorkflow} disabled={loading} aria-label="Search workflow">
                             {loading ? (
                                 <Loader2 className="w-4 h-4 animate-spin" />
                             ) : (
@@ -125,7 +125,7 @@ export default function ConsultationsPage() {
 
             {/* Error */}
             {error && (
-                <div className="flex items-center gap-3 p-4 rounded-lg bg-red-50 text-red-800">
+                <div className="flex items-center gap-3 p-4 rounded-lg bg-red-50 dark:bg-red-950/50 text-red-800 dark:text-red-300">
                     <XCircle className="w-5 h-5" />
                     <p className="text-sm">{error}</p>
                 </div>

@@ -135,8 +135,8 @@ export default function ChatPage() {
 
                         <div
                             className={`max-w-[80%] rounded-lg px-4 py-3 text-sm ${msg.role === 'user'
-                                    ? 'bg-primary text-primary-foreground'
-                                    : 'bg-muted'
+                                ? 'bg-primary text-primary-foreground'
+                                : 'bg-muted'
                                 }`}
                         >
                             <p className="whitespace-pre-wrap">{msg.content}</p>
@@ -201,6 +201,7 @@ export default function ChatPage() {
                     <Button
                         type="submit"
                         disabled={!input.trim() || !patientHash.trim() || loading}
+                        aria-label="Send message"
                     >
                         <Send className="w-4 h-4" />
                     </Button>

@@ -56,9 +56,9 @@ export default function DashboardPage() {
   }, []);
 
   const statusConfig = {
-    healthy: { label: 'All Systems Operational', color: 'text-emerald-600', bg: 'bg-emerald-50', icon: CheckCircle2 },
-    degraded: { label: 'Partial Outage', color: 'text-amber-600', bg: 'bg-amber-50', icon: AlertCircle },
-    offline: { label: 'Backend Offline', color: 'text-red-600', bg: 'bg-red-50', icon: AlertCircle },
+    healthy: { label: 'All Systems Operational', color: 'text-emerald-600 dark:text-emerald-400', bg: 'bg-emerald-50 dark:bg-emerald-950/50', icon: CheckCircle2 },
+    degraded: { label: 'Partial Outage', color: 'text-amber-600 dark:text-amber-400', bg: 'bg-amber-50 dark:bg-amber-950/50', icon: AlertCircle },
+    offline: { label: 'Backend Offline', color: 'text-red-600 dark:text-red-400', bg: 'bg-red-50 dark:bg-red-950/50', icon: AlertCircle },
   };
 
   const status = stats ? statusConfig[stats.systemStatus] : statusConfig.offline;
@@ -165,7 +165,7 @@ export default function DashboardPage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
             <a
               href="/dashboard/upload"
-              className="flex items-center gap-3 p-4 rounded-lg border border-border hover:bg-accent transition-colors"
+              className="flex items-center gap-3 p-4 rounded-lg border border-border hover:bg-accent transition-colors cursor-pointer"
             >
               <Upload className="w-8 h-8 text-primary" />
               <div>
@@ -175,7 +175,7 @@ export default function DashboardPage() {
             </a>
             <a
               href="/dashboard/consultations"
-              className="flex items-center gap-3 p-4 rounded-lg border border-border hover:bg-accent transition-colors"
+              className="flex items-center gap-3 p-4 rounded-lg border border-border hover:bg-accent transition-colors cursor-pointer"
             >
               <Activity className="w-8 h-8 text-primary" />
               <div>
@@ -185,7 +185,7 @@ export default function DashboardPage() {
             </a>
             <a
               href="/dashboard/patients"
-              className="flex items-center gap-3 p-4 rounded-lg border border-border hover:bg-accent transition-colors"
+              className="flex items-center gap-3 p-4 rounded-lg border border-border hover:bg-accent transition-colors cursor-pointer"
             >
               <Users className="w-8 h-8 text-primary" />
               <div>

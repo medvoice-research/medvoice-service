@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { MedVoiceIcon } from '@/components/icons/MedVoiceIcon';
 import { usePathname } from 'next/navigation';
 import {
     LayoutDashboard,
@@ -63,8 +64,8 @@ export function Sidebar() {
             >
                 {/* Logo / Brand */}
                 <div className="flex items-center gap-3 px-4 py-5 border-b border-sidebar-border">
-                    <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-sidebar-primary text-sidebar-primary-foreground font-bold text-sm shrink-0">
-                        MV
+                    <div className="flex items-center justify-center w-9 h-9 rounded-lg bg-sidebar-primary text-sidebar-primary-foreground shrink-0">
+                        <MedVoiceIcon className="w-6 h-6" />
                     </div>
                     {!collapsed && (
                         <div className="overflow-hidden">
@@ -139,7 +140,7 @@ export function Sidebar() {
                                 key={item.href}
                                 href={item.href}
                                 className={cn(
-                                    'flex flex-col items-center gap-0.5 px-2 py-1 rounded-md text-xs transition-colors',
+                                    'flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-md text-xs transition-colors cursor-pointer',
                                     isActive
                                         ? 'text-primary font-medium'
                                         : 'text-muted-foreground'
