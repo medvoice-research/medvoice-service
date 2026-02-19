@@ -14,6 +14,8 @@ from scalar_fastapi import get_scalar_api_reference
 
 from .config import Config
 from .logger import logger
+from .middleware.auth_middleware import AuthMiddleware
+from .middleware.rate_limit_middleware import RateLimitMiddleware
 from .routers import medical, patient_workflows, stt, stt_services, temporal_tasks
 from .routers import admin
 from .temporal.manager import temporal_manager
@@ -210,6 +212,12 @@ This API uses Temporal.io for workflow orchestration, ensuring:
 
 # Add trace middleware
 app.add_middleware(TraceMiddleware)
+
+# Add auth middleware (registered first → runs last in LIFO order, after rate limiting)
+app.add_middleware(AuthMiddleware)
+
+# Add rate limit middleware (registered second → runs first in LIFO order)
+app.add_middleware(RateLimitMiddleware)
 
 # Include routers
 app.include_router(stt.stt_router)
