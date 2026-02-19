@@ -162,6 +162,7 @@ cython_debug/
 
 # Workspace ignore
 .vscode/
+.worktrees/
 .DS_Store
 .temporal.pid
 report/
