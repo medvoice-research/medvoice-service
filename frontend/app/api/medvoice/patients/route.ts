@@ -1,4 +1,4 @@
-import { proxyGet } from '../proxy';
+import { proxyGet } from '../client';
 
 /** GET /api/medvoice/patients — list all patients */
 export async function GET() {

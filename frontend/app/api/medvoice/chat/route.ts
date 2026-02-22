@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { proxyPost } from '../proxy';
+import { proxyPost } from '../client';
 
 /** POST /api/medvoice/chat — medical RAG chat */
 export async function POST(request: NextRequest) {
