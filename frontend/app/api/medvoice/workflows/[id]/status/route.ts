@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { proxyGet } from '../../../proxy';
+import { proxyGet } from '../../../client';
 
 export async function GET(
     request: NextRequest,
