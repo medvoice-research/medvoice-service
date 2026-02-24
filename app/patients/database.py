@@ -1,19 +1,21 @@
 """SQLite database for patient workflow mappings."""
 
-import sqlite3
 import os
+from contextlib import asynccontextmanager
 from pathlib import Path
-from contextlib import contextmanager
 from typing import Optional
-from ..logger import logger
+
+import aiosqlite
+
 from ..config import Config
+from ..logger import logger
 
 
 # Database location - use Config for proper path handling
 DB_PATH = Path(Config.PATIENT_DB_PATH).resolve()
 
 
-def init_database(fresh_start: bool = True):
+async def init_database(fresh_start: bool = True):
     """
     Initialize SQLite database with schema.
 
@@ -29,64 +31,64 @@ def init_database(fresh_start: bool = True):
         os.remove(DB_PATH)
         logger.info("Database cleared successfully")
 
-    conn = sqlite3.connect(str(DB_PATH))
-    cursor = conn.cursor()
+    async with aiosqlite.connect(str(DB_PATH)) as conn:
+        await conn.execute("PRAGMA journal_mode=WAL")
 
-    # Create patient_workflow_mappings table
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS patient_workflow_mappings (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            patient_name TEXT NOT NULL,
-            patient_hash TEXT NOT NULL,
-            workflow_id TEXT NOT NULL UNIQUE,
-            file_path TEXT NOT NULL,
-            department TEXT,
-            created_at TEXT NOT NULL,
-            status TEXT NOT NULL DEFAULT 'pending'
-        )
-    """)
+        # Create patient_workflow_mappings table
+        await conn.execute("""
+            CREATE TABLE IF NOT EXISTS patient_workflow_mappings (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                patient_name TEXT NOT NULL,
+                patient_hash TEXT NOT NULL,
+                workflow_id TEXT NOT NULL UNIQUE,
+                file_path TEXT NOT NULL,
+                department TEXT,
+                created_at TEXT NOT NULL,
+                status TEXT NOT NULL DEFAULT 'pending'
+            )
+        """)
 
-    # Create index on patient_hash for fast lookups
-    cursor.execute("""
-        CREATE INDEX IF NOT EXISTS idx_patient_hash
-        ON patient_workflow_mappings(patient_hash)
-    """)
+        # Create index on patient_hash for fast lookups
+        await conn.execute("""
+            CREATE INDEX IF NOT EXISTS idx_patient_hash
+            ON patient_workflow_mappings(patient_hash)
+        """)
 
-    # Create index on status for filtering active/pending workflows
-    cursor.execute("""
-        CREATE INDEX IF NOT EXISTS idx_status
-        ON patient_workflow_mappings(status)
-    """)
+        # Create index on status for filtering active/pending workflows
+        await conn.execute("""
+            CREATE INDEX IF NOT EXISTS idx_status
+            ON patient_workflow_mappings(status)
+        """)
 
-    conn.commit()
-    conn.close()
+        await conn.commit()
 
     logger.info(f"SQLite database initialized at {DB_PATH}")
 
 
-@contextmanager
-def get_db_connection():
-    """Context manager for database connections."""
-    conn = sqlite3.connect(str(DB_PATH))
-    conn.row_factory = sqlite3.Row  # Return rows as dicts
+@asynccontextmanager
+async def get_db_connection():
+    """Async context manager for database connections."""
+    conn = await aiosqlite.connect(str(DB_PATH))
+    conn.row_factory = aiosqlite.Row  # Return rows as dicts
     try:
+        await conn.execute("PRAGMA journal_mode=WAL")
         yield conn
-        conn.commit()
+        await conn.commit()
     except Exception as e:
-        conn.rollback()
+        await conn.rollback()
         logger.error(f"Database error: {str(e)}")
         raise
     finally:
-        conn.close()
+        await conn.close()
 
 
-def store_patient_workflow_db(
+async def store_patient_workflow_db(
     patient_name: str,
     patient_hash: str,
     workflow_id: str,
     file_path: str,
     department: Optional[str] = None,
-    created_at: str = None,
+    created_at: Optional[str] = None,
 ):
     """
     Store patient-workflow mapping in SQLite.
@@ -104,9 +106,8 @@ def store_patient_workflow_db(
 
         created_at = datetime.now(Config.TIMEZONE).isoformat()
 
-    with get_db_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute(
+    async with get_db_connection() as conn:
+        await conn.execute(
             """
             INSERT INTO patient_workflow_mappings
             (patient_name, patient_hash, workflow_id, file_path, department, created_at, status)
@@ -122,18 +123,19 @@ def store_patient_workflow_db(
             logger.info(f"   Department: {department}")
 
         # Show total count
-        cursor.execute("SELECT COUNT(*) FROM patient_workflow_mappings")
-        total = cursor.fetchone()[0]
+        count_cursor = await conn.execute("SELECT COUNT(*) FROM patient_workflow_mappings")
+        count_row = await count_cursor.fetchone()
+        total = count_row[0] if count_row else 0
         logger.info(f"   Total mappings in DB: {total}")
 
 
-def reserve_workflow_mapping_db(
+async def reserve_workflow_mapping_db(
     patient_name: str,
     patient_hash: str,
     workflow_id: str,
     file_path: str,
     department: Optional[str] = None,
-    created_at: str = None,
+    created_at: Optional[str] = None,
 ):
     """
     Reserve a workflow mapping with 'pending' status.
@@ -155,9 +157,8 @@ def reserve_workflow_mapping_db(
 
         created_at = datetime.now(Config.TIMEZONE).isoformat()
 
-    with get_db_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute(
+    async with get_db_connection() as conn:
+        await conn.execute(
             """
             INSERT INTO patient_workflow_mappings
             (patient_name, patient_hash, workflow_id, file_path, department, created_at, status)
@@ -172,7 +173,7 @@ def reserve_workflow_mapping_db(
             logger.info(f"   Department: {department}")
 
 
-def commit_workflow_mapping_db(workflow_id: str):
+async def commit_workflow_mapping_db(workflow_id: str):
     """
     Mark workflow mapping as 'active'.
 
@@ -181,9 +182,8 @@ def commit_workflow_mapping_db(workflow_id: str):
     Args:
         workflow_id: Workflow ID to commit
     """
-    with get_db_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute(
+    async with get_db_connection() as conn:
+        cursor = await conn.execute(
             """
             UPDATE patient_workflow_mappings
             SET status = 'active'
@@ -198,7 +198,7 @@ def commit_workflow_mapping_db(workflow_id: str):
             logger.info(f"DB COMMIT (ACTIVE): {workflow_id}")
 
 
-def rollback_workflow_mapping_db(workflow_id: str):
+async def rollback_workflow_mapping_db(workflow_id: str):
     """
     Delete pending workflow mapping.
 
@@ -207,9 +207,8 @@ def rollback_workflow_mapping_db(workflow_id: str):
     Args:
         workflow_id: Workflow ID to rollback
     """
-    with get_db_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute(
+    async with get_db_connection() as conn:
+        cursor = await conn.execute(
             """
             DELETE FROM patient_workflow_mappings
             WHERE workflow_id = ? AND status = 'pending'
@@ -223,7 +222,7 @@ def rollback_workflow_mapping_db(workflow_id: str):
             logger.info(f"DB ROLLBACK (DELETED): {workflow_id}")
 
 
-def get_patient_by_workflow_db(workflow_id: str) -> Optional[dict]:
+async def get_patient_by_workflow_db(workflow_id: str) -> Optional[dict]:
     """
     Get patient info by workflow ID from SQLite.
 
@@ -233,9 +232,8 @@ def get_patient_by_workflow_db(workflow_id: str) -> Optional[dict]:
     Returns:
         Patient mapping dict or None
     """
-    with get_db_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute(
+    async with get_db_connection() as conn:
+        cursor = await conn.execute(
             """
             SELECT patient_name, patient_hash, workflow_id, file_path, department, created_at, status
             FROM patient_workflow_mappings
@@ -244,13 +242,13 @@ def get_patient_by_workflow_db(workflow_id: str) -> Optional[dict]:
             (workflow_id,),
         )
 
-        row = cursor.fetchone()
+        row = await cursor.fetchone()
         if row:
             return dict(row)
         return None
 
 
-def get_workflows_by_patient_hash_db(patient_hash: str) -> list:
+async def get_workflows_by_patient_hash_db(patient_hash: str) -> list:
     """
     Get all active workflows for a patient by hash from SQLite.
 
@@ -262,9 +260,8 @@ def get_workflows_by_patient_hash_db(patient_hash: str) -> list:
     Returns:
         List of workflow mapping dicts
     """
-    with get_db_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute(
+    async with get_db_connection() as conn:
+        cursor = await conn.execute(
             """
             SELECT patient_name, patient_hash, workflow_id, file_path, department, created_at, status
             FROM patient_workflow_mappings
@@ -274,7 +271,7 @@ def get_workflows_by_patient_hash_db(patient_hash: str) -> list:
             (patient_hash,),
         )
 
-        rows = cursor.fetchall()
+        rows: list = list(await cursor.fetchall())
 
         # Real-time logging
         logger.info(f"DB QUERY: patient_hash={patient_hash} -> Found {len(rows)} workflows")
@@ -282,7 +279,7 @@ def get_workflows_by_patient_hash_db(patient_hash: str) -> list:
         return [dict(row) for row in rows]
 
 
-def get_patient_name_by_hash_db(patient_hash: str) -> Optional[str]:
+async def get_patient_name_by_hash_db(patient_hash: str) -> Optional[str]:
     """
     Get patient name by hash from SQLite.
 
@@ -292,9 +289,8 @@ def get_patient_name_by_hash_db(patient_hash: str) -> Optional[str]:
     Returns:
         Plain text patient name or None
     """
-    with get_db_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute(
+    async with get_db_connection() as conn:
+        cursor = await conn.execute(
             """
             SELECT patient_name
             FROM patient_workflow_mappings
@@ -304,13 +300,13 @@ def get_patient_name_by_hash_db(patient_hash: str) -> Optional[str]:
             (patient_hash,),
         )
 
-        row = cursor.fetchone()
+        row = await cursor.fetchone()
         if row:
             return row["patient_name"]
         return None
 
 
-def get_all_patients_db() -> list:
+async def get_all_patients_db() -> list:
     """
     Get summary of all patients with active workflow counts.
 
@@ -319,9 +315,8 @@ def get_all_patients_db() -> list:
     Returns:
         List of patient summaries
     """
-    with get_db_connection() as conn:
-        cursor = conn.cursor()
-        cursor.execute("""
+    async with get_db_connection() as conn:
+        cursor = await conn.execute("""
             SELECT
                 patient_hash,
                 patient_name,
@@ -333,15 +328,15 @@ def get_all_patients_db() -> list:
             ORDER BY latest_workflow DESC
         """)
 
-        rows = cursor.fetchall()
+        rows = await cursor.fetchall()
         return [dict(row) for row in rows]
 
 
-def init_db(fresh_start: bool = False):
+async def init_db(fresh_start: bool = False):
     """
     Initialize database. Call this explicitly during application startup.
 
     Args:
         fresh_start: If True, delete existing database for clean slate
     """
-    init_database(fresh_start=fresh_start)
+    await init_database(fresh_start=fresh_start)
