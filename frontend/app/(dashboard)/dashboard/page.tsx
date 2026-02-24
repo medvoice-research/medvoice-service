@@ -36,8 +36,8 @@ export default function DashboardPage() {
       let totalWorkflows = 0;
       if (statsRes.status === 'fulfilled' && statsRes.value.ok) {
         const data = await statsRes.value.json();
-        totalPatients = data.total_patients || 0;
-        totalWorkflows = data.total_workflows || 0;
+        totalPatients = data.unique_patients || data.total_patients || 0;
+        totalWorkflows = data.total_mappings || data.total_consultations || data.total_workflows || 0;
       }
 
       setStats({ totalPatients, totalWorkflows, systemStatus });
