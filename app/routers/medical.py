@@ -140,8 +140,8 @@ async def medical_health():
             "message": "All required settings configured",
         }
 
-    # Overall status
-    all_healthy = all(comp.get("status") == "healthy" for comp in health_status["components"].values())
+    # Overall status (warning is okay, only fail on unhealthy/error)
+    all_healthy = all(comp.get("status") not in ["unhealthy", "error"] for comp in health_status["components"].values())
 
     return JSONResponse(
         status_code=status.HTTP_200_OK if all_healthy else status.HTTP_503_SERVICE_UNAVAILABLE, content=health_status
