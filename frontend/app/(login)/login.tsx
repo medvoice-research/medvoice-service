@@ -39,6 +39,30 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
           <input type="hidden" name="redirect" value={redirect || ''} />
           <input type="hidden" name="priceId" value={priceId || ''} />
           <input type="hidden" name="inviteId" value={inviteId || ''} />
+
+          {mode === 'signup' && (
+            <div>
+              <Label
+                htmlFor="full_name"
+                className="block text-sm font-medium text-foreground"
+              >
+                Full Name
+              </Label>
+              <div className="mt-1">
+                <Input
+                  id="full_name"
+                  name="full_name"
+                  type="text"
+                  autoComplete="name"
+                  required
+                  maxLength={100}
+                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-input placeholder:text-muted-foreground text-foreground focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
+                  placeholder="Enter your full name"
+                />
+              </div>
+            </div>
+          )}
+
           <div>
             <Label
               htmlFor="email"
@@ -85,6 +109,30 @@ export function Login({ mode = 'signin' }: { mode?: 'signin' | 'signup' }) {
               />
             </div>
           </div>
+
+          {mode === 'signup' && (
+            <div>
+              <Label
+                htmlFor="role"
+                className="block text-sm font-medium text-foreground"
+              >
+                Role
+              </Label>
+              <div className="mt-1">
+                <select
+                  id="role"
+                  name="role"
+                  required
+                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-input bg-background text-foreground focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm"
+                >
+                  <option value="" disabled>Select your role</option>
+                  <option value="physician">Doctor</option>
+                  <option value="nurse">Nurse</option>
+                  <option value="administrator">Admin</option>
+                </select>
+              </div>
+            </div>
+          )}
 
           {state?.error && (
             <div className="text-destructive text-sm">{state.error}</div>
