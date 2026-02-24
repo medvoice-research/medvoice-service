@@ -1,5 +1,5 @@
 .PHONY: help install install-prod-gpu install-dev install-dev-gpu \
-	dev server worker web start-temporal lint format \
+	dev prod server worker web next-saas start-temporal lint format \
 	stop-temporal stop temporal-fresh check-activities \
 	test unit-test integration-test \
 	docker-build docker-up docker-start docker-restart docker-down down
@@ -12,9 +12,11 @@ help:
 	@echo "  install-dev          	- Install development dependencies (CPU only)"
 	@echo "  install-dev-gpu      	- Install development dependencies with GPU support"
 	@echo "  dev                  	- Start worker + FastAPI server + Streamlit UI"
+	@echo "  prod                 	- Start worker + FastAPI server + Next.js SaaS"
 	@echo "  server            		- Start FastAPI server only"
 	@echo "  worker           		- Start Temporal server + worker"
 	@echo "  web        		- Start Streamlit UI only"
+	@echo "  next-saas        		- Start Next.js SaaS only"
 	@echo "  start-temporal     	- Start local Temporal server"
 	@echo "  stop-temporal      	- Stop local Temporal server"
 	@echo "  stop              		- Stop all running processes (pkill)"
@@ -118,10 +120,28 @@ dev:
 	@echo "Full application started"
 	@$(MAKE) list-servers
 
+# Start full application (Temporal worker + FastAPI server + Next.js SaaS)
+prod:
+	@echo "Starting full application (SaaS Mode)..."
+	$(MAKE) worker
+	@echo "Waiting for worker to initialize..."
+	uv run python scripts/wait_for_worker.py
+	$(MAKE) server
+	@echo "Waiting for server to start..."
+	uv run python scripts/wait_for_server.py
+	$(MAKE) next-saas
+	@echo "Full application (SaaS) started"
+	@$(MAKE) list-servers
+
 # Start Streamlit UI only
 web:
 	uv run streamlit run streamlit_app/app.py --server.port 8501 &
 	@echo "Streamlit UI started at http://localhost:8501"
+
+# Start Next.js SaaS only
+next-saas:
+	cd frontend && npm run dev &
+	@echo "Next.js SaaS started at http://localhost:3000"
 
 # Start FastAPI server only
 server:
@@ -165,6 +185,7 @@ list-servers:
 	@echo "  Backend Docs:   http://localhost:8000"
 	@echo "  Admin:          http://localhost:8000/admin"
 	@echo "  Frontend UI:    http://localhost:8501"
+	@echo "  SaaS App:       http://localhost:3000"
 	@echo "  Workflows UI:   http://localhost:8233"
 	@echo ""
 	@echo "Workflow Configuration in Docker Environment:"
@@ -179,6 +200,9 @@ stop:
 	@pkill -f "start_server" || true
 	@echo "Stopping Streamlit processes..."
 	@pkill -f "streamlit run" || true
+	@echo "Stopping Next.js processes..."
+	@pkill -f "next dev" || true
+	@pkill -f "next-server" || true
 	@echo "Stopping Temporal processes..."
 	@pkill -f "temporal server" || true
 	@pkill -f "temporal_server" || true
