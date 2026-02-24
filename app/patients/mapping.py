@@ -15,7 +15,7 @@ from .database import (
 )
 
 
-def store_patient_workflow(
+async def store_patient_workflow(
     patient_name: str, patient_hash: str, workflow_id: str, file_path: str, department: Optional[str] = None
 ):
     """
@@ -29,7 +29,7 @@ def store_patient_workflow(
         department: Optional department name
     """
     created_at = datetime.now(Config.TIMEZONE).isoformat()
-    store_patient_workflow_db(
+    await store_patient_workflow_db(
         patient_name=patient_name,
         patient_hash=patient_hash,
         workflow_id=workflow_id,
@@ -39,7 +39,7 @@ def store_patient_workflow(
     )
 
 
-def get_patient_by_workflow(workflow_id: str) -> Optional[dict]:
+async def get_patient_by_workflow(workflow_id: str) -> Optional[dict]:
     """
     Get patient info by workflow ID.
 
@@ -49,10 +49,10 @@ def get_patient_by_workflow(workflow_id: str) -> Optional[dict]:
     Returns:
         Patient mapping or None
     """
-    return get_patient_by_workflow_db(workflow_id)
+    return await get_patient_by_workflow_db(workflow_id)
 
 
-def get_workflows_by_patient_hash(patient_hash: str) -> list:
+async def get_workflows_by_patient_hash(patient_hash: str) -> list:
     """
     Get all workflows for a patient by hash.
 
@@ -62,10 +62,10 @@ def get_workflows_by_patient_hash(patient_hash: str) -> list:
     Returns:
         List of workflow mappings
     """
-    return get_workflows_by_patient_hash_db(patient_hash)
+    return await get_workflows_by_patient_hash_db(patient_hash)
 
 
-def get_patient_name_by_hash(patient_hash: str) -> Optional[str]:
+async def get_patient_name_by_hash(patient_hash: str) -> Optional[str]:
     """
     Get patient name by hash (admin lookup).
 
@@ -75,23 +75,23 @@ def get_patient_name_by_hash(patient_hash: str) -> Optional[str]:
     Returns:
         Plain text patient name or None
     """
-    return get_patient_name_by_hash_db(patient_hash)
+    return await get_patient_name_by_hash_db(patient_hash)
 
 
-def get_all_patients() -> list:
+async def get_all_patients() -> list:
     """
     Get all patients with workflow counts.
 
     Returns:
         List of patient summaries
     """
-    return get_all_patients_db()
+    return await get_all_patients_db()
 
 
 # Two-Phase Commit Functions
 
 
-def reserve_patient_workflow(
+async def reserve_patient_workflow(
     patient_name: str, patient_hash: str, workflow_id: str, file_path: str, department: Optional[str] = None
 ):
     """
@@ -107,7 +107,7 @@ def reserve_patient_workflow(
         department: Optional department name
     """
     created_at = datetime.now(Config.TIMEZONE).isoformat()
-    reserve_workflow_mapping_db(
+    await reserve_workflow_mapping_db(
         patient_name=patient_name,
         patient_hash=patient_hash,
         workflow_id=workflow_id,
@@ -117,21 +117,21 @@ def reserve_patient_workflow(
     )
 
 
-def commit_patient_workflow(workflow_id: str):
+async def commit_patient_workflow(workflow_id: str):
     """
     Mark workflow as 'active' after successful start.
 
     Args:
         workflow_id: Workflow ID to commit
     """
-    commit_workflow_mapping_db(workflow_id)
+    await commit_workflow_mapping_db(workflow_id)
 
 
-def rollback_patient_workflow(workflow_id: str):
+async def rollback_patient_workflow(workflow_id: str):
     """
     Delete pending workflow record on failure.
 
     Args:
         workflow_id: Workflow ID to rollback
     """
-    rollback_workflow_mapping_db(workflow_id)
+    await rollback_workflow_mapping_db(workflow_id)
