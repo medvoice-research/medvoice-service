@@ -1,0 +1,18 @@
+FROM node:20-alpine
+
+# Enable corepack for pnpm support
+RUN corepack enable
+
+WORKDIR /app
+
+# Copy package files and install dependencies
+COPY package.json pnpm-lock.yaml ./
+RUN pnpm install --frozen-lockfile
+
+# Copy source code
+COPY . .
+
+EXPOSE 3000
+
+# Run in development mode (production build can be added later)
+CMD ["pnpm", "dev"]
