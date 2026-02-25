@@ -23,12 +23,8 @@ def client(tmp_path, monkeypatch):
     monkeypatch.setenv("ENABLE_AUTHENTICATION", "false")
     monkeypatch.setenv("JWT_SECRET_KEY", "test-secret-key-for-testing-only")
 
-    # Redirect auth DB to a temp path so we don't pollute real data
-    monkeypatch.setattr("app.auth.models.AUTH_DB_PATH", str(tmp_path / "test_auth.db"))
-    monkeypatch.setattr(
-        "app.auth.models.AUTH_DB_URL",
-        f"sqlite+aiosqlite:///{tmp_path}/test_auth.db",
-    )
+    # Override the raw POSTGRES_URL used by init_auth_db
+    monkeypatch.setenv("POSTGRES_URL", f"sqlite+aiosqlite:///{tmp_path}/test_auth.db")
 
     app = _make_app()
     with TestClient(app, raise_server_exceptions=True) as c:
