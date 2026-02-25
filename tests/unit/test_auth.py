@@ -6,6 +6,7 @@ import pytest
 from fastapi import HTTPException
 from fastapi.testclient import TestClient
 
+
 def _make_app():
     """Import and return the FastAPI app with auth DB mocked out."""
     with (
@@ -17,10 +18,12 @@ def _make_app():
 
         return app
 
+
 @pytest.fixture()
 def client(tmp_path, monkeypatch):
     """Sync TestClient with auth disabled and an in-memory-like DB override."""
     monkeypatch.setenv("ENABLE_AUTHENTICATION", "false")
+    monkeypatch.setenv("AUTH_SECRET", "test-secret-key-for-testing-only")
     monkeypatch.setenv("JWT_SECRET_KEY", "test-secret-key-for-testing-only")
 
     # Override the raw POSTGRES_URL used by init_auth_db
@@ -29,6 +32,7 @@ def client(tmp_path, monkeypatch):
     app = _make_app()
     with TestClient(app, raise_server_exceptions=True) as c:
         yield c
+
 
 class TestSignup:
     """Tests for POST /auth/signup."""
@@ -109,6 +113,7 @@ class TestSignup:
 
         assert response.status_code == 409
 
+
 class TestLogin:
     """Tests for POST /auth/login."""
 
@@ -159,12 +164,14 @@ class TestLogin:
 
         assert response.status_code == 401
 
+
 class TestGetCurrentUser:
     """Tests for app.auth.dependencies.get_current_user."""
 
     @pytest.mark.asyncio
     async def test_auth_disabled_returns_dev_user(self, monkeypatch):
         monkeypatch.setenv("ENABLE_AUTHENTICATION", "false")
+        monkeypatch.setenv("AUTH_SECRET", "test-secret-key-for-testing-only")
         from app.auth.dependencies import get_current_user
 
         result = await get_current_user(credentials=None)
