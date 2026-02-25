@@ -1,8 +1,9 @@
 .PHONY: help install install-prod-gpu install-dev install-dev-gpu \
 	dev prod server worker web next-saas start-temporal lint format \
 	stop-temporal stop temporal-fresh check-activities \
-	test unit-test integration-test \
-	docker-build docker-up docker-start docker-restart docker-down down
+	test unit-test integration-test e2e-test \
+	docker-build docker-up docker-start docker-restart docker-down down \
+	pgweb pgweb-down
 
 # Default target - show help
 help:
@@ -29,6 +30,8 @@ help:
 	@echo "  docker-start      	- Start services without rebuild (faster)"
 	@echo "  docker-restart    	- Restart running services"
 	@echo "  docker-down       	- Stop and remove all containers"
+	@echo "  pgweb             	- Start database dashboard (pgweb)"
+	@echo "  pgweb-down        	- Stop database dashboard"
 	@echo ""
 	@echo "Code quality targets:"
 	@echo "  lint              	- Run all linting checks (ruff, yamllint, etc.)"
@@ -38,6 +41,7 @@ help:
 	@echo "  test              	- Run all tests (unit + integration)"
 	@echo "  unit-test         	- Run unit tests only"
 	@echo "  integration-test  	- Run integration tests only"
+	@echo "  e2e-test          	- Run Playwright E2E concurrent-user tests"
 	@echo ""
 	@echo "Environment Variables:"
 	@echo "  TEMPORAL_DB_PATH  	- Path for Temporal database (default: ./temporal_data/temporal.db)"
@@ -362,6 +366,14 @@ integration-test:
 	uv run pytest tests/integration/test_stt_medical_pipeline.py -v --tb=short -s && \
 	echo "Integration test passed"
 
+e2e-test:
+	@echo "========================================"
+	@echo "Running E2E Tests (Playwright)"
+	@echo "========================================"
+	cd frontend && npx playwright test --project=chromium
+	@echo ""
+	@echo "E2E tests completed"
+
 # ============================================================================
 # Activity monitoring
 # ============================================================================
@@ -414,7 +426,7 @@ build:
 	@$(MAKE) list-servers
 
 up:
-	docker-compose up -d
+	docker-compose up
 	@echo "Docker services started"
 	@$(MAKE) list-servers
 
@@ -426,3 +438,11 @@ restart:
 down:
 	docker-compose down
 	@echo "Docker services stopped"
+
+pgweb:
+	docker compose -f docker-compose.pgweb.yaml up -d
+	@echo "Database dashboard started"
+
+pgweb-down:
+	docker compose -f docker-compose.pgweb.yaml down
+	@echo "Database dashboard stopped"
