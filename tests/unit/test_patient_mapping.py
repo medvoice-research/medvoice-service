@@ -124,7 +124,7 @@ class TestPatientMapping:
         workflows = await get_workflows_by_patient_hash(patient_hash)
 
         assert len(workflows) == 2
-        
+
         ids = [w["workflow_id"] for w in workflows]
         assert "workflow-1" in ids
         assert "workflow-2" in ids

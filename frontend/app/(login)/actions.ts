@@ -45,7 +45,7 @@ const signInSchema = z.object({
   password: z.string().min(8).max(100)
 });
 
-export const signIn = validatedAction(signInSchema, async (data, formData) => {
+export const signIn = validatedAction(signInSchema, async (data: z.infer<typeof signInSchema>, formData: FormData) => {
   const { email, password } = data;
 
   const backendUrl = process.env.BACKEND_URL ?? 'http://localhost:8000';
@@ -91,7 +91,7 @@ const signUpSchema = z.object({
   role: z.enum(['physician', 'nurse', 'administrator'])
 });
 
-export const signUp = validatedAction(signUpSchema, async (data, formData) => {
+export const signUp = validatedAction(signUpSchema, async (data: z.infer<typeof signUpSchema>, formData: FormData) => {
   const { email, password, full_name, role } = data;
 
   const backendUrl = process.env.BACKEND_URL ?? 'http://localhost:8000';
@@ -145,7 +145,7 @@ const updatePasswordSchema = z.object({
 
 export const updatePassword = validatedActionWithUser(
   updatePasswordSchema,
-  async (data, _, user) => {
+  async (data: z.infer<typeof updatePasswordSchema>, _formData: FormData, user: User) => {
     const { currentPassword, newPassword, confirmPassword } = data;
 
     const isPasswordValid = await comparePasswords(
@@ -203,7 +203,7 @@ const deleteAccountSchema = z.object({
 
 export const deleteAccount = validatedActionWithUser(
   deleteAccountSchema,
-  async (data, _, user) => {
+  async (data: z.infer<typeof deleteAccountSchema>, _formData: FormData, user: User) => {
     const { password } = data;
 
     const isPasswordValid = await comparePasswords(password, user.passwordHash);
@@ -254,7 +254,7 @@ const updateAccountSchema = z.object({
 
 export const updateAccount = validatedActionWithUser(
   updateAccountSchema,
-  async (data, _, user) => {
+  async (data: z.infer<typeof updateAccountSchema>, _formData: FormData, user: User) => {
     const { name, email } = data;
     const userWithTeam = await getUserWithTeam(user.id);
 
@@ -273,7 +273,7 @@ const removeTeamMemberSchema = z.object({
 
 export const removeTeamMember = validatedActionWithUser(
   removeTeamMemberSchema,
-  async (data, _, user) => {
+  async (data: z.infer<typeof removeTeamMemberSchema>, _formData: FormData, user: User) => {
     const { memberId } = data;
     const userWithTeam = await getUserWithTeam(user.id);
 
@@ -307,7 +307,7 @@ const inviteTeamMemberSchema = z.object({
 
 export const inviteTeamMember = validatedActionWithUser(
   inviteTeamMemberSchema,
-  async (data, _, user) => {
+  async (data: z.infer<typeof inviteTeamMemberSchema>, _formData: FormData, user: User) => {
     const { email, role } = data;
     const userWithTeam = await getUserWithTeam(user.id);
 
