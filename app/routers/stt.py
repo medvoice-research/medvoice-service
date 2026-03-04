@@ -5,10 +5,11 @@ It includes endpoints for processing uploaded audio files and audio files from U
 """
 
 import logging
+import asyncio
 import os
 import uuid
 
-import requests
+import httpx
 from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
 
 from ..compatibility import log_compatibility_warnings
@@ -169,7 +170,7 @@ async def speech_to_text(
     from ..patients.mapping import reserve_patient_workflow, commit_patient_workflow, rollback_patient_workflow
 
     try:
-        reserve_patient_workflow(
+        await reserve_patient_workflow(
             patient_name=patient_name,
             patient_hash=patient_hash,
             workflow_id=workflow_id,
@@ -220,12 +221,12 @@ async def speech_to_text(
         logger.info("Workflow started: ID %s", handle.id)
 
         # Commit database record (mark as ACTIVE)
-        commit_patient_workflow(workflow_id)
+        await commit_patient_workflow(workflow_id)
 
     except Exception as workflow_error:
         # Workflow start failed - rollback database record
         logger.error(f"Workflow start failed for {workflow_id}: {workflow_error}")
-        rollback_patient_workflow(workflow_id)
+        await rollback_patient_workflow(workflow_id)
         raise HTTPException(status_code=500, detail=f"Failed to start workflow: {str(workflow_error)}")
 
     return Response(identifier=handle.id, message="Workflow started")
@@ -285,37 +286,56 @@ async def speech_to_text_url(
     """
     logger.info("Received URL for processing: %s", url)
 
-    # Extract filename from HTTP response headers or URL
-    with requests.get(url, stream=True) as response:
-        response.raise_for_status()
+    # Use shared uploads directory for Docker environment
+    # This ensures files are accessible across containers
+    uploads_dir = "/tmp/uploads"
+    os.makedirs(uploads_dir, exist_ok=True)
 
-        # Check for filename in Content-Disposition header
-        content_disposition = response.headers.get("Content-Disposition")
-        if content_disposition and "filename=" in content_disposition:
-            filename = content_disposition.split("filename=")[1].strip('"')
-        else:
-            # Fall back to extracting from the URL path
-            filename = os.path.basename(url)
+    try:
+        async with httpx.AsyncClient(follow_redirects=True, timeout=300.0) as client_http:
+            async with client_http.stream("GET", url) as response:
+                try:
+                    response.raise_for_status()
+                except httpx.HTTPStatusError as exc:
+                    raise HTTPException(
+                        status_code=502,
+                        detail=f"Remote server returned error {exc.response.status_code} for URL: {url}",
+                    )
 
-        # Get the file extension
-        _, original_extension = os.path.splitext(filename)
+                # Check for filename in Content-Disposition header
+                content_disposition = response.headers.get("Content-Disposition")
+                if content_disposition and "filename=" in content_disposition:
+                    filename = content_disposition.split("filename=")[1].strip('"')
+                else:
+                    # Fall back to extracting from the URL path
+                    filename = os.path.basename(url)
 
-        # Use shared uploads directory for Docker environment
-        # This ensures files are accessible across containers
-        uploads_dir = "/tmp/uploads"
-        os.makedirs(uploads_dir, exist_ok=True)
+                # Get the file extension
+                _, original_extension = os.path.splitext(filename)
 
-        # Create a unique filename with original extension
-        unique_filename = f"{uuid.uuid4()}{original_extension}"
-        temp_audio_file_path = os.path.join(uploads_dir, unique_filename)
+                # Create a unique filename with original extension
+                unique_filename = f"{uuid.uuid4()}{original_extension}"
+                temp_audio_file_path = os.path.join(uploads_dir, unique_filename)
 
-        # Save the file to the shared location
-        with open(temp_audio_file_path, "wb") as temp_file:
-            for chunk in response.iter_content(chunk_size=8192):
-                temp_file.write(chunk)
+                # Stream file to disk without blocking the event loop
+                def _write_chunks(path: str, chunks: list[bytes]) -> None:
+                    with open(path, "wb") as f:
+                        for chunk in chunks:
+                            f.write(chunk)
 
-        logger.info("File downloaded and saved temporarily: %s", temp_audio_file_path)
-        validate_extension(temp_audio_file_path, ALLOWED_EXTENSIONS)
+                chunks: list[bytes] = []
+                async for chunk in response.aiter_bytes(chunk_size=8192):
+                    chunks.append(chunk)
+
+                await asyncio.to_thread(_write_chunks, temp_audio_file_path, chunks)
+
+    except httpx.TimeoutException as exc:
+        raise HTTPException(status_code=504, detail=f"Timed out downloading URL: {url}") from exc
+    except httpx.RequestError as exc:
+        raise HTTPException(status_code=502, detail=f"Failed to download URL: {url} — {exc}") from exc
+
+    logger.info("File downloaded and saved temporarily: %s", temp_audio_file_path)
+    validate_extension(temp_audio_file_path, ALLOWED_EXTENSIONS)
 
     params = {
         "whisper_model_params": model_params.model_dump(),
@@ -346,7 +366,7 @@ async def speech_to_text_url(
     from ..patients.mapping import reserve_patient_workflow, commit_patient_workflow, rollback_patient_workflow
 
     try:
-        reserve_patient_workflow(
+        await reserve_patient_workflow(
             patient_name=patient_name,
             patient_hash=patient_hash,
             workflow_id=workflow_id,
@@ -369,12 +389,12 @@ async def speech_to_text_url(
         logger.info("Workflow started: ID %s", handle.id)
 
         # Commit database record (mark as ACTIVE)
-        commit_patient_workflow(workflow_id)
+        await commit_patient_workflow(workflow_id)
 
     except Exception as workflow_error:
         # Workflow start failed - rollback database record
         logger.error(f"Workflow start failed for {workflow_id}: {workflow_error}")
-        rollback_patient_workflow(workflow_id)
+        await rollback_patient_workflow(workflow_id)
         raise HTTPException(status_code=500, detail=f"Failed to start workflow: {str(workflow_error)}")
 
     return Response(identifier=handle.id, message="Workflow started")

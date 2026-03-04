@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { proxyFormPost, getBackendUrl } from '../proxy';
+import { proxyFormPost, getBackendUrl } from '../client';
 
 export async function POST(request: NextRequest) {
     const formData = await request.formData();

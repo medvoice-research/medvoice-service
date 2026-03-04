@@ -9,7 +9,7 @@ from datetime import datetime, timedelta
 from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from jose import JWTError, jwt
-from passlib.context import CryptContext
+import bcrypt
 
 logger = logging.getLogger(__name__)
 
@@ -117,14 +117,13 @@ class HIPAAAccessControl:
 
     def __init__(self):
         """Initialize access control system."""
-        self.pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
         self.oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
         # Load JWT configuration
-        self.secret_key = os.environ.get("JWT_SECRET_KEY")
+        self.secret_key = os.environ.get("AUTH_SECRET")
         if not self.secret_key:
-            logger.warning("JWT_SECRET_KEY not set in environment")
-            self.secret_key = "default_change_in_production"
+            logger.error("AUTH_SECRET not set in environment. JWT verification will fail.")
+            raise ValueError("AUTH_SECRET environment variable is strictly required for operation.")
 
         self.algorithm = os.environ.get("JWT_ALGORITHM", "HS256")
         self.access_token_expire_minutes = int(os.environ.get("JWT_ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
@@ -323,7 +322,9 @@ class HIPAAAccessControl:
         Returns:
             Hashed password string
         """
-        return self.pwd_context.hash(password)
+        salt = bcrypt.gensalt()
+        hashed = bcrypt.hashpw(password.encode("utf-8"), salt)
+        return hashed.decode("utf-8")
 
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
         """
@@ -336,7 +337,10 @@ class HIPAAAccessControl:
         Returns:
             True if password matches, False otherwise
         """
-        return self.pwd_context.verify(plain_password, hashed_password)
+        try:
+            return bcrypt.checkpw(plain_password.encode("utf-8"), hashed_password.encode("utf-8"))
+        except ValueError:
+            return False
 
     def can_access_patient_record(
         self, user_role: HealthcareRole, user_id: str, patient_id: str, access_reason: str = "treatment"
