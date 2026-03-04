@@ -8,14 +8,16 @@ import time
 from contextlib import asynccontextmanager
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, status
+from fastapi import Depends, FastAPI, status
 from fastapi.responses import JSONResponse, RedirectResponse
 from scalar_fastapi import get_scalar_api_reference
 
 from .config import Config
 from .logger import logger
+from .auth.dependencies import get_current_user
 from .routers import medical, patient_workflows, stt, stt_services, temporal_tasks
 from .routers import admin
+from .routers.auth import auth_router
 from .temporal.manager import temporal_manager
 from .trace_middleware import TraceMiddleware
 
@@ -36,8 +38,14 @@ async def lifespan(app: FastAPI):
     from .patients.database import init_db
 
     fresh_start = Config.DB_FRESH_START
-    init_db(fresh_start=fresh_start)
+    await init_db(fresh_start=fresh_start)
     logger.info(f"Patient database initialized (fresh_start={fresh_start})")
+
+    # Initialize auth database (creates users table if needed)
+    from .auth.models import init_auth_db
+
+    await init_auth_db()
+    logger.info("Auth database initialized")
 
     # Connect to Temporal
     await temporal_manager.get_client()
@@ -212,12 +220,13 @@ This API uses Temporal.io for workflow orchestration, ensuring:
 app.add_middleware(TraceMiddleware)
 
 # Include routers
-app.include_router(stt.stt_router)
-app.include_router(stt_services.service_router)
-app.include_router(temporal_tasks.temporal_router)
-app.include_router(medical.router)
-app.include_router(patient_workflows.router)
-app.include_router(admin.router)  # Admin endpoints
+app.include_router(auth_router)
+app.include_router(stt.stt_router, dependencies=[Depends(get_current_user)])
+app.include_router(stt_services.service_router, dependencies=[Depends(get_current_user)])
+app.include_router(temporal_tasks.temporal_router, dependencies=[Depends(get_current_user)])
+app.include_router(medical.router, dependencies=[Depends(get_current_user)])
+app.include_router(patient_workflows.router, dependencies=[Depends(get_current_user)])
+app.include_router(admin.router, dependencies=[Depends(get_current_user)])  # Admin endpoints
 
 # Initialize SQLAdmin for database management
 from sqladmin import Admin

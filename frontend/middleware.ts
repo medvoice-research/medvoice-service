@@ -1,8 +1,12 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-import { signToken, verifyToken } from '@/lib/auth/session';
+import { jwtVerify } from 'jose';
 
 const protectedRoutes = '/dashboard';
+
+const jwtSecret = new TextEncoder().encode(
+  process.env.BACKEND_JWT_SECRET || process.env.AUTH_SECRET || ''
+);
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -13,34 +17,22 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(new URL('/sign-in', request.url));
   }
 
-  let res = NextResponse.next();
-
   if (sessionCookie && request.method === 'GET') {
     try {
-      const parsed = await verifyToken(sessionCookie.value);
-      const expiresInOneDay = new Date(Date.now() + 24 * 60 * 60 * 1000);
-
-      res.cookies.set({
-        name: 'session',
-        value: await signToken({
-          ...parsed,
-          expires: expiresInOneDay.toISOString()
-        }),
-        httpOnly: true,
-        secure: true,
-        sameSite: 'lax',
-        expires: expiresInOneDay
+      await jwtVerify(sessionCookie.value, jwtSecret, {
+        algorithms: ['HS256'],
       });
-    } catch (error) {
-      console.error('Error updating session:', error);
+    } catch {
+      const res = NextResponse.next();
       res.cookies.delete('session');
       if (isProtectedRoute) {
         return NextResponse.redirect(new URL('/sign-in', request.url));
       }
+      return res;
     }
   }
 
-  return res;
+  return NextResponse.next();
 }
 
 export const config = {

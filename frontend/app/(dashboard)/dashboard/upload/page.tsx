@@ -57,7 +57,10 @@ export default function UploadPage() {
             }
 
             const data = await res.json();
-            setResult(data);
+            setResult({
+                ...data,
+                workflow_id: data.identifier || data.workflow_id
+            });
         } catch (err) {
             setError((err as Error).message);
         } finally {

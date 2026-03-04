@@ -79,12 +79,20 @@ make dev
 
 ## Architecture
 
-```
-Client → FastAPI → Temporal → Activities (Transcribe → Align → Diarize)
-                    ↓
-                 Patient DB (SQLite)
-                    ↓
-              Medical LLM (LM Studio)
+```text
+ Next.js SaaS (Frontend)  <────>  PostgreSQL (Auth, Users, Teams)
+           │                                │
+           ▼                                ▼
+ FastAPI (REST Backend)   <────>  PostgreSQL (Auth Validation)
+           │
+           ▼
+ Temporal (Orchestration) ────> Activities (Transcribe → Align → Diarize)
+           │
+           ▼
+  Patient DB (SQLite) & Vector Storage (FAISS)
+           │
+           ▼
+  Medical LLM (LM Studio)
 ```
 
 ## API Endpoints

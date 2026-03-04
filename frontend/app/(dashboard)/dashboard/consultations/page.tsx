@@ -1,6 +1,7 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -32,21 +33,25 @@ const statusStyles: Record<string, { icon: React.ElementType; color: string; bg:
     TIMED_OUT: { icon: Clock, color: 'text-amber-600', bg: 'bg-amber-50' },
 };
 
-export default function ConsultationsPage() {
-    const [searchId, setSearchId] = useState('');
+function ConsultationsClient() {
+    const searchParams = useSearchParams();
+    const initialWf = searchParams.get('wf') ?? '';
+
+    const [searchId, setSearchId] = useState(initialWf);
     const [workflows, setWorkflows] = useState<Workflow[]>([]);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
     const [expandedId, setExpandedId] = useState<string | null>(null);
     const [workflowResults, setWorkflowResults] = useState<Record<string, unknown>>({});
 
-    const searchWorkflow = useCallback(async () => {
-        if (!searchId.trim()) return;
+    const searchWorkflow = useCallback(async (id?: string) => {
+        const query = (id ?? searchId).trim();
+        if (!query) return;
         setLoading(true);
         setError(null);
 
         try {
-            const res = await fetch(`/api/medvoice/workflows/${searchId.trim()}/status`);
+            const res = await fetch(`/api/medvoice/workflows/${query}/status`);
             if (!res.ok) {
                 if (res.status === 404) {
                     setError('Workflow not found');
@@ -63,6 +68,15 @@ export default function ConsultationsPage() {
             setLoading(false);
         }
     }, [searchId]);
+
+    // Auto-search when navigated with ?wf= query parameter
+    useEffect(() => {
+        if (initialWf) {
+            searchWorkflow(initialWf);
+        }
+        // Only run on initial mount
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const fetchResult = async (workflowId: string) => {
         if (workflowResults[workflowId]) {
@@ -112,7 +126,7 @@ export default function ConsultationsPage() {
                                 className="pl-10"
                             />
                         </div>
-                        <Button onClick={searchWorkflow} disabled={loading} aria-label="Search workflow">
+                        <Button onClick={() => searchWorkflow()} disabled={loading} aria-label="Search workflow">
                             {loading ? (
                                 <Loader2 className="w-4 h-4 animate-spin" />
                             ) : (
@@ -216,5 +230,17 @@ export default function ConsultationsPage() {
                 )}
             </div>
         </div>
+    );
+}
+
+export default function ConsultationsPage() {
+    return (
+        <Suspense fallback={
+            <div className="p-4 sm:p-6 lg:p-8 flex items-center justify-center py-12">
+                <Loader2 className="w-6 h-6 animate-spin text-muted-foreground" />
+            </div>
+        }>
+            <ConsultationsClient />
+        </Suspense>
     );
 }
