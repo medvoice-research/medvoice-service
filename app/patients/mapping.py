@@ -16,7 +16,12 @@ from .database import (
 
 
 async def store_patient_workflow(
-    patient_name: str, patient_hash: str, workflow_id: str, file_path: str, department: Optional[str] = None
+    patient_name: str,
+    patient_hash: str,
+    workflow_id: str,
+    file_path: str,
+    department: Optional[str] = None,
+    created_by: Optional[str] = None,
 ):
     """
     Store patient-workflow mapping.
@@ -27,6 +32,7 @@ async def store_patient_workflow(
         workflow_id: Temporal workflow ID
         file_path: Path to audio file
         department: Optional department name
+        created_by: User ID of the authenticated user who created this record
     """
     created_at = datetime.now(Config.TIMEZONE).isoformat()
     await store_patient_workflow_db(
@@ -36,63 +42,75 @@ async def store_patient_workflow(
         file_path=file_path,
         department=department,
         created_at=created_at,
+        created_by=created_by,
     )
 
 
-async def get_patient_by_workflow(workflow_id: str) -> Optional[dict]:
+async def get_patient_by_workflow(workflow_id: str, user_id: Optional[str] = None) -> Optional[dict]:
     """
     Get patient info by workflow ID.
 
     Args:
         workflow_id: Workflow ID
+        user_id: If provided, scope results to this user (or legacy data)
 
     Returns:
         Patient mapping or None
     """
-    return await get_patient_by_workflow_db(workflow_id)
+    return await get_patient_by_workflow_db(workflow_id, user_id=user_id)
 
 
-async def get_workflows_by_patient_hash(patient_hash: str) -> list:
+async def get_workflows_by_patient_hash(patient_hash: str, user_id: Optional[str] = None) -> list:
     """
     Get all workflows for a patient by hash.
 
     Args:
         patient_hash: 8-char patient hash
+        user_id: If provided, scope results to this user (or legacy data)
 
     Returns:
         List of workflow mappings
     """
-    return await get_workflows_by_patient_hash_db(patient_hash)
+    return await get_workflows_by_patient_hash_db(patient_hash, user_id=user_id)
 
 
-async def get_patient_name_by_hash(patient_hash: str) -> Optional[str]:
+async def get_patient_name_by_hash(patient_hash: str, user_id: Optional[str] = None) -> Optional[str]:
     """
     Get patient name by hash (admin lookup).
 
     Args:
         patient_hash: 8-char patient hash
+        user_id: If provided, scope results to this user (or legacy data)
 
     Returns:
         Plain text patient name or None
     """
-    return await get_patient_name_by_hash_db(patient_hash)
+    return await get_patient_name_by_hash_db(patient_hash, user_id=user_id)
 
 
-async def get_all_patients() -> list:
+async def get_all_patients(user_id: Optional[str] = None) -> list:
     """
     Get all patients with workflow counts.
+
+    Args:
+        user_id: If provided, scope results to this user (or legacy data)
 
     Returns:
         List of patient summaries
     """
-    return await get_all_patients_db()
+    return await get_all_patients_db(user_id=user_id)
 
 
 # Two-Phase Commit Functions
 
 
 async def reserve_patient_workflow(
-    patient_name: str, patient_hash: str, workflow_id: str, file_path: str, department: Optional[str] = None
+    patient_name: str,
+    patient_hash: str,
+    workflow_id: str,
+    file_path: str,
+    department: Optional[str] = None,
+    created_by: Optional[str] = None,
 ):
     """
     Reserve a patient-workflow mapping with 'pending' status.
@@ -105,6 +123,7 @@ async def reserve_patient_workflow(
         workflow_id: Temporal workflow ID
         file_path: Path to audio file
         department: Optional department name
+        created_by: User ID of the authenticated user who created this record
     """
     created_at = datetime.now(Config.TIMEZONE).isoformat()
     await reserve_workflow_mapping_db(
@@ -114,6 +133,7 @@ async def reserve_patient_workflow(
         file_path=file_path,
         department=department,
         created_at=created_at,
+        created_by=created_by,
     )
 
 

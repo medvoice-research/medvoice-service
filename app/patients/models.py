@@ -38,6 +38,7 @@ class PatientWorkflowMapping(Base):
     status = Column(
         Text, nullable=False, default="pending", comment="Workflow status: pending, active, completed, failed"
     )
+    created_by = Column(Text, nullable=True, comment="User ID of the authenticated user who created this record")
 
     def __repr__(self):
         return f"<PatientWorkflow(hash={self.patient_hash}, workflow={self.workflow_id[:20]}...)>"
