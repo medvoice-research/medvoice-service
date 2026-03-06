@@ -311,4 +311,20 @@ class STTToMedicalWorkflow:
                 summary["outputs"]["vector_id"] = results["vector_storage"].get("vector_id")
 
         summary["total_stages"] = len(summary["stages_completed"])
+
+        # Detect errors in medical processing stages
+        error_stages = []
+        medical_stage_keys = ["phi_detection", "entity_extraction", "soap_generation", "vector_storage"]
+        for stage_key in medical_stage_keys:
+            if stage_key in results:
+                stage_result = results[stage_key]
+                if isinstance(stage_result, dict) and stage_result.get("error"):
+                    error_stages.append(stage_key)
+
+        if error_stages:
+            summary["status"] = "completed_with_errors"
+            summary["errors"] = error_stages
+        else:
+            summary["status"] = "completed"
+
         return summary

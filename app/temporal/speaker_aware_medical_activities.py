@@ -125,12 +125,12 @@ async def detect_phi_in_dialogue_activity(dialogue_data: Dict[str, Any]) -> Dict
 
         except Exception as e:
             logging.error(f"PHI detection in dialogue failed: {e}")
-            # Classify as non-retryable for invalid input data
-            is_retryable = not isinstance(e, (ValueError, TypeError))
-            raise TemporalErrorHandler.create_application_error(
-                e,
-                retryable=is_retryable,
-            )
+            return {
+                "error": str(e),
+                "phi_detected": False,
+                "entities": [],
+                "processed_at": datetime.now(Config.TIMEZONE).isoformat(),
+            }
 
 
 @activity.defn
@@ -199,13 +199,17 @@ async def extract_entities_with_speaker_activity(dialogue_data: Dict[str, Any]) 
 
         except Exception as e:
             logging.error(f"Entity extraction with speaker failed: {e}")
-            # Classify as non-retryable for invalid input data
-            is_retryable = not isinstance(e, (ValueError, TypeError))
-            raise TemporalErrorHandler.create_application_error(
-                e,
-                "Entity Extraction (Speaker)",
-                retryable=is_retryable,
-            )
+            return {
+                "error": str(e),
+                "entities": [],
+                "entity_count": 0,
+                "speaker_breakdown": {
+                    "doctor": 0,
+                    "patient": 0,
+                    "unknown": 0,
+                },
+                "processed_at": datetime.now(Config.TIMEZONE).isoformat(),
+            }
 
 
 @activity.defn
@@ -273,13 +277,23 @@ async def generate_soap_from_dialogue_activity(dialogue_data: Dict[str, Any]) ->
 
         except Exception as e:
             logging.error(f"SOAP generation from dialogue failed: {e}")
-            # Classify as non-retryable for invalid input data
-            is_retryable = not isinstance(e, (ValueError, TypeError))
-            raise TemporalErrorHandler.create_application_error(
-                e,
-                "SOAP Generation (Dialogue)",
-                retryable=is_retryable,
-            )
+            return {
+                "error": str(e),
+                "soap_note": {
+                    "subjective": "",
+                    "objective": "",
+                    "assessment": "",
+                    "plan": "",
+                    "error": str(e),
+                },
+                "section_lengths": {
+                    "subjective": 0,
+                    "objective": 0,
+                    "assessment": 0,
+                    "plan": 0,
+                },
+                "processed_at": datetime.now(Config.TIMEZONE).isoformat(),
+            }
 
 
 @activity.defn

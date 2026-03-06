@@ -93,6 +93,7 @@ class Config:
     AUDIO_EXTENSIONS = {
         ".mp3",
         ".wav",
+        ".webm",
         ".awb",
         ".aac",
         ".ogg",
