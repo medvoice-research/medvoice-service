@@ -206,26 +206,21 @@ Return results as JSON with this exact format:
 
 Be precise with character positions. Set confidence based on certainty."""
 
-        try:
-            # Format dialogue for LLM
-            formatted_dialogue = self._format_dialogue_for_prompt(dialogue_data)
+        # Format dialogue for LLM
+        formatted_dialogue = self._format_dialogue_for_prompt(dialogue_data)
 
-            messages = [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": f"Detect PHI in this medical dialogue:\n\n{formatted_dialogue}"},
-            ]
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": f"Detect PHI in this medical dialogue:\n\n{formatted_dialogue}"},
+        ]
 
-            response = await self.client.chat_completion(
-                messages=messages,
-                temperature=0.0,  # Deterministic for PHI detection
-                max_tokens=2048,
-            )
+        response = await self.client.chat_completion(
+            messages=messages,
+            temperature=0.0,  # Deterministic for PHI detection
+            max_tokens=2048,
+        )
 
-            return self._parse_phi_response(response)
-
-        except Exception as e:
-            logger.error(f"PHI detection in dialogue failed: {e}")
-            return {"phi_detected": False, "entities": [], "error": str(e)}
+        return self._parse_phi_response(response)
 
     async def extract_entities_with_speaker(self, dialogue_data: Dict[str, Any]) -> List[Dict[str, Any]]:
         """
@@ -269,21 +264,16 @@ Return JSON format:
 
 Use standard medical terminology and coding systems."""
 
-        try:
-            # Format dialogue for LLM
-            formatted_dialogue = self._format_dialogue_for_prompt(dialogue_data)
+        # Format dialogue for LLM
+        formatted_dialogue = self._format_dialogue_for_prompt(dialogue_data)
 
-            messages = [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": f"Extract medical entities:\n\n{formatted_dialogue}"},
-            ]
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": f"Extract medical entities:\n\n{formatted_dialogue}"},
+        ]
 
-            response = await self.client.chat_completion(messages=messages)
-            return self._parse_entities_response(response)
-
-        except Exception as e:
-            logger.error(f"Medical entity extraction from dialogue failed: {e}")
-            return []
+        response = await self.client.chat_completion(messages=messages)
+        return self._parse_entities_response(response)
 
     async def generate_soap_from_dialogue(self, dialogue_data: Dict[str, Any]) -> Dict[str, str]:
         """
@@ -317,36 +307,31 @@ Guidelines:
 - Maintain chronological flow in each section
 - Use proper medical abbreviations judiciously"""
 
-        try:
-            # Format dialogue for LLM
-            formatted_dialogue = self._format_dialogue_for_prompt(dialogue_data)
+        # Format dialogue for LLM
+        formatted_dialogue = self._format_dialogue_for_prompt(dialogue_data)
 
-            # Get speaker summary for context
-            speaker_mapping = dialogue_data.get("speaker_mapping", {})
+        # Get speaker summary for context
+        speaker_mapping = dialogue_data.get("speaker_mapping", {})
 
-            context = f"""Speaker-Attributed Medical Dialogue:
+        context = f"""Speaker-Attributed Medical Dialogue:
 
 {formatted_dialogue}
 
 Speaker Summary:
 """
-            for speaker_id, info in speaker_mapping.items():
-                role = info.get("role", "unknown")
-                confidence = info.get("confidence", 0)
-                context += f"- {speaker_id}: {role.title()} (confidence: {confidence:.2f})\n"
+        for speaker_id, info in speaker_mapping.items():
+            role = info.get("role", "unknown")
+            confidence = info.get("confidence", 0)
+            context += f"- {speaker_id}: {role.title()} (confidence: {confidence:.2f})\n"
 
-            messages = [
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": f"Generate SOAP note:\n\n{context}"},
-            ]
+        messages = [
+            {"role": "system", "content": system_prompt},
+            {"role": "user", "content": f"Generate SOAP note:\n\n{context}"},
+        ]
 
-            response = await self.client.chat_completion(messages=messages, max_tokens=3072)
+        response = await self.client.chat_completion(messages=messages, max_tokens=3072)
 
-            return self._parse_soap_response(response)
-
-        except Exception as e:
-            logger.error(f"SOAP note generation from dialogue failed: {e}")
-            return {"subjective": "", "objective": "", "assessment": "", "plan": "", "error": str(e)}
+        return self._parse_soap_response(response)
 
     async def process_speaker_dialogue(self, dialogue_data: Dict[str, Any]) -> Dict[str, Any]:
         """

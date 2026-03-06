@@ -76,6 +76,110 @@ export interface WorkflowResult {
 }
 
 // ============================================================
+// Backend Workflow Result (actual Temporal result shape)
+// ============================================================
+
+export interface DialogueEntry {
+    speaker_role: string;
+    text: string;
+    start?: number;
+    end?: number;
+}
+
+export interface SpeakerMappingEntry {
+    role: string;
+    confidence: number;
+}
+
+export interface DialogueTransformation {
+    full_transcript_markdown?: string;
+    full_transcript?: string;
+    dialogue?: DialogueEntry[];
+    speaker_mapping?: Record<string, SpeakerMappingEntry | string>;
+}
+
+export interface PHIEntity {
+    type: string;
+    text: string;
+    confidence: number;
+}
+
+export interface PHIDetection {
+    phi_detected: boolean;
+    entities?: PHIEntity[];
+}
+
+export interface MedicalEntityItem {
+    type: string;
+    text: string;
+    normalized?: string;
+    speaker_role?: string;
+    confidence?: number;
+    details?: string;
+}
+
+export interface EntityExtraction {
+    entities?: MedicalEntityItem[];
+    entity_count?: number;
+    entities_by_speaker?: Record<string, Record<string, string[]>>;
+}
+
+export interface SOAPNoteContent {
+    subjective?: string;
+    objective?: string;
+    assessment?: string;
+    plan?: string;
+}
+
+export interface SOAPGeneration {
+    soap_note?: SOAPNoteContent;
+    subjective?: string;
+    objective?: string;
+    assessment?: string;
+    plan?: string;
+}
+
+export interface VectorStorageMetadata {
+    entity_count?: number;
+    has_soap_note?: boolean;
+    has_phi?: boolean;
+}
+
+export interface VectorStorage {
+    vector_id?: string;
+    consultation_id?: string;
+    stored_at?: string;
+    metadata?: VectorStorageMetadata;
+    success?: boolean;
+    document_id?: string;
+    error?: string;
+}
+
+export interface WhisperXSegment {
+    text: string;
+    start?: number;
+    end?: number;
+    speaker?: string;
+}
+
+export interface WhisperXFinal {
+    segments?: WhisperXSegment[];
+}
+
+export interface BackendWorkflowResult {
+    workflow_type?: string;
+    audio_path?: string;
+    started_at?: string;
+    dialogue_transformation?: DialogueTransformation;
+    phi_detection?: PHIDetection;
+    entity_extraction?: EntityExtraction;
+    soap_generation?: SOAPGeneration;
+    vector_storage?: VectorStorage;
+    whisperx_final?: WhisperXFinal;
+    [key: string]: unknown;
+}
+
+// ============================================================
 // Patient Records
 // ============================================================
 

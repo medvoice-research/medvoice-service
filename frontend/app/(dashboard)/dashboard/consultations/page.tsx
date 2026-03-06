@@ -2,9 +2,10 @@
 
 import { useState, useCallback, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import {
     Search,
     RefreshCw,
@@ -16,6 +17,8 @@ import {
     ChevronUp,
     FileText,
 } from 'lucide-react';
+import { TranscriptionSection, MedicalResultsSection, RawDataSection } from './result-sections';
+import type { BackendWorkflowResult } from '@/lib/medvoice/types';
 
 interface Workflow {
     workflow_id: string;
@@ -207,13 +210,36 @@ function ConsultationsClient() {
                                 </div>
 
                                 {/* Expanded Result */}
-                                {isExpanded && result && (
-                                    <div className="mt-4 border-t pt-4">
-                                        <pre className="text-xs bg-muted p-4 rounded-lg overflow-x-auto max-h-96">
-                                            {JSON.stringify(result, null, 2)}
-                                        </pre>
-                                    </div>
-                                )}
+                                {isExpanded && result && (() => {
+                                    const r = result as BackendWorkflowResult;
+                                    const hasMedical =
+                                        (r.workflow_type && r.workflow_type.toLowerCase().includes('medical')) ||
+                                        !!r.dialogue_transformation;
+                                    return (
+                                        <div className="mt-4 border-t pt-4">
+                                            <Tabs defaultValue="transcription">
+                                                <TabsList>
+                                                    <TabsTrigger value="transcription">📄 Transcription</TabsTrigger>
+                                                    {hasMedical && (
+                                                        <TabsTrigger value="medical">🏥 Medical Results</TabsTrigger>
+                                                    )}
+                                                    <TabsTrigger value="raw">📊 Raw Data</TabsTrigger>
+                                                </TabsList>
+                                                <TabsContent value="transcription" className="mt-3">
+                                                    <TranscriptionSection result={r} />
+                                                </TabsContent>
+                                                {hasMedical && (
+                                                    <TabsContent value="medical" className="mt-3">
+                                                        <MedicalResultsSection result={r} />
+                                                    </TabsContent>
+                                                )}
+                                                <TabsContent value="raw" className="mt-3">
+                                                    <RawDataSection result={r} workflowId={wf.workflow_id} />
+                                                </TabsContent>
+                                            </Tabs>
+                                        </div>
+                                    );
+                                })()}
                             </CardContent>
                         </Card>
                     );
