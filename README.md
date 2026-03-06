@@ -76,6 +76,7 @@ make dev
 | FastAPI | http://localhost:8000 | REST API with Scalar/Swagger docs |
 | Web UI | http://localhost:8501 | Web interface for audio processing |
 | Temporal UI | http://localhost:8233 | Workflow monitoring dashboard |
+| Pgweb | http://localhost:8081 | PostgreSQL web dashboard |
 
 ## Architecture
 
@@ -193,6 +194,7 @@ cp .env.example .env
 ## Documentation
 
 - [Docker Guide](docs/DOCKER.md)
+- [Pgweb Setup](docs/DOCKER.md#pgweb--postgresql-dashboard)
 - [Temporal Retry Policies](docs/TEMPORAL_RETRY_POLICIES.md)
 - [Architecture Decisions](docs/adr/)
 

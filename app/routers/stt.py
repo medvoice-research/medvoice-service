@@ -10,7 +10,7 @@ import os
 import uuid
 
 import httpx
-from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
+from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile
 
 from ..compatibility import log_compatibility_warnings
 from ..files import ALLOWED_EXTENSIONS, save_temporary_file, validate_extension
@@ -106,6 +106,7 @@ async def speech_to_text(
         None,
         description="Date of encounter in ISO format (optional, defaults to today)",
     ),
+    request: Request = None,
 ) -> Response:
     """
     Process an uploaded audio file for speech-to-text conversion.
@@ -170,12 +171,18 @@ async def speech_to_text(
     from ..patients.mapping import reserve_patient_workflow, commit_patient_workflow, rollback_patient_workflow
 
     try:
+        # Extract user_id from request state (set by AuthMiddleware)
+        created_by = None
+        if request and hasattr(request.state, "current_user") and request.state.current_user:
+            created_by = request.state.current_user.get("user_id")
+
         await reserve_patient_workflow(
             patient_name=patient_name,
             patient_hash=patient_hash,
             workflow_id=workflow_id,
             file_path=temp_file,
             department=None,  # TODO: Add department parameter
+            created_by=created_by,
         )
     except Exception as db_error:
         # Database reservation failed - fail fast, no workflow to clean up yet
@@ -276,6 +283,7 @@ async def speech_to_text_url(
         pattern=r".*\S.*",
         description="Patient full name for HIPAA-compliant identification (required for workflow tracking)",
     ),
+    request: Request = None,
 ) -> Response:
     """
     Process an audio file from a URL for speech-to-text conversion.
@@ -366,12 +374,18 @@ async def speech_to_text_url(
     from ..patients.mapping import reserve_patient_workflow, commit_patient_workflow, rollback_patient_workflow
 
     try:
+        # Extract user_id from request state (set by AuthMiddleware)
+        created_by = None
+        if request and hasattr(request.state, "current_user") and request.state.current_user:
+            created_by = request.state.current_user.get("user_id")
+
         await reserve_patient_workflow(
             patient_name=patient_name,
             patient_hash=patient_hash,
             workflow_id=workflow_id,
             file_path=temp_audio_file_path,
             department=None,
+            created_by=created_by,
         )
     except Exception as db_error:
         # Database reservation failed - fail fast, no workflow to clean up yet
