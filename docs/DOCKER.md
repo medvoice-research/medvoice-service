@@ -79,6 +79,42 @@ The Docker Compose setup includes these main services:
 - **Port**: `8501`
 - **Access**: `http://localhost:8501`
 
+### 5. `pgweb` – PostgreSQL Dashboard
+
+- **Purpose**: Lightweight web UI for browsing and querying the PostgreSQL database
+- **Port**: `8081` (configurable via `PGWEB_PORT`)
+- **Access**: `http://localhost:8081`
+
+> **Note:** pgweb runs as a standalone compose file and requires the main stack to be running first so the `whisperx-network` exists.
+
+#### Start / Stop
+
+```bash
+# Start pgweb (main stack must already be running)
+make pgweb
+
+# Stop pgweb
+make pgweb-down
+```
+
+Or without Make:
+
+```bash
+docker compose -f docker-compose.pgweb.yaml up -d
+docker compose -f docker-compose.pgweb.yaml down
+```
+
+#### Custom Port
+
+Set `PGWEB_PORT` in your `.env` file to change the default port:
+
+```bash
+# .env
+PGWEB_PORT=9090
+```
+
+Then access pgweb at `http://localhost:9090`.
+
 ## Persistent Storage
 
 The setup includes persistent volumes for:
