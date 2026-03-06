@@ -1,5 +1,5 @@
 import { NextRequest } from 'next/server';
-import { proxyGet } from '../../../proxy';
+import { proxyGet } from '../../../client';
 
 /** GET /api/medvoice/patients/[hash]/workflows — get patient's workflows */
 export async function GET(

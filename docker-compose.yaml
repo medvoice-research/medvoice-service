@@ -42,6 +42,26 @@ services:
       timeout: 5s
       retries: 5
 
+  # Main Application Database (Next.js / FastAPI)
+  app-postgres:
+    image: postgres:16.4-alpine
+    container_name: next_saas_starter_postgres
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "54322:5432"
+    volumes:
+      - app-postgres-data:/var/lib/postgresql/data
+    networks:
+      - whisperx-network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
   # Temporal Web UI
   temporal-ui:
     image: temporalio/ui:latest
@@ -68,6 +88,8 @@ services:
     ports:
       - "8000:8000"
     environment:
+      - POSTGRES_URL=postgresql://postgres:postgres@app-postgres:5432/postgres
+      - AUTH_SECRET=${AUTH_SECRET:-}
       - HF_TOKEN=${HF_TOKEN:-}
       - ENVIRONMENT=${ENVIRONMENT:-production}
       - LOG_LEVEL=${LOG_LEVEL:-INFO}
@@ -116,6 +138,8 @@ services:
         - INSTALL_GPU=false
     stop_grace_period: 30s
     environment:
+      - POSTGRES_URL=postgresql://postgres:postgres@app-postgres:5432/postgres
+      - AUTH_SECRET=${AUTH_SECRET:-}
       - HF_TOKEN=${HF_TOKEN:-}
       - ENVIRONMENT=${ENVIRONMENT:-production}
       - LOG_LEVEL=${LOG_LEVEL:-INFO}
@@ -171,12 +195,33 @@ services:
       retries: 3
       start_period: 30s
 
+  # Next.js SaaS Frontend
+  next-saas:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.nextjs
+    ports:
+      - "3000:3000"
+    environment:
+      - POSTGRES_URL=postgresql://postgres:postgres@app-postgres:5432/postgres
+      - AUTH_SECRET=${AUTH_SECRET:-}
+      - BACKEND_URL=http://whisperx-api:8000
+    depends_on:
+      app-postgres:
+        condition: service_healthy
+      whisperx-api:
+        condition: service_healthy
+    networks:
+      - whisperx-network
+    restart: unless-stopped
+
 networks:
   whisperx-network:
     driver: bridge
 
 volumes:
   postgres-data:
+  app-postgres-data:
   whisperx-huggingface-cache:
   whisperx-torch-cache:
   whisperx-uploads:

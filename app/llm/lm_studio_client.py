@@ -98,7 +98,10 @@ class LMStudioClient:
                 return first_choice["message"]["content"]
 
             except httpx.HTTPStatusError as e:
-                logger.warning(f"HTTP error on attempt {attempt + 1}: {e}")
+                if e.response.status_code < 500:
+                    logger.error(f"Client error (not retryable): {e}")
+                    raise
+                logger.warning(f"Server error on attempt {attempt + 1}: {e}")
                 if attempt == self.config.max_retries - 1:
                     raise
                 await asyncio.sleep(2**attempt)

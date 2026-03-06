@@ -16,8 +16,8 @@ import {
 interface Patient {
     patient_hash: string;
     patient_name: string;
-    total_workflows: number;
-    workflows: { workflow_id: string; created_at: string }[];
+    workflow_count: number;
+    workflows?: { workflow_id: string; created_at: string }[];
 }
 
 export default function PatientsPage() {
@@ -27,6 +27,7 @@ export default function PatientsPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [selected, setSelected] = useState<Patient | null>(null);
+    const [detailLoading, setDetailLoading] = useState(false);
 
     const fetchPatients = async () => {
         setLoading(true);
@@ -41,6 +42,22 @@ export default function PatientsPage() {
             setError((err as Error).message);
         } finally {
             setLoading(false);
+        }
+    };
+
+    const handleSelectPatient = async (patient: Patient) => {
+        setSelected(patient);
+        setDetailLoading(true);
+        try {
+            const res = await fetch(`/api/medvoice/patients/${patient.patient_hash}`);
+            if (res.ok) {
+                const data = await res.json();
+                setSelected((prev) => prev ? { ...prev, workflows: data.workflows ?? [] } : prev);
+            }
+        } catch {
+            // Silently fall back to empty workflows
+        } finally {
+            setDetailLoading(false);
         }
     };
 
@@ -108,7 +125,7 @@ export default function PatientsPage() {
                         filtered.map((patient) => (
                             <button
                                 key={patient.patient_hash}
-                                onClick={() => setSelected(patient)}
+                                onClick={() => handleSelectPatient(patient)}
                                 className={`w-full text-left p-4 rounded-lg border transition-colors cursor-pointer ${selected?.patient_hash === patient.patient_hash
                                     ? 'border-primary bg-accent'
                                     : 'border-border hover:bg-accent/50'
@@ -125,7 +142,7 @@ export default function PatientsPage() {
                                     </div>
                                     <div className="flex items-center gap-2 shrink-0">
                                         <span className="text-xs text-muted-foreground">
-                                            {patient.total_workflows} workflow{patient.total_workflows !== 1 ? 's' : ''}
+                                            {patient.workflow_count} workflow{patient.workflow_count !== 1 ? 's' : ''}
                                         </span>
                                         <ChevronRight className="w-4 h-4 text-muted-foreground" />
                                     </div>
@@ -160,15 +177,19 @@ export default function PatientsPage() {
                             <CardContent>
                                 <h3 className="text-sm font-medium mb-3 flex items-center gap-2">
                                     <Activity className="w-4 h-4" />
-                                    Consultation History ({selected.total_workflows})
+                                    Consultation History ({selected.workflow_count})
                                 </h3>
                                 <div className="space-y-2 max-h-96 overflow-y-auto">
-                                    {selected.workflows.length === 0 ? (
+                                    {detailLoading ? (
+                                        <div className="flex items-center justify-center py-4">
+                                            <Loader2 className="w-4 h-4 animate-spin text-muted-foreground" />
+                                        </div>
+                                    ) : (selected.workflows ?? []).length === 0 ? (
                                         <p className="text-sm text-muted-foreground py-4 text-center">
                                             No consultations yet
                                         </p>
                                     ) : (
-                                        selected.workflows.map((wf) => (
+                                        (selected.workflows ?? []).map((wf) => (
                                             <a
                                                 key={wf.workflow_id}
                                                 href={`/dashboard/consultations?wf=${wf.workflow_id}`}

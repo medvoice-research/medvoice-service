@@ -43,13 +43,13 @@ async def get_patient_info_by_hash(patient_hash: str):
         Patient name and all associated workflows
     """
     # Get patient name from DB (plain text)
-    patient_name = get_patient_name_by_hash(patient_hash)
+    patient_name = await get_patient_name_by_hash(patient_hash)
 
     if not patient_name:
         raise HTTPException(status_code=404, detail=f"No patient found with hash: {patient_hash}")
 
     # Get all workflows for this patient
-    workflows = get_workflows_by_patient_hash(patient_hash)
+    workflows = await get_workflows_by_patient_hash(patient_hash)
 
     logger.info(f"Admin lookup: patient hash {patient_hash} → {len(workflows)} workflows")
 
@@ -77,7 +77,7 @@ async def get_patient_by_workflow_id(workflow_id: str):
     Returns:
         Patient information for the workflow
     """
-    mapping = get_patient_by_workflow(workflow_id)
+    mapping = await get_patient_by_workflow(workflow_id)
 
     if not mapping:
         raise HTTPException(status_code=404, detail=f"No patient mapping found for workflow: {workflow_id}")
@@ -97,7 +97,7 @@ async def list_all_patients():
     """
     from ..patients.mapping import get_all_patients
 
-    patients = get_all_patients()
+    patients = await get_all_patients()
 
     return {"total_patients": len(patients), "patients": patients}
 
@@ -107,24 +107,21 @@ async def get_database_stats():
     """Get real-time database statistics for monitoring."""
     from ..patients.database import get_db_connection
 
-    with get_db_connection() as conn:
-        cursor = conn.cursor()
+    async with get_db_connection() as conn:
+        cursor = await conn.execute("SELECT COUNT(*) FROM patient_workflow_mappings")
+        row = await cursor.fetchone()
+        total_mappings = row[0] if row else 0
 
-        # Total mappings
-        cursor.execute("SELECT COUNT(*) FROM patient_workflow_mappings")
-        total_mappings = cursor.fetchone()[0]
+        cursor = await conn.execute("SELECT COUNT(DISTINCT patient_hash) FROM patient_workflow_mappings")
+        row = await cursor.fetchone()
+        unique_patients = row[0] if row else 0
 
-        # Unique patients
-        cursor.execute("SELECT COUNT(DISTINCT patient_hash) FROM patient_workflow_mappings")
-        unique_patients = cursor.fetchone()[0]
-
-        # Recent entries
-        cursor.execute("""
+        cursor = await conn.execute("""
             SELECT patient_name, patient_hash, workflow_id, created_at
             FROM patient_workflow_mappings
             ORDER BY created_at DESC
             LIMIT 5
         """)
-        recent = [dict(row) for row in cursor.fetchall()]
+        recent = [dict(r) for r in await cursor.fetchall()]
 
     return {"total_mappings": total_mappings, "unique_patients": unique_patients, "recent_entries": recent}

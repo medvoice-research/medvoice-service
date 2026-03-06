@@ -9,14 +9,11 @@ import {
   teams,
   teamMembers,
   activityLogs,
-  type NewUser,
-  type NewTeam,
-  type NewTeamMember,
   type NewActivityLog,
   ActivityType,
   invitations
 } from '@/lib/db/schema';
-import { comparePasswords, hashPassword, setSession } from '@/lib/auth/session';
+import { setFastAPISession, hashPassword, comparePasswords } from '@/lib/auth/session';
 import { redirect } from 'next/navigation';
 import { cookies } from 'next/headers';
 import { getUser, getUserWithTeam } from '@/lib/db/queries';
@@ -48,170 +45,97 @@ const signInSchema = z.object({
   password: z.string().min(8).max(100)
 });
 
-export const signIn = validatedAction(signInSchema, async (data, formData) => {
+export const signIn = validatedAction(signInSchema, async (data: z.infer<typeof signInSchema>, formData: FormData) => {
   const { email, password } = data;
 
-  const userWithTeam = await db
-    .select({
-      user: users,
-      team: teams
-    })
-    .from(users)
-    .leftJoin(teamMembers, eq(users.id, teamMembers.userId))
-    .leftJoin(teams, eq(teamMembers.teamId, teams.id))
-    .where(eq(users.email, email))
-    .limit(1);
-
-  if (userWithTeam.length === 0) {
-    return {
-      error: 'Invalid email or password. Please try again.',
-      email,
-      password
-    };
+  const backendUrl = process.env.BACKEND_URL ?? 'http://localhost:8000';
+  let res: Response;
+  try {
+    res = await fetch(`${backendUrl}/auth/login`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+  } catch {
+    return { error: 'Unable to reach authentication service. Please try again.', email, password };
   }
 
-  const { user: foundUser, team: foundTeam } = userWithTeam[0];
-
-  const isPasswordValid = await comparePasswords(
-    password,
-    foundUser.passwordHash
-  );
-
-  if (!isPasswordValid) {
-    return {
-      error: 'Invalid email or password. Please try again.',
-      email,
-      password
-    };
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    let message: string;
+    if (typeof body?.detail === 'string') {
+      message = body.detail;
+    } else if (Array.isArray(body?.detail)) {
+      message = body.detail
+        .map((e: { loc?: string[]; msg?: string }) =>
+          `${e.loc?.slice(-1)?.[0] ?? ''}: ${e.msg ?? ''}`.trim()
+        )
+        .join('; ');
+    } else {
+      message = 'Invalid email or password. Please try again.';
+    }
+    return { error: message, email, password };
   }
 
-  await Promise.all([
-    setSession(foundUser),
-    logActivity(foundTeam?.id, foundUser.id, ActivityType.SIGN_IN)
-  ]);
+  const body = await res.json() as { access_token: string; exp: number };
+  await setFastAPISession(body.access_token, body.exp);
 
-  redirect('/dashboard');
+  const redirectTo = formData.get('redirect') as string;
+  redirect(redirectTo || '/dashboard');
 });
 
 const signUpSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8),
-  inviteId: z.string().optional()
+  email: z.string().email().min(3).max(255),
+  password: z.string().min(8).max(100),
+  full_name: z.string().min(1).max(100),
+  role: z.enum(['physician', 'nurse', 'administrator'])
 });
 
-export const signUp = validatedAction(signUpSchema, async (data, formData) => {
-  const { email, password, inviteId } = data;
+export const signUp = validatedAction(signUpSchema, async (data: z.infer<typeof signUpSchema>, formData: FormData) => {
+  const { email, password, full_name, role } = data;
 
-  const existingUser = await db
-    .select()
-    .from(users)
-    .where(eq(users.email, email))
-    .limit(1);
-
-  if (existingUser.length > 0) {
-    return {
-      error: 'Failed to create user. Please try again.',
-      email,
-      password
-    };
+  const backendUrl = process.env.BACKEND_URL ?? 'http://localhost:8000';
+  let res: Response;
+  try {
+    res = await fetch(`${backendUrl}/auth/signup`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, full_name, role })
+    });
+  } catch {
+    return { error: 'Unable to reach authentication service. Please try again.', email, password };
   }
 
-  const passwordHash = await hashPassword(password);
-
-  const newUser: NewUser = {
-    email,
-    passwordHash,
-    role: 'owner' // Default role, will be overridden if there's an invitation
-  };
-
-  const [createdUser] = await db.insert(users).values(newUser).returning();
-
-  if (!createdUser) {
-    return {
-      error: 'Failed to create user. Please try again.',
-      email,
-      password
-    };
-  }
-
-  let teamId: number;
-  let userRole: string;
-  let createdTeam: typeof teams.$inferSelect | null = null;
-
-  if (inviteId) {
-    // Check if there's a valid invitation
-    const [invitation] = await db
-      .select()
-      .from(invitations)
-      .where(
-        and(
-          eq(invitations.id, parseInt(inviteId)),
-          eq(invitations.email, email),
-          eq(invitations.status, 'pending')
+  if (!res.ok) {
+    const body = await res.json().catch(() => ({}));
+    let message: string;
+    if (typeof body?.detail === 'string') {
+      message = body.detail;
+    } else if (Array.isArray(body?.detail)) {
+      message = body.detail
+        .map((e: { loc?: string[]; msg?: string }) =>
+          `${e.loc?.slice(-1)?.[0] ?? ''}: ${e.msg ?? ''}`.trim()
         )
-      )
-      .limit(1);
-
-    if (invitation) {
-      teamId = invitation.teamId;
-      userRole = invitation.role;
-
-      await db
-        .update(invitations)
-        .set({ status: 'accepted' })
-        .where(eq(invitations.id, invitation.id));
-
-      await logActivity(teamId, createdUser.id, ActivityType.ACCEPT_INVITATION);
-
-      [createdTeam] = await db
-        .select()
-        .from(teams)
-        .where(eq(teams.id, teamId))
-        .limit(1);
+        .join('; ');
     } else {
-      return { error: 'Invalid or expired invitation.', email, password };
+      message = 'Failed to create account. Please try again.';
     }
-  } else {
-    // Create a new team if there's no invitation
-    const newTeam: NewTeam = {
-      name: `${email}'s Team`
-    };
-
-    [createdTeam] = await db.insert(teams).values(newTeam).returning();
-
-    if (!createdTeam) {
-      return {
-        error: 'Failed to create team. Please try again.',
-        email,
-        password
-      };
-    }
-
-    teamId = createdTeam.id;
-    userRole = 'owner';
-
-    await logActivity(teamId, createdUser.id, ActivityType.CREATE_TEAM);
+    return { error: message, email, password };
   }
 
-  const newTeamMember: NewTeamMember = {
-    userId: createdUser.id,
-    teamId: teamId,
-    role: userRole
-  };
+  const body = await res.json() as { access_token: string; exp: number };
+  await setFastAPISession(body.access_token, body.exp);
 
-  await Promise.all([
-    db.insert(teamMembers).values(newTeamMember),
-    logActivity(teamId, createdUser.id, ActivityType.SIGN_UP),
-    setSession(createdUser)
-  ]);
-
-  redirect('/dashboard');
+  const redirectTo = formData.get('redirect') as string;
+  redirect(redirectTo || '/dashboard');
 });
 
 export async function signOut() {
-  const user = (await getUser()) as User;
-  const userWithTeam = await getUserWithTeam(user.id);
-  await logActivity(userWithTeam?.teamId, user.id, ActivityType.SIGN_OUT);
+  const user = await getUser();
+  if (user) {
+    const userWithTeam = await getUserWithTeam(user.id);
+    await logActivity(userWithTeam?.teamId, user.id, ActivityType.SIGN_OUT);
+  }
   (await cookies()).delete('session');
 }
 
@@ -223,7 +147,7 @@ const updatePasswordSchema = z.object({
 
 export const updatePassword = validatedActionWithUser(
   updatePasswordSchema,
-  async (data, _, user) => {
+  async (data: z.infer<typeof updatePasswordSchema>, _formData: FormData, user: User) => {
     const { currentPassword, newPassword, confirmPassword } = data;
 
     const isPasswordValid = await comparePasswords(
@@ -281,7 +205,7 @@ const deleteAccountSchema = z.object({
 
 export const deleteAccount = validatedActionWithUser(
   deleteAccountSchema,
-  async (data, _, user) => {
+  async (data: z.infer<typeof deleteAccountSchema>, _formData: FormData, user: User) => {
     const { password } = data;
 
     const isPasswordValid = await comparePasswords(password, user.passwordHash);
@@ -332,7 +256,7 @@ const updateAccountSchema = z.object({
 
 export const updateAccount = validatedActionWithUser(
   updateAccountSchema,
-  async (data, _, user) => {
+  async (data: z.infer<typeof updateAccountSchema>, _formData: FormData, user: User) => {
     const { name, email } = data;
     const userWithTeam = await getUserWithTeam(user.id);
 
@@ -351,7 +275,7 @@ const removeTeamMemberSchema = z.object({
 
 export const removeTeamMember = validatedActionWithUser(
   removeTeamMemberSchema,
-  async (data, _, user) => {
+  async (data: z.infer<typeof removeTeamMemberSchema>, _formData: FormData, user: User) => {
     const { memberId } = data;
     const userWithTeam = await getUserWithTeam(user.id);
 
@@ -385,7 +309,7 @@ const inviteTeamMemberSchema = z.object({
 
 export const inviteTeamMember = validatedActionWithUser(
   inviteTeamMemberSchema,
-  async (data, _, user) => {
+  async (data: z.infer<typeof inviteTeamMemberSchema>, _formData: FormData, user: User) => {
     const { email, role } = data;
     const userWithTeam = await getUserWithTeam(user.id);
 

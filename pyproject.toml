@@ -149,10 +149,13 @@ dependencies = [
     "virtualenv==20.31.2",
     "yarl==1.20.1",
     "python-jose[cryptography]>=3.5.0",
-    "passlib[bcrypt]>=1.7.4",
     "pytest-env>=1.1.5",
     "scalar-fastapi>=1.5.0",
     "sqladmin>=0.22.0",
+    "aiosqlite>=0.20.0",
+    "email-validator>=2.0.0",
+    "bcrypt>=5.0.0",
+    "asyncpg>=0.29.0",
 ]
 
 [project.optional-dependencies]

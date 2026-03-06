@@ -5,9 +5,18 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Upload, FileAudio, CheckCircle2, AlertCircle, Loader2 } from 'lucide-react';
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
+import { Upload, FileAudio, CheckCircle2, AlertCircle, Loader2, Mic, Square } from 'lucide-react';
+import { useAudioRecorder } from '@/hooks/use-audio-recorder';
+
+function formatDuration(seconds: number): string {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+}
 
 export default function UploadPage() {
+    const [activeTab, setActiveTab] = useState('upload');
     const [file, setFile] = useState<File | null>(null);
     const [patientName, setPatientName] = useState('');
     const [enableMedical, setEnableMedical] = useState(false);
@@ -21,15 +30,19 @@ export default function UploadPage() {
     const [error, setError] = useState<string | null>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
 
+    const recorder = useAudioRecorder();
+
     const handleFileDrop = (e: React.DragEvent) => {
         e.preventDefault();
         const droppedFile = e.dataTransfer.files[0];
         if (droppedFile) setFile(droppedFile);
     };
 
+    const hasAudioSource = activeTab === 'upload' ? !!file : !!recorder.audioBlob;
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!file || !patientName.trim()) return;
+        if (!patientName.trim() || !hasAudioSource) return;
 
         setUploading(true);
         setError(null);
@@ -37,7 +50,19 @@ export default function UploadPage() {
 
         try {
             const formData = new FormData();
-            formData.append('file', file);
+
+            if (activeTab === 'upload' && file) {
+                formData.append('file', file);
+            } else if (activeTab === 'record' && recorder.audioBlob) {
+                const now = new Date();
+                const pad = (n: number) => String(n).padStart(2, '0');
+                const timestamp = `${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}_${pad(now.getHours())}${pad(now.getMinutes())}${pad(now.getSeconds())}`;
+                const filename = `recorded_${timestamp}.webm`;
+                formData.append('file', recorder.audioBlob, filename);
+            } else {
+                return;
+            }
+
             formData.append('patient_name', patientName);
             formData.append('enable_medical_processing', String(enableMedical));
             if (enableMedical && providerId) formData.append('provider_id', providerId);
@@ -57,7 +82,10 @@ export default function UploadPage() {
             }
 
             const data = await res.json();
-            setResult(data);
+            setResult({
+                ...data,
+                workflow_id: data.identifier || data.workflow_id
+            });
         } catch (err) {
             setError((err as Error).message);
         } finally {
@@ -72,63 +100,172 @@ export default function UploadPage() {
                     Upload Consultation
                 </h1>
                 <p className="text-muted-foreground mt-1">
-                    Upload an audio recording for AI-powered transcription and analysis
+                    Upload an audio recording or record from your microphone for AI-powered transcription
                 </p>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-6">
-                {/* File Drop Zone */}
-                <Card>
-                    <CardContent className="pt-6">
-                        <div
-                            onDragOver={(e) => e.preventDefault()}
-                            onDrop={handleFileDrop}
-                            onClick={() => fileInputRef.current?.click()}
-                            className="border-2 border-dashed border-border rounded-lg p-8 text-center cursor-pointer hover:border-primary/50 hover:bg-accent/30 transition-colors"
-                        >
-                            {file ? (
-                                <div className="flex items-center justify-center gap-3">
-                                    <FileAudio className="w-8 h-8 text-primary" />
-                                    <div className="text-left">
-                                        <p className="font-medium text-sm">{file.name}</p>
-                                        <p className="text-xs text-muted-foreground">
-                                            {(file.size / (1024 * 1024)).toFixed(1)} MB
-                                        </p>
-                                    </div>
-                                    <Button
-                                        type="button"
-                                        variant="ghost"
-                                        size="sm"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            setFile(null);
-                                        }}
-                                    >
-                                        Remove
-                                    </Button>
+                {/* Audio Input Tabs */}
+                <Tabs value={activeTab} onValueChange={setActiveTab}>
+                    <TabsList>
+                        <TabsTrigger value="upload" className="gap-1.5">
+                            <Upload className="size-3.5" />
+                            Upload File
+                        </TabsTrigger>
+                        <TabsTrigger value="record" className="gap-1.5">
+                            <Mic className="size-3.5" />
+                            Record Audio
+                        </TabsTrigger>
+                    </TabsList>
+
+                    {/* Upload File Tab */}
+                    <TabsContent value="upload" className="mt-4">
+                        <Card>
+                            <CardContent className="pt-6">
+                                <div
+                                    onDragOver={(e) => e.preventDefault()}
+                                    onDrop={handleFileDrop}
+                                    onClick={() => fileInputRef.current?.click()}
+                                    className="border-2 border-dashed border-border rounded-lg p-8 text-center cursor-pointer hover:border-primary/50 hover:bg-accent/30 transition-colors"
+                                >
+                                    {file ? (
+                                        <div className="flex items-center justify-center gap-3">
+                                            <FileAudio className="w-8 h-8 text-primary" />
+                                            <div className="text-left">
+                                                <p className="font-medium text-sm">{file.name}</p>
+                                                <p className="text-xs text-muted-foreground">
+                                                    {(file.size / (1024 * 1024)).toFixed(1)} MB
+                                                </p>
+                                            </div>
+                                            <Button
+                                                type="button"
+                                                variant="ghost"
+                                                size="sm"
+                                                onClick={(e) => {
+                                                    e.stopPropagation();
+                                                    setFile(null);
+                                                }}
+                                            >
+                                                Remove
+                                            </Button>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <Upload className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
+                                            <p className="text-sm font-medium">
+                                                Drop audio file here or click to browse
+                                            </p>
+                                            <p className="text-xs text-muted-foreground mt-1">
+                                                Supports MP3, WAV, M4A, FLAC, OGG
+                                            </p>
+                                        </>
+                                    )}
+                                    <input
+                                        ref={fileInputRef}
+                                        type="file"
+                                        accept="audio/*"
+                                        className="hidden"
+                                        aria-label="Select audio file"
+                                        onChange={(e) => setFile(e.target.files?.[0] || null)}
+                                    />
                                 </div>
-                            ) : (
-                                <>
-                                    <Upload className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
-                                    <p className="text-sm font-medium">
-                                        Drop audio file here or click to browse
-                                    </p>
-                                    <p className="text-xs text-muted-foreground mt-1">
-                                        Supports MP3, WAV, M4A, FLAC, OGG
-                                    </p>
-                                </>
-                            )}
-                            <input
-                                ref={fileInputRef}
-                                type="file"
-                                accept="audio/*"
-                                className="hidden"
-                                aria-label="Select audio file"
-                                onChange={(e) => setFile(e.target.files?.[0] || null)}
-                            />
-                        </div>
-                    </CardContent>
-                </Card>
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
+
+                    {/* Record Audio Tab */}
+                    <TabsContent value="record" className="mt-4">
+                        <Card>
+                            <CardContent className="pt-6">
+                                <div className="space-y-4">
+                                    {/* Recording controls */}
+                                    <div className="flex flex-col items-center gap-4 py-4">
+                                        {recorder.isRecording ? (
+                                            <>
+                                                <div className="flex items-center gap-2">
+                                                    <span className="relative flex size-3">
+                                                        <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+                                                        <span className="relative inline-flex rounded-full size-3 bg-red-500" />
+                                                    </span>
+                                                    <span className="text-sm font-medium text-red-500">
+                                                        Recording
+                                                    </span>
+                                                    <span className="text-sm font-mono text-muted-foreground">
+                                                        {formatDuration(recorder.duration)}
+                                                    </span>
+                                                </div>
+                                                <Button
+                                                    type="button"
+                                                    variant="destructive"
+                                                    size="lg"
+                                                    onClick={recorder.stopRecording}
+                                                    className="gap-2"
+                                                >
+                                                    <Square className="size-4" />
+                                                    Stop Recording
+                                                </Button>
+                                            </>
+                                        ) : recorder.audioBlob ? (
+                                            <div className="w-full space-y-3">
+                                                <div className="flex items-center justify-between">
+                                                    <div className="flex items-center gap-2">
+                                                        <FileAudio className="w-5 h-5 text-primary" />
+                                                        <div>
+                                                            <p className="text-sm font-medium">Recording captured</p>
+                                                            <p className="text-xs text-muted-foreground">
+                                                                {(recorder.audioBlob.size / 1024).toFixed(1)} KB · {formatDuration(recorder.duration)}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <Button
+                                                        type="button"
+                                                        variant="ghost"
+                                                        size="sm"
+                                                        onClick={recorder.resetRecording}
+                                                    >
+                                                        Remove
+                                                    </Button>
+                                                </div>
+                                                {recorder.audioUrl && (
+                                                    <audio
+                                                        controls
+                                                        src={recorder.audioUrl}
+                                                        className="w-full h-10"
+                                                    />
+                                                )}
+                                            </div>
+                                        ) : (
+                                            <>
+                                                <Mic className="w-10 h-10 text-muted-foreground" />
+                                                <p className="text-sm text-muted-foreground">
+                                                    Click below to start recording from your microphone
+                                                </p>
+                                                <Button
+                                                    type="button"
+                                                    variant="outline"
+                                                    size="lg"
+                                                    onClick={recorder.startRecording}
+                                                    className="gap-2"
+                                                >
+                                                    <Mic className="size-4" />
+                                                    Start Recording
+                                                </Button>
+                                            </>
+                                        )}
+                                    </div>
+
+                                    {/* Recorder error */}
+                                    {recorder.error && (
+                                        <div className="flex items-center gap-3 p-3 rounded-lg bg-red-50 dark:bg-red-950/50 text-red-800 dark:text-red-300">
+                                            <AlertCircle className="w-4 h-4 shrink-0" />
+                                            <p className="text-sm">{recorder.error}</p>
+                                        </div>
+                                    )}
+                                </div>
+                            </CardContent>
+                        </Card>
+                    </TabsContent>
+                </Tabs>
 
                 {/* Patient Information */}
                 <Card>
@@ -271,7 +408,7 @@ export default function UploadPage() {
                 <Button
                     type="submit"
                     size="lg"
-                    disabled={!file || !patientName.trim() || uploading}
+                    disabled={!hasAudioSource || !patientName.trim() || uploading}
                     className="w-full sm:w-auto"
                 >
                     {uploading ? (
