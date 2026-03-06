@@ -93,6 +93,7 @@ class Config:
     AUDIO_EXTENSIONS = {
         ".mp3",
         ".wav",
+        ".webm",
         ".awb",
         ".aac",
         ".ogg",
@@ -126,8 +127,8 @@ class Config:
     HIPAA_AUDIT_LOG_PATH = "./audit_logs"
     HIPAA_MINIMUM_NECESSARY = True
 
-    # Authentication
-    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
+    # Authentication (disabled for POC)
+    AUTH_SECRET = os.getenv("AUTH_SECRET")
     JWT_ALGORITHM = "HS256"
     JWT_ACCESS_TOKEN_EXPIRE_MINUTES = 30
     ENABLE_AUTHENTICATION = os.getenv("ENABLE_AUTHENTICATION", "true").lower() == "true"
@@ -177,8 +178,8 @@ class Config:
             if cls.ENABLE_VECTOR_STORAGE and not cls.VECTOR_DB_PATH:
                 missing.append("VECTOR_DB_PATH required when ENABLE_VECTOR_STORAGE is true")
 
-            if cls.ENABLE_AUTHENTICATION and not cls.JWT_SECRET_KEY:
-                missing.append("JWT_SECRET_KEY required when ENABLE_AUTHENTICATION is true")
+            if cls.ENABLE_AUTHENTICATION and not cls.AUTH_SECRET:
+                missing.append("AUTH_SECRET required when ENABLE_AUTHENTICATION is true")
 
         return missing
 

@@ -41,7 +41,7 @@ async def get_patient_workflows(
     """
     try:
         # Query SQLite database for workflows
-        db_workflows = get_workflows_by_patient_hash(patient_hash)
+        db_workflows = await get_workflows_by_patient_hash(patient_hash)
 
         if not db_workflows:
             return {
@@ -146,7 +146,7 @@ async def get_patient_latest_workflow(patient_hash: str):
     """
     try:
         # Query SQLite database for workflows
-        db_workflows = get_workflows_by_patient_hash(patient_hash)
+        db_workflows = await get_workflows_by_patient_hash(patient_hash)
 
         if not db_workflows:
             raise HTTPException(status_code=404, detail=f"No workflows found for patient hash: {patient_hash}")

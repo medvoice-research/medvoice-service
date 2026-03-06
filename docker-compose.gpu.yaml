@@ -53,6 +53,8 @@ services:
       - "8000:8000"
     environment:
       # Secrets from .env
+      - POSTGRES_URL=postgresql://postgres:postgres@host.docker.internal:54322/postgres
+      - AUTH_SECRET=${AUTH_SECRET:-}
       - HF_TOKEN=${HF_TOKEN:-}
       - ENVIRONMENT=${ENVIRONMENT:-production}
       - LOG_LEVEL=${LOG_LEVEL:-INFO}
@@ -109,6 +111,8 @@ services:
     stop_grace_period: 30s
     environment:
       # Secrets from .env
+      - POSTGRES_URL=postgresql://postgres:postgres@host.docker.internal:54322/postgres
+      - AUTH_SECRET=${AUTH_SECRET:-}
       - HF_TOKEN=${HF_TOKEN:-}
       - ENVIRONMENT=${ENVIRONMENT:-production}
       - LOG_LEVEL=${LOG_LEVEL:-INFO}
@@ -173,6 +177,26 @@ services:
       timeout: 10s
       retries: 3
       start_period: 30s
+
+  # Next.js SaaS Frontend
+  next-saas:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.nextjs
+    ports:
+      - "3000:3000"
+    environment:
+      - POSTGRES_URL=postgresql://postgres:postgres@host.docker.internal:54322/postgres
+      - AUTH_SECRET=${AUTH_SECRET:-}
+      - BACKEND_URL=http://whisperx-api:8000
+    depends_on:
+      whisperx-api:
+        condition: service_healthy
+    networks:
+      - whisperx-network
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped
 
 networks:
   whisperx-network:

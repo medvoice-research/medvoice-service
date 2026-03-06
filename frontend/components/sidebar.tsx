@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { MedVoiceIcon } from '@/components/icons/MedVoiceIcon';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import {
     LayoutDashboard,
     Upload,
@@ -12,9 +12,11 @@ import {
     Shield,
     ChevronLeft,
     ChevronRight,
+    LogOut,
 } from 'lucide-react';
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
+import { signOut } from '@/app/(login)/actions';
 
 const navigation = [
     {
@@ -51,7 +53,13 @@ const navigation = [
 
 export function Sidebar() {
     const pathname = usePathname();
+    const router = useRouter();
     const [collapsed, setCollapsed] = useState(false);
+
+    const handleSignOut = async () => {
+        await signOut();
+        router.push('/sign-in');
+    };
 
     return (
         <>
@@ -105,7 +113,7 @@ export function Sidebar() {
                     })}
                 </div>
 
-                {/* HIPAA footer + Collapse toggle */}
+                {/* HIPAA footer + Log Out + Collapse toggle */}
                 <div className="border-t border-sidebar-border px-3 py-3 space-y-2">
                     {!collapsed && (
                         <div className="flex items-center gap-2 text-xs text-sidebar-foreground/40 px-1">
@@ -114,8 +122,20 @@ export function Sidebar() {
                         </div>
                     )}
                     <button
+                        onClick={handleSignOut}
+                        className={cn(
+                            'flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm transition-all duration-150 text-sidebar-foreground/70 hover:bg-red-500/10 hover:text-red-500 cursor-pointer',
+                            collapsed && 'justify-center'
+                        )}
+                        title={collapsed ? 'Log Out' : undefined}
+                        aria-label="Log out"
+                    >
+                        <LogOut className="w-5 h-5 shrink-0" />
+                        {!collapsed && <span>Log Out</span>}
+                    </button>
+                    <button
                         onClick={() => setCollapsed(!collapsed)}
-                        className="flex items-center justify-center w-full py-1.5 rounded-md text-sidebar-foreground/50 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground transition-colors"
+                        className="flex items-center justify-center w-full py-1.5 rounded-md text-sidebar-foreground/50 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground transition-colors cursor-pointer"
                         aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
                     >
                         {collapsed ? (
@@ -130,7 +150,7 @@ export function Sidebar() {
             {/* Mobile bottom navigation */}
             <nav className="fixed bottom-0 left-0 right-0 z-50 md:hidden bg-card border-t border-border">
                 <div className="flex items-center justify-around py-2 px-1">
-                    {navigation.slice(0, 5).map((item) => {
+                    {navigation.slice(0, 4).map((item) => {
                         const isActive =
                             pathname === item.href ||
                             (item.href !== '/dashboard' && pathname.startsWith(item.href));
@@ -153,6 +173,14 @@ export function Sidebar() {
                             </Link>
                         );
                     })}
+                    <button
+                        onClick={handleSignOut}
+                        className="flex flex-col items-center gap-0.5 px-2 py-1.5 rounded-md text-xs transition-colors cursor-pointer text-muted-foreground hover:text-red-500"
+                        aria-label="Log out"
+                    >
+                        <LogOut className="w-5 h-5" />
+                        <span className="truncate max-w-[60px]">Logout</span>
+                    </button>
                 </div>
             </nav>
         </>
