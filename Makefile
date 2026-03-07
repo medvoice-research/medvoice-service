@@ -187,9 +187,9 @@ list-servers:
 	@echo ""
 	@echo "List of running servers:"
 	@echo "  Backend Docs:   http://localhost:8000"
-	@echo "  Admin:          http://localhost:8000/admin"
-	@echo "  Frontend UI:    http://localhost:8501"
-	@echo "  SaaS App:       http://localhost:3000"
+	@echo "  Admin UI:       http://localhost:8000/admin"
+	@echo "  Dev UI:         http://localhost:8501"
+	@echo "  Prod UI:        http://localhost:3000"
 	@echo "  Workflows UI:   http://localhost:8233"
 	@echo ""
 	@echo "Workflow Configuration in Docker Environment:"
@@ -430,18 +430,23 @@ up:
 	@echo "Docker services started"
 	@$(MAKE) list-servers
 
+down:
+	docker-compose down
+	@echo "Docker services stopped"
+
 restart:
 	@$(MAKE) down
 	@$(MAKE) up
 	@echo "Docker services restarted"
 
-down:
-	docker-compose down
-	@echo "Docker services stopped"
-
 pgweb:
+	@$(MAKE) pgweb-down
+	@$(MAKE) down
+	@echo "Waiting for containers to shut down..."
+	@sleep 5
+	docker-compose up -d
 	docker compose -f docker-compose.pgweb.yaml up -d
-	@echo "Database dashboard started"
+	@echo "Database dashboard started at http://localhost:8081"
 
 pgweb-down:
 	docker compose -f docker-compose.pgweb.yaml down
