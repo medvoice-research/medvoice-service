@@ -218,14 +218,11 @@ async def test_detect_phi_in_dialogue_no_phi(medical_service, mock_lm_studio_cli
 
 @pytest.mark.asyncio
 async def test_detect_phi_in_dialogue_error_handling(medical_service, mock_lm_studio_client):
-    """Test error handling in PHI detection."""
+    """Test that LLM errors propagate from PHI detection (handled at activity layer)."""
     mock_lm_studio_client.chat_completion.side_effect = Exception("LLM error")
 
-    result = await medical_service.detect_phi_in_dialogue(SAMPLE_DIALOGUE_DATA)
-
-    assert result["phi_detected"] is False
-    assert "error" in result
-    assert result["error"] == "LLM error"
+    with pytest.raises(Exception, match="LLM error"):
+        await medical_service.detect_phi_in_dialogue(SAMPLE_DIALOGUE_DATA)
 
 
 # ============================================================================
@@ -282,12 +279,11 @@ async def test_extract_entities_with_speaker_no_entities(medical_service, mock_l
 
 @pytest.mark.asyncio
 async def test_extract_entities_with_speaker_error(medical_service, mock_lm_studio_client):
-    """Test error handling in entity extraction."""
+    """Test that LLM errors propagate from entity extraction (handled at activity layer)."""
     mock_lm_studio_client.chat_completion.side_effect = Exception("Extraction failed")
 
-    entities = await medical_service.extract_entities_with_speaker(SAMPLE_DIALOGUE_DATA)
-
-    assert entities == []
+    with pytest.raises(Exception, match="Extraction failed"):
+        await medical_service.extract_entities_with_speaker(SAMPLE_DIALOGUE_DATA)
 
 
 # ============================================================================
@@ -342,14 +338,11 @@ async def test_generate_soap_from_dialogue_with_speaker_context(medical_service,
 
 @pytest.mark.asyncio
 async def test_generate_soap_from_dialogue_error(medical_service, mock_lm_studio_client):
-    """Test error handling in SOAP generation."""
+    """Test that LLM errors propagate from SOAP generation (handled at activity layer)."""
     mock_lm_studio_client.chat_completion.side_effect = Exception("SOAP generation failed")
 
-    soap_note = await medical_service.generate_soap_from_dialogue(SAMPLE_DIALOGUE_DATA)
-
-    assert "error" in soap_note
-    assert soap_note["subjective"] == ""
-    assert soap_note["objective"] == ""
+    with pytest.raises(Exception, match="SOAP generation failed"):
+        await medical_service.generate_soap_from_dialogue(SAMPLE_DIALOGUE_DATA)
 
 
 # ============================================================================
