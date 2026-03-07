@@ -9,6 +9,7 @@ import {
     Activity,
     Users,
     MessageCircle,
+    Settings,
     Shield,
     ChevronLeft,
     ChevronRight,
@@ -48,6 +49,12 @@ const navigation = [
         href: '/dashboard/chat',
         icon: MessageCircle,
         description: 'AI-powered Q&A',
+    },
+    {
+        name: 'Settings',
+        href: '/dashboard/settings',
+        icon: Settings,
+        description: 'Account preferences',
     },
 ];
 

@@ -89,13 +89,14 @@ services:
       - "8000:8000"
     environment:
       - POSTGRES_URL=postgresql://postgres:postgres@app-postgres:5432/postgres
-      - AUTH_SECRET=${AUTH_SECRET:-}
+      - AUTH_SECRET=${AUTH_SECRET:-docker-dev-secret-change-in-production}
       - HF_TOKEN=${HF_TOKEN:-}
       - ENVIRONMENT=${ENVIRONMENT:-production}
       - LOG_LEVEL=${LOG_LEVEL:-INFO}
       - DIARIZATION_MODEL_PATH=${DIARIZATION_MODEL_PATH:-}
       - TEMPORAL_SERVER_URL=temporal:7233
       - HIPAA_ENCRYPTION_KEY=${HIPAA_ENCRYPTION_KEY:-default}
+      - HIPAA_SALT=${HIPAA_SALT:-docker_dev_salt_change_in_real_production}
       # LM Studio configuration for medical processing (host.docker.internal for Docker-to-host connectivity)
       - LM_STUDIO_BASE_URL=${LM_STUDIO_BASE_URL:-http://host.docker.internal:1234/v1}
       - LM_STUDIO_MODEL=${LM_STUDIO_MODEL:-}
@@ -139,13 +140,14 @@ services:
     stop_grace_period: 30s
     environment:
       - POSTGRES_URL=postgresql://postgres:postgres@app-postgres:5432/postgres
-      - AUTH_SECRET=${AUTH_SECRET:-}
+      - AUTH_SECRET=${AUTH_SECRET:-docker-dev-secret-change-in-production}
       - HF_TOKEN=${HF_TOKEN:-}
       - ENVIRONMENT=${ENVIRONMENT:-production}
       - LOG_LEVEL=${LOG_LEVEL:-INFO}
       - DIARIZATION_MODEL_PATH=${DIARIZATION_MODEL_PATH:-}
       - TEMPORAL_SERVER_URL=temporal:7233
       - HIPAA_ENCRYPTION_KEY=${HIPAA_ENCRYPTION_KEY:-default}
+      - HIPAA_SALT=${HIPAA_SALT:-docker_dev_salt_change_in_real_production}
       # LM Studio configuration for medical processing (host.docker.internal for Docker-to-host connectivity)
       - LM_STUDIO_BASE_URL=${LM_STUDIO_BASE_URL:-http://host.docker.internal:1234/v1}
       - LM_STUDIO_MODEL=${LM_STUDIO_MODEL:-}
@@ -204,7 +206,7 @@ services:
       - "3000:3000"
     environment:
       - POSTGRES_URL=postgresql://postgres:postgres@app-postgres:5432/postgres
-      - AUTH_SECRET=${AUTH_SECRET:-}
+      - AUTH_SECRET=${AUTH_SECRET:-docker-dev-secret-change-in-production}
       - BACKEND_URL=http://whisperx-api:8000
     depends_on:
       app-postgres:
@@ -217,6 +219,7 @@ services:
 
 networks:
   whisperx-network:
+    name: whisperx-network
     driver: bridge
 
 volumes:
