@@ -24,17 +24,7 @@ async def get_current_user(
     """Extract and validate Bearer JWT; return the decoded payload.
 
     Reads ENABLE_AUTHENTICATION directly from the environment so that the
-    Config.ENABLE_AUTHENTICATION hardcoded False is bypassed at runtime.
-
-    Args:
-        credentials: Optional HTTP Bearer credentials from the Authorization header.
-
-    Returns:
-        Decoded token payload dict.
-
-    Raises:
-        HTTPException 401: If authentication is enabled and the token is missing or invalid.
-    """
+    Config.ENABLE_AUTHENTICATION hardcoded False is bypassed at runtime."""
     enable_auth = os.environ.get("ENABLE_AUTHENTICATION", "false").lower() == "true"
 
     if not enable_auth:

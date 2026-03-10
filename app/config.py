@@ -131,7 +131,23 @@ class Config:
     AUTH_SECRET = os.getenv("AUTH_SECRET")
     JWT_ALGORITHM = "HS256"
     JWT_ACCESS_TOKEN_EXPIRE_MINUTES = 30
-    ENABLE_AUTHENTICATION = False
+    ENABLE_AUTHENTICATION = os.getenv("ENABLE_AUTHENTICATION", "true").lower() == "true"
+
+    # Public paths allowlist — requests matching these prefixes bypass auth
+    PUBLIC_PATHS: set[str] = {
+        "/auth/",
+        "/health",
+        "/",
+        "/docs",
+        "/redoc",
+        "/openapi.json",
+        "/scalar",
+    }
+
+    # Rate limiting — paths subject to per-IP sliding-window limits
+    RATE_LIMITED_PATHS: set[str] = {"/auth/login", "/auth/signup"}
+    RATE_LIMIT_REQUESTS: int = int(os.getenv("RATE_LIMIT_REQUESTS", "10"))
+    RATE_LIMIT_WINDOW_SECONDS: int = int(os.getenv("RATE_LIMIT_WINDOW_SECONDS", "60"))
 
     # Database paths
     MEDICAL_DB_PATH = _get_yaml("database", "medical_db_path", "./medical_metadata.db")

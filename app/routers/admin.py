@@ -1,32 +1,36 @@
 """Admin endpoints for patient workflow monitoring.
 
-[WARN]️  SECURITY WARNING - HIPAA COMPLIANCE REQUIRED [WARN]️
-These endpoints expose Protected Health Information (PHI) including plain text patient names
-without authentication or authorization. DO NOT use in production without implementing:
-1. Authentication middleware (JWT, OAuth2, etc.)
-2. Role-based access control (RBAC)
-3. Audit logging for all PHI access
-4. IP whitelisting or VPN restrictions
+⚠️  SECURITY WARNING - HIPAA COMPLIANCE REQUIRED ⚠️
+These endpoints expose Protected Health Information (PHI) including plain text patient names.
+Authentication is enforced via AuthMiddleware. Admin endpoints apply user-scoped filtering:
+- Administrators see all data (global view)
+- Non-admin users see only their own data (+ legacy unowned records)
 """
 
-# TODO: CRITICAL - Add authentication and authorization before production
-# TODO: See HIPAA Security Rule 164.312(a)(1) - Access Control requirements
-# TODO: Implement role-based access (admin, physician, nurse roles)
-# TODO: Add comprehensive audit logging for all PHI access
-# TODO: Consider adding IP whitelisting for admin endpoints
+from typing import Any, Dict
 
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from ..logger import logger
+from ..auth.dependencies import get_current_user
 from ..patients.mapping import get_patient_by_workflow, get_workflows_by_patient_hash, get_patient_name_by_hash
 
 
 router = APIRouter(prefix="/admin", tags=["Admin"])
 
 
+def _extract_user_id(current_user: Dict[str, Any]) -> str | None:
+    """Return user_id for query scoping; administrators get None (no filter)."""
+    if current_user.get("role") == "administrator":
+        return None  # Admin sees all data
+    return current_user.get("user_id")
+
+
 @router.get("/patient/hash/{patient_hash}")
-async def get_patient_info_by_hash(patient_hash: str):
-    """
-    Get patient information by hash (Admin lookup).
+async def get_patient_info_by_hash(
+    patient_hash: str,
+    current_user: Dict[str, Any] = Depends(get_current_user),
+):
+    """Get patient information by hash (Admin lookup).
 
     **Purpose:** Admin monitoring - map file/workflow hash back to patient
 
@@ -34,22 +38,17 @@ async def get_patient_info_by_hash(patient_hash: str):
     - File: `audio_154c26a1_20251227.mp3`
     - Hash: `154c26a1`
     - Query: `GET /admin/patient/hash/154c26a1`
-    - Returns: `{ "patient_name": "John Michael Smith", "workflows": [...] }`
+    - Returns: `{ "patient_name": "John Michael Smith", "workflows": [...] }`"""
+    uid = _extract_user_id(current_user)
 
-    Args:
-        patient_hash: 8-character patient hash from filename/workflow ID
-
-    Returns:
-        Patient name and all associated workflows
-    """
     # Get patient name from DB (plain text)
-    patient_name = await get_patient_name_by_hash(patient_hash)
+    patient_name = await get_patient_name_by_hash(patient_hash, user_id=uid)
 
     if not patient_name:
         raise HTTPException(status_code=404, detail=f"No patient found with hash: {patient_hash}")
 
     # Get all workflows for this patient
-    workflows = await get_workflows_by_patient_hash(patient_hash)
+    workflows = await get_workflows_by_patient_hash(patient_hash, user_id=uid)
 
     logger.info(f"Admin lookup: patient hash {patient_hash} → {len(workflows)} workflows")
 
@@ -62,22 +61,19 @@ async def get_patient_info_by_hash(patient_hash: str):
 
 
 @router.get("/workflow/{workflow_id}/patient")
-async def get_patient_by_workflow_id(workflow_id: str):
-    """
-    Get patient information by workflow ID.
+async def get_patient_by_workflow_id(
+    workflow_id: str,
+    current_user: Dict[str, Any] = Depends(get_current_user),
+):
+    """Get patient information by workflow ID.
 
     **Example:**
     - Workflow ID: `whisperx-wf-pt_154c26a1-20251227_145128`
     - Query: `GET /admin/workflow/whisperx-wf-pt_154c26a1-20251227_145128/patient`
-    - Returns: `{ "patient_name": "John Michael Smith", ... }`
+    - Returns: `{ "patient_name": "John Michael Smith", ... }`"""
+    uid = _extract_user_id(current_user)
 
-    Args:
-        workflow_id: Temporal workflow ID
-
-    Returns:
-        Patient information for the workflow
-    """
-    mapping = await get_patient_by_workflow(workflow_id)
+    mapping = await get_patient_by_workflow(workflow_id, user_id=uid)
 
     if not mapping:
         raise HTTPException(status_code=404, detail=f"No patient mapping found for workflow: {workflow_id}")
@@ -88,40 +84,72 @@ async def get_patient_by_workflow_id(workflow_id: str):
 
 
 @router.get("/patients")
-async def list_all_patients():
-    """
-    List all patients with workflow counts (Admin overview).
+async def list_all_patients(
+    current_user: Dict[str, Any] = Depends(get_current_user),
+):
+    """List all patients with workflow counts.
 
-    Returns:
-        Summary of all patients and their workflow counts
-    """
+    Administrators see all patients; non-admin users see only their own."""
+    uid = _extract_user_id(current_user)
+
     from ..patients.mapping import get_all_patients
 
-    patients = await get_all_patients()
+    patients = await get_all_patients(user_id=uid)
 
     return {"total_patients": len(patients), "patients": patients}
 
 
 @router.get("/database/stats", tags=["Admin"])
-async def get_database_stats():
-    """Get real-time database statistics for monitoring."""
+async def get_database_stats(
+    current_user: Dict[str, Any] = Depends(get_current_user),
+):
+    """Get real-time database statistics for monitoring.
+
+    Administrators see global stats; non-admin users see only their own.
+    """
     from ..patients.database import get_db_connection
 
+    uid = _extract_user_id(current_user)
+
     async with get_db_connection() as conn:
-        cursor = await conn.execute("SELECT COUNT(*) FROM patient_workflow_mappings")
+        if uid is not None:
+            cursor = await conn.execute(
+                "SELECT COUNT(*) FROM patient_workflow_mappings WHERE (created_by = ? OR created_by IS NULL)",
+                (uid,),
+            )
+        else:
+            cursor = await conn.execute("SELECT COUNT(*) FROM patient_workflow_mappings")
         row = await cursor.fetchone()
         total_mappings = row[0] if row else 0
 
-        cursor = await conn.execute("SELECT COUNT(DISTINCT patient_hash) FROM patient_workflow_mappings")
+        if uid is not None:
+            cursor = await conn.execute(
+                "SELECT COUNT(DISTINCT patient_hash) FROM patient_workflow_mappings WHERE (created_by = ? OR created_by IS NULL)",
+                (uid,),
+            )
+        else:
+            cursor = await conn.execute("SELECT COUNT(DISTINCT patient_hash) FROM patient_workflow_mappings")
         row = await cursor.fetchone()
         unique_patients = row[0] if row else 0
 
-        cursor = await conn.execute("""
-            SELECT patient_name, patient_hash, workflow_id, created_at
-            FROM patient_workflow_mappings
-            ORDER BY created_at DESC
-            LIMIT 5
-        """)
+        if uid is not None:
+            cursor = await conn.execute(
+                """
+                SELECT patient_name, patient_hash, workflow_id, created_at
+                FROM patient_workflow_mappings
+                WHERE (created_by = ? OR created_by IS NULL)
+                ORDER BY created_at DESC
+                LIMIT 5
+            """,
+                (uid,),
+            )
+        else:
+            cursor = await conn.execute("""
+                SELECT patient_name, patient_hash, workflow_id, created_at
+                FROM patient_workflow_mappings
+                ORDER BY created_at DESC
+                LIMIT 5
+            """)
         recent = [dict(r) for r in await cursor.fetchall()]
 
     return {"total_mappings": total_mappings, "unique_patients": unique_patients, "recent_entries": recent}

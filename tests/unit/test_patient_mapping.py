@@ -12,6 +12,7 @@ import pytest
 import pytest_asyncio
 
 from app.patients.mapping import (
+    get_all_patients,
     get_patient_by_workflow,
     get_workflows_by_patient_hash,
     get_patient_name_by_hash,
@@ -45,7 +46,8 @@ async def test_db():
             file_path TEXT NOT NULL,
             department TEXT,
             created_at TEXT NOT NULL,
-            status TEXT NOT NULL DEFAULT 'pending'
+            status TEXT NOT NULL DEFAULT 'pending',
+            created_by TEXT
         )
     """)
 
@@ -325,6 +327,147 @@ class TestTwoPhaseCommit:
 
         workflows = await get_workflows_by_patient_hash(patient_hash)
         assert len(workflows) == 0
+
+
+@pytest.mark.asyncio
+class TestUserDataIsolation:
+    """Test per-user data isolation for patients and consultations."""
+
+    async def test_store_with_created_by(self, test_db):
+        """Test that created_by is persisted on insert."""
+        await store_patient_workflow(
+            patient_name="User A Patient",
+            patient_hash="usera111",
+            workflow_id="wf-usera-1",
+            file_path="/tmp/usera.mp3",
+            created_by="user-a",
+        )
+        mapping = await get_patient_by_workflow("wf-usera-1")
+        assert mapping is not None
+        assert mapping["created_by"] == "user-a"
+
+    async def test_get_all_patients_scoped_by_user(self, test_db):
+        """User A sees only their own patients, not user B's."""
+        await store_patient_workflow(
+            patient_name="Alice",
+            patient_hash="alice111",
+            workflow_id="wf-a1",
+            file_path="/tmp/a.mp3",
+            created_by="user-a",
+        )
+        await store_patient_workflow(
+            patient_name="Bob",
+            patient_hash="bob22222",
+            workflow_id="wf-b1",
+            file_path="/tmp/b.mp3",
+            created_by="user-b",
+        )
+
+        patients_a = await get_all_patients(user_id="user-a")
+        patients_b = await get_all_patients(user_id="user-b")
+
+        assert len(patients_a) == 1
+        assert patients_a[0]["patient_name"] == "Alice"
+        assert len(patients_b) == 1
+        assert patients_b[0]["patient_name"] == "Bob"
+
+    async def test_get_all_patients_no_filter_returns_all(self, test_db):
+        """Admin (user_id=None) sees all patients."""
+        await store_patient_workflow(
+            patient_name="Alice",
+            patient_hash="alice111",
+            workflow_id="wf-a2",
+            file_path="/tmp/a.mp3",
+            created_by="user-a",
+        )
+        await store_patient_workflow(
+            patient_name="Bob",
+            patient_hash="bob22222",
+            workflow_id="wf-b2",
+            file_path="/tmp/b.mp3",
+            created_by="user-b",
+        )
+
+        all_patients = await get_all_patients(user_id=None)
+        assert len(all_patients) == 2
+
+    async def test_legacy_rows_visible_to_all(self, test_db):
+        """Rows with created_by=NULL are visible to every user."""
+        # Insert a legacy row directly (no created_by)
+        await store_patient_workflow(
+            patient_name="Legacy Pat",
+            patient_hash="legacy11",
+            workflow_id="wf-legacy",
+            file_path="/tmp/legacy.mp3",  # created_by defaults to None
+        )
+
+        patients_a = await get_all_patients(user_id="user-a")
+        patients_b = await get_all_patients(user_id="user-b")
+
+        assert len(patients_a) == 1
+        assert patients_a[0]["patient_name"] == "Legacy Pat"
+        assert len(patients_b) == 1
+
+    async def test_workflows_scoped_by_user(self, test_db):
+        """get_workflows_by_patient_hash returns only user's workflows."""
+        patient_hash = "shared11"
+        await store_patient_workflow(
+            patient_name="Shared",
+            patient_hash=patient_hash,
+            workflow_id="wf-sa",
+            file_path="/tmp/sa.mp3",
+            created_by="user-a",
+        )
+        await store_patient_workflow(
+            patient_name="Shared",
+            patient_hash=patient_hash,
+            workflow_id="wf-sb",
+            file_path="/tmp/sb.mp3",
+            created_by="user-b",
+        )
+
+        wf_a = await get_workflows_by_patient_hash(patient_hash, user_id="user-a")
+        wf_b = await get_workflows_by_patient_hash(patient_hash, user_id="user-b")
+
+        assert len(wf_a) == 1
+        assert wf_a[0]["workflow_id"] == "wf-sa"
+        assert len(wf_b) == 1
+        assert wf_b[0]["workflow_id"] == "wf-sb"
+
+    async def test_get_patient_by_workflow_scoped(self, test_db):
+        """get_patient_by_workflow respects user_id filtering."""
+        await store_patient_workflow(
+            patient_name="Only A",
+            patient_hash="onlya111",
+            workflow_id="wf-only-a",
+            file_path="/tmp/only_a.mp3",
+            created_by="user-a",
+        )
+
+        # user-a can see it
+        result = await get_patient_by_workflow("wf-only-a", user_id="user-a")
+        assert result is not None
+
+        # user-b cannot
+        result = await get_patient_by_workflow("wf-only-a", user_id="user-b")
+        assert result is None
+
+    async def test_reserve_with_created_by(self, test_db):
+        """Two-phase reserve also persists created_by."""
+        from app.patients.mapping import reserve_patient_workflow
+
+        await reserve_patient_workflow(
+            patient_name="Reserved",
+            patient_hash="reserv11",
+            workflow_id="wf-reserve-u",
+            file_path="/tmp/r.mp3",
+            created_by="user-a",
+        )
+
+        mapping = await get_patient_by_workflow("wf-reserve-u")
+        assert mapping is not None
+        assert mapping["created_by"] == "user-a"
+        assert mapping["status"] == "pending"
 
 
 @pytest.mark.asyncio

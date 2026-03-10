@@ -7,11 +7,7 @@ from temporalio.common import RetryPolicy
 
 
 def _load_yaml_config() -> dict:
-    """Load configuration from config.yaml file.
-
-    Raises:
-        RuntimeError: If config.yaml exists but cannot be read or parsed.
-    """
+    """Load configuration from config.yaml file."""
     config_path = Path(__file__).parent.parent.parent / "config.yaml"
     if config_path.exists():
         try:

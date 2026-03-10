@@ -48,12 +48,7 @@ class TemporalMetrics:
 
 
 def monitor_activity(activity_name: str = None):
-    """
-    Decorator to add monitoring to activity functions.
-
-    Args:
-        activity_name: Optional custom name for the activity
-    """
+    """Decorator to add monitoring to activity functions."""
 
     def decorator(func):
         def wrapper(*args, **kwargs):
@@ -69,12 +64,7 @@ def monitor_activity(activity_name: str = None):
 
 
 def monitor_workflow(workflow_name: str = None):
-    """
-    Decorator to add monitoring to workflow functions.
-
-    Args:
-        workflow_name: Optional custom name for the workflow
-    """
+    """Decorator to add monitoring to workflow functions."""
 
     def decorator(func):
         async def wrapper(*args, **kwargs):

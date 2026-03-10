@@ -30,27 +30,7 @@ class STTToMedicalWorkflow:
         enable_medical_processing: bool = False,
         medical_params: Optional[dict] = None,
     ) -> dict:
-        """
-        Execute complete STT → Medical pipeline.
-
-        Args:
-            audio_path: Path to audio/video file
-            params: WhisperX processing parameters (model, ASR options, VAD, etc.)
-            enable_medical_processing: Whether to run medical processing after WhisperX
-            medical_params: Medical processing parameters (patient_id, provider_id, etc.)
-
-        Returns:
-            Combined results from WhisperX and medical processing
-
-        The workflow executes:
-        1. WhisperX: Transcribe → Align → Diarize → Assign Speakers
-        2. If enable_medical_processing:
-           - Transform to speaker-attributed dialogue
-           - PHI detection (speaker-aware)
-           - Entity extraction (speaker-aware)
-           - SOAP generation (speaker-aware)
-           - Vector storage (with speaker metadata)
-        """
+        """Execute complete STT → Medical pipeline."""
         from app.config import Config
 
         consultation_id = (medical_params or {}).get("consultation_id") or f"stt_{workflow.uuid4().hex[:8]}"

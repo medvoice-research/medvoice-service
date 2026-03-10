@@ -76,11 +76,6 @@ Guidelines:
 The following context contains relevant patient consultation records that you should use to answer questions."""
 
     def __init__(self, client: Optional[LMStudioClient] = None):
-        """Initialize chatbot service.
-
-        Args:
-            client: LM Studio client. If None, creates a new client with config from env.
-        """
         if client:
             self.client = client
         else:
@@ -154,18 +149,7 @@ Privacy Status: {phi_status}
         session_id: Optional[str] = None,
         additional_context: Optional[List[Dict[str, Any]]] = None,
     ) -> Dict[str, Any]:
-        """
-        Process a user query with RAG context.
-
-        Args:
-            user_query: The user's question
-            patient_id_encrypted: Encrypted patient ID for context retrieval
-            session_id: Optional session ID for conversation continuity
-            additional_context: Pre-fetched search results (optional)
-
-        Returns:
-            Dict with response, sources, and metadata
-        """
+        """Process a user query with RAG context."""
         session_id = session_id or f"session_{datetime.now(Config.TIMEZONE).timestamp()}"
         conversation = self._get_or_create_conversation(session_id)
 

@@ -35,18 +35,7 @@ def _client_ip(request: Request) -> str:
     summary="Register a new medical staff account",
 )
 async def signup(body: SignUpRequest, request: Request) -> AuthResponse:
-    """Register a new user and return a signed JWT.
-
-    Args:
-        body: SignUpRequest with email, password, full_name, and role.
-        request: FastAPI Request (used for audit logging).
-
-    Returns:
-        AuthResponse containing the access token and user details.
-
-    Raises:
-        HTTPException 409: If the email is already registered.
-    """
+    """Register a new user and return a signed JWT."""
     existing = await get_user_by_email(body.email)
     if existing is not None:
         _audit_logger.log_authentication_event(
@@ -105,18 +94,7 @@ async def signup(body: SignUpRequest, request: Request) -> AuthResponse:
     summary="Authenticate and obtain a JWT",
 )
 async def login(body: LoginRequest, request: Request) -> AuthResponse:
-    """Validate credentials and return a signed JWT.
-
-    Args:
-        body: LoginRequest with email and password.
-        request: FastAPI Request (used for audit logging).
-
-    Returns:
-        AuthResponse containing the access token and user details.
-
-    Raises:
-        HTTPException 401: If the email is not found or the password is incorrect.
-    """
+    """Validate credentials and return a signed JWT."""
     user = await get_user_by_email(body.email)
 
     if user is None or not _access_control.verify_password(body.password, str(user.hashed_password)):

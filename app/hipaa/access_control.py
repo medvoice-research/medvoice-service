@@ -116,7 +116,6 @@ class HIPAAAccessControl:
     """Role-based access control system for HIPAA compliance."""
 
     def __init__(self):
-        """Initialize access control system."""
         self.oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
 
         # Load JWT configuration
@@ -129,21 +128,7 @@ class HIPAAAccessControl:
         self.access_token_expire_minutes = int(os.environ.get("JWT_ACCESS_TOKEN_EXPIRE_MINUTES", "30"))
 
     def create_access_token(self, user_data: Dict[str, Any]) -> str:
-        """
-        Create JWT access token for user.
-
-        Args:
-            user_data: Dictionary containing user information
-                - user_id: Unique user identifier
-                - username: Username/email
-                - role: HealthcareRole
-                - full_name: User's full name
-                - department: Department/organization
-                - npi_number: National Provider Identifier (if applicable)
-
-        Returns:
-            JWT access token string
-        """
+        """Create JWT access token for user."""
         to_encode = user_data.copy()
 
         # Add expiration time
@@ -155,18 +140,6 @@ class HIPAAAccessControl:
         return encoded_jwt
 
     def verify_token(self, token: str) -> Dict[str, Any]:
-        """
-        Verify and decode JWT token.
-
-        Args:
-            token: JWT token string
-
-        Returns:
-            Decoded token payload
-
-        Raises:
-            HTTPException: If token is invalid or expired
-        """
         try:
             payload = jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
             return payload
@@ -179,33 +152,13 @@ class HIPAAAccessControl:
             )
 
     def check_permission(self, user_role: HealthcareRole, permission: Permission) -> bool:
-        """
-        Check if user role has specific permission.
-
-        Args:
-            user_role: User's healthcare role
-            permission: Permission to check
-
-        Returns:
-            True if role has permission, False otherwise
-        """
         role_permissions = ROLE_PERMISSIONS.get(user_role, [])
         return permission in role_permissions
 
     def check_context_permissions(
         self, user_role: HealthcareRole, context: str, additional_permissions: List[Permission] = None
     ) -> bool:
-        """
-        Check if user role has permissions for specific context.
-
-        Args:
-            user_role: User's healthcare role
-            context: Access context (patient_treatment, emergency_care, etc.)
-            additional_permissions: Additional required permissions
-
-        Returns:
-            True if user has all required permissions for context
-        """
+        """Check if user role has permissions for specific context."""
         required_permissions = CONTEXT_PERMISSIONS.get(context, [])
         if additional_permissions:
             required_permissions.extend(additional_permissions)
@@ -214,15 +167,7 @@ class HIPAAAccessControl:
         return all(perm in user_permissions for perm in required_permissions)
 
     def require_permission(self, permission: Permission):
-        """
-        Decorator to require specific permission.
-
-        Args:
-            permission: Required permission
-
-        Returns:
-            Decorator function
-        """
+        """Decorator to require specific permission."""
 
         def decorator(func):
             # Import here to avoid circular import
@@ -283,15 +228,7 @@ class HIPAAAccessControl:
         return decorator
 
     def require_context(self, context: str):
-        """
-        Decorator to require permissions for specific context.
-
-        Args:
-            context: Access context
-
-        Returns:
-            Decorator function
-        """
+        """Decorator to require permissions for specific context."""
 
         def decorator(func):
             async def wrapper(*args, token: str = Depends(self.oauth2_scheme), **kwargs):
@@ -313,30 +250,13 @@ class HIPAAAccessControl:
         return decorator
 
     def hash_password(self, password: str) -> str:
-        """
-        Hash password using bcrypt.
-
-        Args:
-            password: Plain text password
-
-        Returns:
-            Hashed password string
-        """
+        """Hash password using bcrypt."""
         salt = bcrypt.gensalt()
         hashed = bcrypt.hashpw(password.encode("utf-8"), salt)
         return hashed.decode("utf-8")
 
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
-        """
-        Verify password against hash.
-
-        Args:
-            plain_password: Plain text password
-            hashed_password: Hashed password
-
-        Returns:
-            True if password matches, False otherwise
-        """
+        """Verify password against hash."""
         try:
             return bcrypt.checkpw(plain_password.encode("utf-8"), hashed_password.encode("utf-8"))
         except ValueError:
@@ -345,18 +265,7 @@ class HIPAAAccessControl:
     def can_access_patient_record(
         self, user_role: HealthcareRole, user_id: str, patient_id: str, access_reason: str = "treatment"
     ) -> bool:
-        """
-        Check if user can access specific patient record.
-
-        Args:
-            user_role: User's healthcare role
-            user_id: User's unique identifier
-            patient_id: Patient's encrypted identifier
-            access_reason: Reason for access (treatment, emergency, research, etc.)
-
-        Returns:
-            True if access is allowed, False otherwise
-        """
+        """Check if user can access specific patient record."""
         # Basic role-based check
         if not self.check_permission(user_role, Permission.READ_PHI):
             if access_reason == "emergency" and self.check_permission(user_role, Permission.EMERGENCY_ACCESS):
@@ -374,17 +283,7 @@ class HIPAAAccessControl:
     def get_minimum_necessary_fields(
         self, user_role: HealthcareRole, access_context: str, requested_fields: List[str]
     ) -> List[str]:
-        """
-        Filter requested fields to minimum necessary for role and context.
-
-        Args:
-            user_role: User's healthcare role
-            access_context: Access context
-            requested_fields: List of requested field names
-
-        Returns:
-            Filtered list of allowed fields
-        """
+        """Filter requested fields to minimum necessary for role and context."""
         # Define minimum necessary fields by role and context
         minimum_fields_map = {
             (HealthcareRole.PHYSICIAN, "patient_treatment"): [
@@ -438,16 +337,7 @@ class HIPAAAccessControl:
         success: bool,
         additional_context: Dict[str, Any] = None,
     ):
-        """
-        Log access attempt for audit trail.
-
-        Args:
-            user_data: User information from token
-            resource: Resource being accessed
-            action: Action being performed
-            success: Whether access was successful
-            additional_context: Additional context information
-        """
+        """Log access attempt for audit trail."""
         access_log = {
             "timestamp": datetime.utcnow().isoformat(),
             "user_id": user_data.get("user_id"),
@@ -466,15 +356,7 @@ class HIPAAAccessControl:
             logger.warning(f"Access denied: {access_log}")
 
     def create_refresh_token(self, user_data: Dict[str, Any]) -> str:
-        """
-        Create refresh token for extended sessions.
-
-        Args:
-            user_data: User information
-
-        Returns:
-            Refresh token string
-        """
+        """Create refresh token for extended sessions."""
         to_encode = user_data.copy()
         expire = datetime.utcnow() + timedelta(days=7)  # Refresh tokens valid for 7 days
         to_encode.update({"exp": expire, "iat": datetime.utcnow(), "type": "refresh_token"})
@@ -482,18 +364,7 @@ class HIPAAAccessControl:
         return jwt.encode(to_encode, self.secret_key, algorithm=self.algorithm)
 
     def verify_refresh_token(self, token: str) -> Dict[str, Any]:
-        """
-        Verify refresh token.
-
-        Args:
-            token: Refresh token string
-
-        Returns:
-            Decoded token payload
-
-        Raises:
-            HTTPException: If token is invalid
-        """
+        """Verify refresh token."""
         try:
             payload = jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
             if payload.get("type") != "refresh_token":

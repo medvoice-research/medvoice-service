@@ -16,18 +16,14 @@ from .database import (
 
 
 async def store_patient_workflow(
-    patient_name: str, patient_hash: str, workflow_id: str, file_path: str, department: Optional[str] = None
+    patient_name: str,
+    patient_hash: str,
+    workflow_id: str,
+    file_path: str,
+    department: Optional[str] = None,
+    created_by: Optional[str] = None,
 ):
-    """
-    Store patient-workflow mapping.
-
-    Args:
-        patient_name: Plain text patient name (stored securely in DB)
-        patient_hash: 8-char hash used in filenames/workflow IDs
-        workflow_id: Temporal workflow ID
-        file_path: Path to audio file
-        department: Optional department name
-    """
+    """Store patient-workflow mapping."""
     created_at = datetime.now(Config.TIMEZONE).isoformat()
     await store_patient_workflow_db(
         patient_name=patient_name,
@@ -36,76 +32,44 @@ async def store_patient_workflow(
         file_path=file_path,
         department=department,
         created_at=created_at,
+        created_by=created_by,
     )
 
 
-async def get_patient_by_workflow(workflow_id: str) -> Optional[dict]:
-    """
-    Get patient info by workflow ID.
-
-    Args:
-        workflow_id: Workflow ID
-
-    Returns:
-        Patient mapping or None
-    """
-    return await get_patient_by_workflow_db(workflow_id)
+async def get_patient_by_workflow(workflow_id: str, user_id: Optional[str] = None) -> Optional[dict]:
+    """Get patient info by workflow ID."""
+    return await get_patient_by_workflow_db(workflow_id, user_id=user_id)
 
 
-async def get_workflows_by_patient_hash(patient_hash: str) -> list:
-    """
-    Get all workflows for a patient by hash.
-
-    Args:
-        patient_hash: 8-char patient hash
-
-    Returns:
-        List of workflow mappings
-    """
-    return await get_workflows_by_patient_hash_db(patient_hash)
+async def get_workflows_by_patient_hash(patient_hash: str, user_id: Optional[str] = None) -> list:
+    """Get all workflows for a patient by hash."""
+    return await get_workflows_by_patient_hash_db(patient_hash, user_id=user_id)
 
 
-async def get_patient_name_by_hash(patient_hash: str) -> Optional[str]:
-    """
-    Get patient name by hash (admin lookup).
-
-    Args:
-        patient_hash: 8-char patient hash
-
-    Returns:
-        Plain text patient name or None
-    """
-    return await get_patient_name_by_hash_db(patient_hash)
+async def get_patient_name_by_hash(patient_hash: str, user_id: Optional[str] = None) -> Optional[str]:
+    """Get patient name by hash (admin lookup)."""
+    return await get_patient_name_by_hash_db(patient_hash, user_id=user_id)
 
 
-async def get_all_patients() -> list:
-    """
-    Get all patients with workflow counts.
-
-    Returns:
-        List of patient summaries
-    """
-    return await get_all_patients_db()
+async def get_all_patients(user_id: Optional[str] = None) -> list:
+    """Get all patients with workflow counts."""
+    return await get_all_patients_db(user_id=user_id)
 
 
 # Two-Phase Commit Functions
 
 
 async def reserve_patient_workflow(
-    patient_name: str, patient_hash: str, workflow_id: str, file_path: str, department: Optional[str] = None
+    patient_name: str,
+    patient_hash: str,
+    workflow_id: str,
+    file_path: str,
+    department: Optional[str] = None,
+    created_by: Optional[str] = None,
 ):
-    """
-    Reserve a patient-workflow mapping with 'pending' status.
+    """Reserve a patient-workflow mapping with 'pending' status.
 
-    Call this BEFORE starting the Temporal workflow.
-
-    Args:
-        patient_name: Plain text patient name
-        patient_hash: 8-char hash used in filenames/workflow IDs
-        workflow_id: Temporal workflow ID
-        file_path: Path to audio file
-        department: Optional department name
-    """
+    Call this BEFORE starting the Temporal workflow."""
     created_at = datetime.now(Config.TIMEZONE).isoformat()
     await reserve_workflow_mapping_db(
         patient_name=patient_name,
@@ -114,24 +78,15 @@ async def reserve_patient_workflow(
         file_path=file_path,
         department=department,
         created_at=created_at,
+        created_by=created_by,
     )
 
 
 async def commit_patient_workflow(workflow_id: str):
-    """
-    Mark workflow as 'active' after successful start.
-
-    Args:
-        workflow_id: Workflow ID to commit
-    """
+    """Mark workflow as 'active' after successful start."""
     await commit_workflow_mapping_db(workflow_id)
 
 
 async def rollback_patient_workflow(workflow_id: str):
-    """
-    Delete pending workflow record on failure.
-
-    Args:
-        workflow_id: Workflow ID to rollback
-    """
+    """Delete pending workflow record on failure."""
     await rollback_workflow_mapping_db(workflow_id)

@@ -3,7 +3,7 @@
 	stop-temporal stop temporal-fresh check-activities \
 	test unit-test integration-test e2e-test \
 	docker-build docker-up docker-start docker-restart docker-down down \
-	pgweb pgweb-down
+	pgweb pgweb-down trim-docstrings
 
 # Default target - show help
 help:
@@ -36,6 +36,7 @@ help:
 	@echo "Code quality targets:"
 	@echo "  lint              	- Run all linting checks (ruff, yamllint, etc.)"
 	@echo "  format            	- Format code with ruff"
+	@echo "  trim-docstrings   	- Strip verbose Args/Returns sections from docstrings"
 	@echo ""
 	@echo "Testing targets:"
 	@echo "  test              	- Run all tests (unit + integration)"
@@ -106,6 +107,12 @@ format:
 	uv run ruff check app/ tests/ streamlit_app/ --fix --config pyproject.toml
 	uv run ruff format app/ tests/ streamlit_app/ --config pyproject.toml
 	@echo "Code formatting completed"
+
+# Strip verbose Args/Returns/Raises sections from docstrings (skips config files)
+trim-docstrings:
+	@echo "Trimming verbose docstrings..."
+	@uv run python scripts/trim_docstrings.py .
+	@echo ""
 
 # ============================================================================
 # Run targets
@@ -187,9 +194,9 @@ list-servers:
 	@echo ""
 	@echo "List of running servers:"
 	@echo "  Backend Docs:   http://localhost:8000"
-	@echo "  Admin:          http://localhost:8000/admin"
-	@echo "  Frontend UI:    http://localhost:8501"
-	@echo "  SaaS App:       http://localhost:3000"
+	@echo "  Admin UI:       http://localhost:8000/admin"
+	@echo "  Dev UI:         http://localhost:8501"
+	@echo "  Prod UI:        http://localhost:3000"
 	@echo "  Workflows UI:   http://localhost:8233"
 	@echo ""
 	@echo "Workflow Configuration in Docker Environment:"
@@ -430,18 +437,23 @@ up:
 	@echo "Docker services started"
 	@$(MAKE) list-servers
 
+down:
+	docker-compose down
+	@echo "Docker services stopped"
+
 restart:
 	@$(MAKE) down
 	@$(MAKE) up
 	@echo "Docker services restarted"
 
-down:
-	docker-compose down
-	@echo "Docker services stopped"
-
 pgweb:
+	@$(MAKE) pgweb-down
+	@$(MAKE) down
+	@echo "Waiting for containers to shut down..."
+	@sleep 5
+	docker-compose up -d
 	docker compose -f docker-compose.pgweb.yaml up -d
-	@echo "Database dashboard started"
+	@echo "Database dashboard started at http://localhost:8081"
 
 pgweb-down:
 	docker compose -f docker-compose.pgweb.yaml down

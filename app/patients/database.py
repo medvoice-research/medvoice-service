@@ -44,7 +44,8 @@ async def init_database(fresh_start: bool = True):
                 file_path TEXT NOT NULL,
                 department TEXT,
                 created_at TEXT NOT NULL,
-                status TEXT NOT NULL DEFAULT 'pending'
+                status TEXT NOT NULL DEFAULT 'pending',
+                created_by TEXT
             )
         """)
 
@@ -59,6 +60,19 @@ async def init_database(fresh_start: bool = True):
             CREATE INDEX IF NOT EXISTS idx_status
             ON patient_workflow_mappings(status)
         """)
+
+        # Create index on created_by for user-scoped queries
+        await conn.execute("""
+            CREATE INDEX IF NOT EXISTS idx_created_by
+            ON patient_workflow_mappings(created_by)
+        """)
+
+        # Migration: add created_by column to existing databases that lack it
+        try:
+            await conn.execute("ALTER TABLE patient_workflow_mappings ADD COLUMN created_by TEXT")
+            logger.info("Migrated: added created_by column to patient_workflow_mappings")
+        except Exception:
+            pass  # Column already exists
 
         await conn.commit()
 
@@ -89,6 +103,7 @@ async def store_patient_workflow_db(
     file_path: str,
     department: Optional[str] = None,
     created_at: Optional[str] = None,
+    created_by: Optional[str] = None,
 ):
     """
     Store patient-workflow mapping in SQLite.
@@ -100,6 +115,7 @@ async def store_patient_workflow_db(
         file_path: Path to audio file
         department: Optional department name
         created_at: ISO timestamp (auto-generated if None)
+        created_by: User ID of the authenticated user who created this record
     """
     if created_at is None:
         from datetime import datetime
@@ -110,10 +126,10 @@ async def store_patient_workflow_db(
         await conn.execute(
             """
             INSERT INTO patient_workflow_mappings
-            (patient_name, patient_hash, workflow_id, file_path, department, created_at, status)
-            VALUES (?, ?, ?, ?, ?, ?, 'active')
+            (patient_name, patient_hash, workflow_id, file_path, department, created_at, status, created_by)
+            VALUES (?, ?, ?, ?, ?, ?, 'active', ?)
         """,
-            (patient_name, patient_hash, workflow_id, file_path, department, created_at),
+            (patient_name, patient_hash, workflow_id, file_path, department, created_at, created_by),
         )
 
         # Real-time logging
@@ -121,6 +137,8 @@ async def store_patient_workflow_db(
         logger.info(f"   File: {file_path}")
         if department:
             logger.info(f"   Department: {department}")
+        if created_by:
+            logger.info(f"   Created by: {created_by}")
 
         # Show total count
         count_cursor = await conn.execute("SELECT COUNT(*) FROM patient_workflow_mappings")
@@ -136,6 +154,7 @@ async def reserve_workflow_mapping_db(
     file_path: str,
     department: Optional[str] = None,
     created_at: Optional[str] = None,
+    created_by: Optional[str] = None,
 ):
     """
     Reserve a workflow mapping with 'pending' status.
@@ -151,6 +170,7 @@ async def reserve_workflow_mapping_db(
         file_path: Path to audio file
         department: Optional department name
         created_at: ISO timestamp (auto-generated if None)
+        created_by: User ID of the authenticated user who created this record
     """
     if created_at is None:
         from datetime import datetime
@@ -161,16 +181,18 @@ async def reserve_workflow_mapping_db(
         await conn.execute(
             """
             INSERT INTO patient_workflow_mappings
-            (patient_name, patient_hash, workflow_id, file_path, department, created_at, status)
-            VALUES (?, ?, ?, ?, ?, ?, 'pending')
+            (patient_name, patient_hash, workflow_id, file_path, department, created_at, status, created_by)
+            VALUES (?, ?, ?, ?, ?, ?, 'pending', ?)
         """,
-            (patient_name, patient_hash, workflow_id, file_path, department, created_at),
+            (patient_name, patient_hash, workflow_id, file_path, department, created_at, created_by),
         )
 
         logger.info(f"DB RESERVE (PENDING): {patient_name} ({patient_hash}) -> {workflow_id}")
         logger.info(f"   File: {file_path}")
         if department:
             logger.info(f"   Department: {department}")
+        if created_by:
+            logger.info(f"   Created by: {created_by}")
 
 
 async def commit_workflow_mapping_db(workflow_id: str):
@@ -222,25 +244,37 @@ async def rollback_workflow_mapping_db(workflow_id: str):
             logger.info(f"DB ROLLBACK (DELETED): {workflow_id}")
 
 
-async def get_patient_by_workflow_db(workflow_id: str) -> Optional[dict]:
+async def get_patient_by_workflow_db(workflow_id: str, user_id: Optional[str] = None) -> Optional[dict]:
     """
     Get patient info by workflow ID from SQLite.
 
     Args:
         workflow_id: Workflow ID
+        user_id: If provided, only return the record if it belongs to this user
+                 (or has no owner, i.e. legacy data). Pass None to skip filtering.
 
     Returns:
         Patient mapping dict or None
     """
     async with get_db_connection() as conn:
-        cursor = await conn.execute(
-            """
-            SELECT patient_name, patient_hash, workflow_id, file_path, department, created_at, status
-            FROM patient_workflow_mappings
-            WHERE workflow_id = ?
-        """,
-            (workflow_id,),
-        )
+        if user_id is not None:
+            cursor = await conn.execute(
+                """
+                SELECT patient_name, patient_hash, workflow_id, file_path, department, created_at, status, created_by
+                FROM patient_workflow_mappings
+                WHERE workflow_id = ? AND (created_by = ? OR created_by IS NULL)
+            """,
+                (workflow_id, user_id),
+            )
+        else:
+            cursor = await conn.execute(
+                """
+                SELECT patient_name, patient_hash, workflow_id, file_path, department, created_at, status, created_by
+                FROM patient_workflow_mappings
+                WHERE workflow_id = ?
+            """,
+                (workflow_id,),
+            )
 
         row = await cursor.fetchone()
         if row:
@@ -248,7 +282,7 @@ async def get_patient_by_workflow_db(workflow_id: str) -> Optional[dict]:
         return None
 
 
-async def get_workflows_by_patient_hash_db(patient_hash: str) -> list:
+async def get_workflows_by_patient_hash_db(patient_hash: str, user_id: Optional[str] = None) -> list:
     """
     Get all active workflows for a patient by hash from SQLite.
 
@@ -256,20 +290,33 @@ async def get_workflows_by_patient_hash_db(patient_hash: str) -> list:
 
     Args:
         patient_hash: 8-char patient hash
+        user_id: If provided, only return workflows belonging to this user
+                 (or with no owner). Pass None to skip filtering (admin).
 
     Returns:
         List of workflow mapping dicts
     """
     async with get_db_connection() as conn:
-        cursor = await conn.execute(
-            """
-            SELECT patient_name, patient_hash, workflow_id, file_path, department, created_at, status
-            FROM patient_workflow_mappings
-            WHERE patient_hash = ? AND status = 'active'
-            ORDER BY created_at DESC
-        """,
-            (patient_hash,),
-        )
+        if user_id is not None:
+            cursor = await conn.execute(
+                """
+                SELECT patient_name, patient_hash, workflow_id, file_path, department, created_at, status, created_by
+                FROM patient_workflow_mappings
+                WHERE patient_hash = ? AND status = 'active' AND (created_by = ? OR created_by IS NULL)
+                ORDER BY created_at DESC
+            """,
+                (patient_hash, user_id),
+            )
+        else:
+            cursor = await conn.execute(
+                """
+                SELECT patient_name, patient_hash, workflow_id, file_path, department, created_at, status, created_by
+                FROM patient_workflow_mappings
+                WHERE patient_hash = ? AND status = 'active'
+                ORDER BY created_at DESC
+            """,
+                (patient_hash,),
+            )
 
         rows: list = list(await cursor.fetchall())
 
@@ -279,26 +326,39 @@ async def get_workflows_by_patient_hash_db(patient_hash: str) -> list:
         return [dict(row) for row in rows]
 
 
-async def get_patient_name_by_hash_db(patient_hash: str) -> Optional[str]:
+async def get_patient_name_by_hash_db(patient_hash: str, user_id: Optional[str] = None) -> Optional[str]:
     """
     Get patient name by hash from SQLite.
 
     Args:
         patient_hash: 8-char patient hash
+        user_id: If provided, only match records belonging to this user
+                 (or with no owner). Pass None to skip filtering (admin).
 
     Returns:
         Plain text patient name or None
     """
     async with get_db_connection() as conn:
-        cursor = await conn.execute(
-            """
-            SELECT patient_name
-            FROM patient_workflow_mappings
-            WHERE patient_hash = ?
-            LIMIT 1
-        """,
-            (patient_hash,),
-        )
+        if user_id is not None:
+            cursor = await conn.execute(
+                """
+                SELECT patient_name
+                FROM patient_workflow_mappings
+                WHERE patient_hash = ? AND (created_by = ? OR created_by IS NULL)
+                LIMIT 1
+            """,
+                (patient_hash, user_id),
+            )
+        else:
+            cursor = await conn.execute(
+                """
+                SELECT patient_name
+                FROM patient_workflow_mappings
+                WHERE patient_hash = ?
+                LIMIT 1
+            """,
+                (patient_hash,),
+            )
 
         row = await cursor.fetchone()
         if row:
@@ -306,27 +366,48 @@ async def get_patient_name_by_hash_db(patient_hash: str) -> Optional[str]:
         return None
 
 
-async def get_all_patients_db() -> list:
+async def get_all_patients_db(user_id: Optional[str] = None) -> list:
     """
     Get summary of all patients with active workflow counts.
 
     Only counts workflows with status='active' (excludes pending/failed).
 
+    Args:
+        user_id: If provided, only return patients belonging to this user
+                 (or with no owner, i.e. legacy data). Pass None to skip
+                 filtering (admin).
+
     Returns:
         List of patient summaries
     """
     async with get_db_connection() as conn:
-        cursor = await conn.execute("""
-            SELECT
-                patient_hash,
-                patient_name,
-                COUNT(*) as workflow_count,
-                MAX(created_at) as latest_workflow
-            FROM patient_workflow_mappings
-            WHERE status = 'active'
-            GROUP BY patient_hash
-            ORDER BY latest_workflow DESC
-        """)
+        if user_id is not None:
+            cursor = await conn.execute(
+                """
+                SELECT
+                    patient_hash,
+                    patient_name,
+                    COUNT(*) as workflow_count,
+                    MAX(created_at) as latest_workflow
+                FROM patient_workflow_mappings
+                WHERE status = 'active' AND (created_by = ? OR created_by IS NULL)
+                GROUP BY patient_hash
+                ORDER BY latest_workflow DESC
+            """,
+                (user_id,),
+            )
+        else:
+            cursor = await conn.execute("""
+                SELECT
+                    patient_hash,
+                    patient_name,
+                    COUNT(*) as workflow_count,
+                    MAX(created_at) as latest_workflow
+                FROM patient_workflow_mappings
+                WHERE status = 'active'
+                GROUP BY patient_hash
+                ORDER BY latest_workflow DESC
+            """)
 
         rows = await cursor.fetchall()
         return [dict(row) for row in rows]

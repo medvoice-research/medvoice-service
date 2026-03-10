@@ -35,21 +35,10 @@ _diarization_cache_misses = 0
 
 
 def get_diarization_model(device_param: str = None) -> DiarizationPipeline:
-    """
-    Get cached diarization model, loading only if necessary.
+    """Get cached diarization model, loading only if necessary.
 
     Thread-safe singleton pattern for model caching to eliminate 5-10 second
-    loading overhead on every request.
-
-    Args:
-        device_param: Device to load model on (cuda/cpu). Defaults to Config.DEVICE.
-
-    Returns:
-        Cached DiarizationPipeline instance
-
-    Raises:
-        RuntimeError: If model loading fails from both HuggingFace Hub and local path
-    """
+    loading overhead on every request."""
     global _diarization_model_cache, _diarization_model_lock, _diarization_cache_hits, _diarization_cache_misses
 
     device_param = device_param or Config.DEVICE
@@ -133,12 +122,7 @@ def clear_diarization_model_cache() -> None:
 
 
 def get_diarization_cache_status() -> dict:
-    """
-    Get status of diarization model cache.
-
-    Returns:
-        Dictionary with cache status information
-    """
+    """Get status of diarization model cache."""
     global _diarization_model_cache, _diarization_cache_hits, _diarization_cache_misses
 
     total_requests = _diarization_cache_hits + _diarization_cache_misses
@@ -176,29 +160,10 @@ def get_transcription_model(
     task: str = "transcribe",
     threads: int = 4,
 ):
-    """
-    Get cached transcription model, loading only if necessary.
+    """Get cached transcription model, loading only if necessary.
 
     Thread-safe singleton pattern for model caching to eliminate 5-10 second
-    loading overhead on every request.
-
-    Args:
-        model_name: Name of the Whisper model to use
-        device_param: Device to load model on (cuda/cpu)
-        device_index: Device index for FasterWhisper
-        compute_type_param: Compute type for computation
-        asr_options: ASR options for the model
-        vad_options: VAD options for the model
-        language: Language code
-        task: Task type (transcribe/translate)
-        threads: Number of threads
-
-    Returns:
-        Cached Whisper model instance
-
-    Raises:
-        RuntimeError: If model loading fails
-    """
+    loading overhead on every request."""
     global _transcription_model_cache, _transcription_model_lock, _transcription_cache_hits, _transcription_cache_misses
 
     compute_type_param = compute_type_param or compute_type
@@ -302,22 +267,9 @@ _alignment_cache_misses = 0
 
 
 def get_alignment_model(language_code: str, device_param: str, model_name: str = None):
-    """
-    Get cached alignment model, loading only if necessary.
+    """Get cached alignment model, loading only if necessary.
 
-    Thread-safe singleton pattern for model caching.
-
-    Args:
-        language_code: Language code for alignment
-        device_param: Device to load model on (cuda/cpu)
-        model_name: Optional specific model name
-
-    Returns:
-        Tuple of (cached alignment model, metadata)
-
-    Raises:
-        RuntimeError: If model loading fails
-    """
+    Thread-safe singleton pattern for model caching."""
     global _alignment_model_cache, _alignment_model_lock, _alignment_cache_hits, _alignment_cache_misses
 
     cache_key = f"alignment_{language_code}_{device_param}_{model_name or 'default'}"
@@ -397,15 +349,7 @@ def get_alignment_cache_status() -> dict:
 
 
 def check_gpu_memory_pressure(threshold: float = 0.9) -> bool:
-    """
-    Check if GPU memory usage exceeds threshold.
-
-    Args:
-        threshold: Memory usage threshold (0.0 to 1.0)
-
-    Returns:
-        True if memory pressure detected, False otherwise
-    """
+    """Check if GPU memory usage exceeds threshold."""
     if not torch.cuda.is_available():
         return False
 
@@ -480,24 +424,10 @@ def transcribe_with_whisper(
     compute_type: str = compute_type,
     threads: int = 0,
 ):
-    """
-    Transcribe an audio file using cached Whisper model.
+    """Transcribe an audio file using cached Whisper model.
 
     Uses thread-safe model caching to eliminate 5-10 second loading overhead
-    on every request.
-
-    Args:
-       audio (Audio): The audio to transcribe.
-       batch_size (int): Batch size for transcription (default 16).
-       chunk_size (int): Chunk size for transcription (default 20).
-       model (str): Name of the Whisper model to use.
-       device (str): Device to use for PyTorch inference.
-       device_index (int): Device index to use for FasterWhisper inference.
-       compute_type (str): Compute type for computation.
-
-    Returns:
-       Transcript: The transcription result.
-    """
+    on every request."""
     logger.debug(
         "Starting transcription with Whisper model: %s on device: %s",
         WHISPER_MODEL,
@@ -564,25 +494,10 @@ def transcribe_with_whisper(
 
 
 def diarize(audio, device: str = None, min_speakers=None, max_speakers=None):
-    """
-    Diarize audio using cached model.
+    """Diarize audio using cached model.
 
     Uses thread-safe model caching to eliminate 5-10 second loading overhead
-    on every request.
-
-    Args:
-        audio: Audio array to diarize
-        device: Device to use (cuda/cpu). Defaults to Config.DEVICE
-        min_speakers: Minimum number of speakers
-        max_speakers: Maximum number of speakers
-
-    Returns:
-        Diarization result DataFrame
-
-    Raises:
-        ValueError: If HF_TOKEN is not set
-        RuntimeError: If model loading fails
-    """
+    on every request."""
     device = device or Config.DEVICE
     logger.debug(f"Starting diarization with device: {device}")
 
@@ -627,22 +542,9 @@ def align_whisper_output(
     interpolate_method: str = "nearest",
     return_char_alignments: bool = False,
 ):
-    """
-    Align the transcript to the original audio using cached alignment model.
+    """Align the transcript to the original audio using cached alignment model.
 
-    Uses thread-safe model caching to eliminate loading overhead on every request.
-
-    Args:
-       transcript: The text transcript.
-       audio: The original audio.
-       language_code: The language code.
-       align_model: Name of phoneme-level ASR model to do alignment.
-       interpolate_method: For word .srt, method to assign timestamps to non-aligned words, or merge them into neighboring.
-       return_char_alignments: Whether to return character-level alignments in the output json file.
-
-    Returns:
-       The aligned transcript.
-    """
+    Uses thread-safe model caching to eliminate loading overhead on every request."""
     logger.debug(
         "Starting alignment for language code: %s on device: %s",
         language_code,

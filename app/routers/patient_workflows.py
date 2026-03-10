@@ -1,12 +1,21 @@
 """Additional Temporal workflow query endpoints for patient-based access."""
 
-from fastapi import APIRouter, Query, HTTPException
-from typing import Optional
+from typing import Any, Dict, Optional
+
+from fastapi import APIRouter, Depends, Query, HTTPException
 from ..temporal.manager import temporal_manager
 from ..logger import logger
+from ..auth.dependencies import get_current_user
 from ..patients.mapping import get_workflows_by_patient_hash
 
 router = APIRouter(prefix="/temporal")
+
+
+def _extract_user_id(current_user: Dict[str, Any]) -> str | None:
+    """Return user_id for query scoping; administrators get None (no filter)."""
+    if current_user.get("role") == "administrator":
+        return None
+    return current_user.get("user_id")
 
 
 @router.get("/patient/{patient_hash}/workflows", tags=["Temporal"])
@@ -15,33 +24,16 @@ async def get_patient_workflows(
     status: Optional[str] = Query(None, description="Filter by workflow status (RUNNING, COMPLETED, FAILED)"),
     limit: int = Query(20, ge=1, le=100, description="Maximum number of workflows to return (1-100)"),
     offset: int = Query(0, ge=0, description="Number of workflows to skip for pagination"),
+    current_user: Dict[str, Any] = Depends(get_current_user),
 ):
-    """
-    List workflows for a specific patient with pagination.
+    """List workflows for a specific patient with pagination.
 
     Uses SQLite database for instant results (no Temporal indexing delay).
-    Pagination limits the number of Temporal API calls for better performance.
-
-    Args:
-        patient_hash: 8-character patient hash from filename/workflow ID
-        status: Optional workflow status filter (RUNNING, COMPLETED, FAILED)
-        limit: Maximum workflows to return per request (default: 20, max: 100)
-        offset: Number of workflows to skip (for pagination)
-
-    Returns:
-        Paginated list of workflows with metadata including:
-        - total_count: Total workflows in database for this patient
-        - filtered_count: Workflows matching status filter (equals total_count if no filter)
-        - returned_count: Number of workflows in this page
-
-    Example:
-        GET /temporal/patient/abc12345/workflows?limit=10&offset=0  # First 10
-        GET /temporal/patient/abc12345/workflows?limit=10&offset=10  # Next 10
-        GET /temporal/patient/abc12345/workflows?status=COMPLETED  # Only completed
-    """
+    Pagination limits the number of Temporal API calls for better performance."""
     try:
         # Query SQLite database for workflows
-        db_workflows = await get_workflows_by_patient_hash(patient_hash)
+        uid = _extract_user_id(current_user)
+        db_workflows = await get_workflows_by_patient_hash(patient_hash, user_id=uid)
 
         if not db_workflows:
             return {
@@ -132,21 +124,17 @@ async def get_patient_workflows(
 
 
 @router.get("/patient/{patient_hash}/latest", tags=["Temporal"])
-async def get_patient_latest_workflow(patient_hash: str):
-    """
-    Get the latest workflow for a specific patient.
+async def get_patient_latest_workflow(
+    patient_hash: str,
+    current_user: Dict[str, Any] = Depends(get_current_user),
+):
+    """Get the latest workflow for a specific patient.
 
-    Returns the most recent workflow based on created_at timestamp.
-
-    Args:
-        patient_hash: 8-character patient hash from filename/workflow ID
-
-    Returns:
-        Latest workflow info or 404 if no workflows found
-    """
+    Returns the most recent workflow based on created_at timestamp."""
     try:
         # Query SQLite database for workflows
-        db_workflows = await get_workflows_by_patient_hash(patient_hash)
+        uid = _extract_user_id(current_user)
+        db_workflows = await get_workflows_by_patient_hash(patient_hash, user_id=uid)
 
         if not db_workflows:
             raise HTTPException(status_code=404, detail=f"No workflows found for patient hash: {patient_hash}")

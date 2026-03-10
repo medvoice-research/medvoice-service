@@ -18,16 +18,6 @@ class HIPAAEncryption:
     """AES-256-GCM encryption for HIPAA compliance."""
 
     def __init__(self, master_key: bytes = None, salt: bytes = None):
-        """
-        Initialize encryption with master key.
-
-        Args:
-            master_key: Master encryption key (loads from environment if None)
-            salt: Salt for key derivation (generates if None)
-
-        Raises:
-            ValueError: If master key is not provided and not in environment
-        """
         self.backend = default_backend()
         self.master_key = master_key or self._load_master_key()
         self.salt = salt or self._generate_salt()
@@ -61,16 +51,7 @@ class HIPAAEncryption:
         return os.urandom(16)
 
     def _derive_key(self, context: str, salt: bytes = None) -> Tuple[bytes, bytes]:
-        """
-        Derive context-specific encryption key using PBKDF2.
-
-        Args:
-            context: Context string (e.g., patient_id, consultation_id)
-            salt: Salt for key derivation (uses instance salt if None)
-
-        Returns:
-            Tuple of (derived_key, salt_used)
-        """
+        """Derive context-specific encryption key using PBKDF2."""
         if salt is None:
             salt = self.salt
 
@@ -89,16 +70,7 @@ class HIPAAEncryption:
         return derived_key, salt
 
     def encrypt_phi(self, plaintext: str, context: str) -> Dict[str, str]:
-        """
-        Encrypt PHI data with context-specific key.
-
-        Args:
-            plaintext: PHI text to encrypt
-            context: Context for key derivation (e.g., patient_id)
-
-        Returns:
-            Dictionary with encrypted data and metadata
-        """
+        """Encrypt PHI data with context-specific key."""
         try:
             # Derive context-specific key
             key, salt = self._derive_key(context)
@@ -128,16 +100,7 @@ class HIPAAEncryption:
             raise ValueError(f"Failed to encrypt PHI: {e}")
 
     def decrypt_phi(self, encrypted_data: Dict[str, str], context: str) -> str:
-        """
-        Decrypt PHI data using context-specific key.
-
-        Args:
-            encrypted_data: Dictionary from encrypt_phi()
-            context: Same context used for encryption
-
-        Returns:
-            Decrypted plaintext
-        """
+        """Decrypt PHI data using context-specific key."""
         try:
             # Validate required fields
             required_fields = ["ciphertext", "iv", "tag", "salt"]
@@ -168,15 +131,7 @@ class HIPAAEncryption:
             raise ValueError(f"Failed to decrypt PHI: {e}")
 
     def encrypt_patient_id(self, patient_id: str) -> str:
-        """
-        Encrypt patient identifier for storage.
-
-        Args:
-            patient_id: Patient identifier (MRN, SSN, etc.)
-
-        Returns:
-            Encrypted patient ID (base64 encoded)
-        """
+        """Encrypt patient identifier for storage."""
         # Use patient ID as both context and data for consistency
         encrypted = self.encrypt_phi(patient_id, f"patient_id_{patient_id}")
 
@@ -185,15 +140,6 @@ class HIPAAEncryption:
         return base64.b64encode(combined.encode("utf-8")).decode("utf-8")
 
     def decrypt_patient_id(self, encrypted_patient_id: str) -> str:
-        """
-        Decrypt patient identifier.
-
-        Args:
-            encrypted_patient_id: Encrypted patient ID from encrypt_patient_id()
-
-        Returns:
-            Decrypted patient ID
-        """
         try:
             # Decode combined format
             combined = base64.b64decode(encrypted_patient_id).decode("utf-8")
@@ -219,31 +165,12 @@ class HIPAAEncryption:
             raise ValueError(f"Invalid encrypted patient ID: {e}")
 
     def generate_secure_id(self, prefix: str = "", length: int = 16) -> str:
-        """
-        Generate cryptographically secure identifier.
-
-        Args:
-            prefix: Optional prefix for the ID
-            length: Number of random bytes (before hex encoding)
-
-        Returns:
-            Secure identifier string
-        """
         random_bytes = os.urandom(length)
         identifier = hashlib.sha256(random_bytes).hexdigest()[: length * 2]
         return f"{prefix}{identifier}" if prefix else identifier
 
     def hash_phi(self, phi_text: str, salt: str = None) -> str:
-        """
-        Generate irreversible hash of PHI for comparison.
-
-        Args:
-            phi_text: PHI text to hash
-            salt: Optional salt (uses default if None)
-
-        Returns:
-            SHA-256 hash of PHI
-        """
+        """Generate irreversible hash of PHI for comparison."""
         if salt is None:
             salt = base64.b64encode(self.salt).decode("utf-8")
 
@@ -252,41 +179,16 @@ class HIPAAEncryption:
         return hashlib.sha256(combined.encode("utf-8")).hexdigest()
 
     def verify_phi_hash(self, phi_text: str, stored_hash: str, salt: str = None) -> bool:
-        """
-        Verify PHI text against stored hash.
-
-        Args:
-            phi_text: PHI text to verify
-            stored_hash: Previously stored hash
-            salt: Salt used for original hashing
-
-        Returns:
-            True if PHI matches hash, False otherwise
-        """
         current_hash = self.hash_phi(phi_text, salt)
         return current_hash == stored_hash
 
     @classmethod
     def generate_master_key(cls) -> str:
-        """
-        Generate a new master key for HIPAA encryption.
-
-        Returns:
-            Base64-encoded master key (32 bytes)
-        """
         master_key = os.urandom(32)
         return base64.b64encode(master_key).decode("utf-8")
 
     def validate_encryption_integrity(self, encrypted_data: Dict[str, str]) -> bool:
-        """
-        Validate encrypted data structure and format.
-
-        Args:
-            encrypted_data: Encrypted data dictionary
-
-        Returns:
-            True if format is valid, False otherwise
-        """
+        """Validate encrypted data structure and format."""
         try:
             required_fields = ["ciphertext", "iv", "tag", "salt", "algorithm"]
 

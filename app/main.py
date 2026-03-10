@@ -15,6 +15,8 @@ from scalar_fastapi import get_scalar_api_reference
 from .config import Config
 from .logger import logger
 from .auth.dependencies import get_current_user
+from .middleware.auth_middleware import AuthMiddleware
+from .middleware.rate_limit_middleware import RateLimitMiddleware
 from .routers import medical, patient_workflows, stt, stt_services, temporal_tasks
 from .routers import admin
 from .routers.auth import auth_router
@@ -27,13 +29,9 @@ load_dotenv()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """
-    Lifespan context manager for the FastAPI application.
+    """Lifespan context manager for the FastAPI application.
     This function is used to perform startup and shutdown tasks for the FastAPI application.
-    It initializes the patient database, saves the OpenAPI JSON, and connects to the Temporal server.
-    Args:
-        app (FastAPI): The FastAPI application instance.
-    """
+    It initializes the patient database, saves the OpenAPI JSON, and connects to the Temporal server."""
     # Initialize patient database
     from .patients.database import init_db
 
@@ -218,6 +216,12 @@ This API uses Temporal.io for workflow orchestration, ensuring:
 
 # Add trace middleware
 app.add_middleware(TraceMiddleware)
+
+# Add auth middleware (registered first → runs last in LIFO order, after rate limiting)
+app.add_middleware(AuthMiddleware)
+
+# Add rate limit middleware (registered second → runs first in LIFO order)
+app.add_middleware(RateLimitMiddleware)
 
 # Include routers
 app.include_router(auth_router)

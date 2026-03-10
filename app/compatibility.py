@@ -36,14 +36,7 @@ COMPATIBILITY_ISSUES = {
 
 
 def check_library_version(library_name: str) -> Optional[str]:
-    """Check the installed version of a library.
-
-    Args:
-        library_name: Name of the library to check
-
-    Returns:
-        Version string if library is installed, None otherwise
-    """
+    """Check the installed version of a library."""
     try:
         lib = importlib.import_module(library_name)
         return getattr(lib, "__version__", "unknown")
@@ -52,11 +45,7 @@ def check_library_version(library_name: str) -> Optional[str]:
 
 
 def check_cuda_libraries() -> List[str]:
-    """Check for missing CUDA libraries.
-
-    Returns:
-        List of missing library names
-    """
+    """Check for missing CUDA libraries."""
     cuda_libs = ["libcudnn_ops_infer.so.8", "libcudnn.so.8", "libcublas.so.11"]
 
     missing_libs = []
@@ -100,11 +89,7 @@ def check_cuda_libraries() -> List[str]:
 
 
 def check_compatibility() -> Dict[str, Dict[str, str]]:
-    """Perform compatibility checks and return issues found.
-
-    Returns:
-        Dictionary of issues found with their details
-    """
+    """Perform compatibility checks and return issues found."""
     issues = {}
 
     # Only check CUDA libraries when using Linux

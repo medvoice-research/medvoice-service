@@ -10,15 +10,7 @@ from .files import VIDEO_EXTENSIONS
 
 
 def convert_video_to_audio(file):
-    """
-    Convert a video file to an audio file.
-
-    Args:
-        file (str): The path to the video file.
-
-    Returns:
-        str: The path to the audio file.
-    """
+    """Convert a video file to an audio file."""
     # Use shared uploads directory for Docker environment
     # This ensures files are accessible across containers
     uploads_dir = "/tmp/uploads"
@@ -50,14 +42,7 @@ def convert_video_to_audio(file):
 
 
 def process_audio_file(audio_file):
-    """
-    Check file if it is audio file, if it is video file, convert it to audio file.
-
-    Args:
-        audio_file (str): The path to the audio file.
-    Returns:
-        Audio: The processed audio.
-    """
+    """Check file if it is audio file, if it is video file, convert it to audio file."""
     # Get the file extension
     _, file_extension = os.path.splitext(audio_file)
     file_extension = file_extension.lower()
@@ -70,12 +55,5 @@ def process_audio_file(audio_file):
 
 
 def get_audio_duration(audio):
-    """
-    Get the duration of the audio file.
-
-    Args:
-        audio_file (str): The path to the audio file.
-    Returns:
-        float: The duration of the audio file.
-    """
+    """Get the duration of the audio file."""
     return len(audio) / SAMPLE_RATE
