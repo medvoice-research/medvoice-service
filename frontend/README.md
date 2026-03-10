@@ -1,85 +1,124 @@
-# Next.js SaaS Starter
+# MedVoice Portal — Frontend
 
-This is a starter template for building a SaaS application using **Next.js** with support for authentication, Stripe integration for payments, and a dashboard for logged-in users.
-
-**Demo: [https://next-saas-start.vercel.app/](https://next-saas-start.vercel.app/)**
-
-## Features
-
-- Activity logging system for any user events
-- Global middleware to protect logged-in routes
-- Local middleware to protect Server Actions or validate Zod schemas
-- Activity logging system for any user events
+Next.js clinical portal for the MedVoice Service. Provides authentication, a dashboard for audio consultation management, patient records, and an AI-powered medical assistant — all proxied through a secure API layer to the FastAPI backend.
 
 ## Tech Stack
 
-- **Framework**: [Next.js](https://nextjs.org/)
-- **Database**: [Postgres](https://www.postgresql.org/)
-- **ORM**: [Drizzle](https://orm.drizzle.team/)
-- **UI Library**: [shadcn/ui](https://ui.shadcn.com/)
+| Layer | Technology |
+|-------|-----------|
+| Framework | [Next.js 15](https://nextjs.org/) (Turbopack) |
+| Language | TypeScript |
+| Database | PostgreSQL via [Drizzle ORM](https://orm.drizzle.team/) |
+| Auth | JWT sessions (`jose`) with global middleware |
+| UI | [shadcn/ui](https://ui.shadcn.com/) + [Radix UI](https://www.radix-ui.com/) + [Tailwind CSS v4](https://tailwindcss.com/) |
+| Icons | [Lucide React](https://lucide.dev/) |
+| Data Fetching | [SWR](https://swr.vercel.app/) |
+| Unit Tests | [Vitest](https://vitest.dev/) + Testing Library |
+| E2E Tests | [Playwright](https://playwright.dev/) |
+| Validation | [Zod](https://zod.dev/) |
+
+## Features
+
+- **JWT Authentication** — Sign-in / sign-up with bcrypt password hashing and cookie-based JWT sessions
+- **Route Protection** — Global Next.js middleware guards `/dashboard` routes
+- **Team Management** — Multi-user teams with roles, invitations, and activity logging
+- **MedVoice API Proxy** — Server-side proxy routes forward requests to the FastAPI backend, keeping `BACKEND_URL` hidden from the client
+- **Dashboard Pages**
+  - **Overview** — System health and database statistics
+  - **Upload Consultation** — Upload audio for transcription (with WhisperX model selection)
+  - **My Consultations** — Monitor workflow status and view results
+  - **Patient Records** — Browse patient data and consultation history
+  - **Medical Assistant** — RAG-powered AI chat per patient
+- **Responsive Sidebar** — Collapsible navigation with mobile bottom-bar fallback
+- **HIPAA Compliance Indicators** — UI badge and audit-ready activity logging
 
 ## Getting Started
 
+### Prerequisites
+
+- **Node.js** ≥ 20
+- **pnpm** (via corepack: `corepack enable`)
+- **PostgreSQL** instance (shared with root project or standalone)
+
+### Setup
+
 ```bash
-git clone https://github.com/nextjs/saas-starter
-cd saas-starter
+cd frontend
+
+# Install dependencies
 pnpm install
+
+# Configure environment
+cp .env.example .env
+# Edit .env — set POSTGRES_URL, AUTH_SECRET, BACKEND_URL
 ```
 
-## Running Locally
-
-Use the included setup script to create your `.env` file:
+### Database
 
 ```bash
-pnpm db:setup
-```
+# Generate migrations from Drizzle schema
+pnpm db:generate
 
-Run the database migrations and seed the database with a default user and team:
-
-```bash
+# Run migrations
 pnpm db:migrate
+
+# Seed default user and team
 pnpm db:seed
 ```
 
-This will create the following user and team:
+Default seed credentials:
 
-- User: `test@test.com`
-- Password: `admin123`
+| Field | Value |
+|-------|-------|
+| Email | `test@test.com` |
+| Password | `admin123` |
 
-You can also create new users through the `/sign-up` route.
-
-Finally, run the Next.js development server:
+### Development
 
 ```bash
 pnpm dev
+# → http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser to see the app in action.
+### Docker
 
-## Going to Production
+```bash
+# Using make at root directory (Recommended)
+make build
+make up
+make pgweb
 
-When you're ready to deploy your SaaS application to production, follow these steps:
+# Or using docker
+docker build -f Dockerfile.nextjs -t medvoice-portal .
+docker run -p 3000:3000 --env-file .env medvoice-portal
+```
 
-### Deploy to Vercel
+## Environment Variables
 
-1. Push your code to a GitHub repository.
-2. Connect your repository to [Vercel](https://vercel.com/) and deploy it.
-3. Follow the Vercel deployment process, which will guide you through setting up your project.
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `POSTGRES_URL` | PostgreSQL connection string | `postgresql://postgres:postgres@localhost:5432/medvoice_portal` |
+| `AUTH_SECRET` | JWT signing secret (shared with backend) | `random-auth-secret` |
+| `BASE_URL` | Frontend origin | `http://localhost:3000` |
+| `BACKEND_URL` | MedVoice FastAPI backend URL | `http://localhost:8000` |
 
-### Add environment variables
+## Scripts
 
-In your Vercel project settings (or during deployment), add all the necessary environment variables. Make sure to update the values for the production environment, including:
+| Command | Description |
+|---------|-------------|
+| `pnpm dev` | Start dev server (Turbopack) |
+| `pnpm build` | Production build |
+| `pnpm start` | Start production server |
+| `pnpm test` | Run unit tests (Vitest) |
+| `pnpm e2e-test` | Run E2E tests (Playwright) |
+| `pnpm lint` | ESLint |
+| `pnpm typecheck` | TypeScript type check |
+| `pnpm db:setup` | Interactive `.env` generator |
+| `pnpm db:generate` | Generate Drizzle migrations |
+| `pnpm db:migrate` | Apply migrations |
+| `pnpm db:seed` | Seed database |
+| `pnpm db:studio` | Open Drizzle Studio |
 
-1. `BASE_URL`: Set this to your production domain.
-2. `POSTGRES_URL`: Set this to your production database URL.
-3. `AUTH_SECRET`: Set this to a random string. `openssl rand -base64 32` will generate one.
+## License
 
-## Other Templates
-
-While this template is intentionally minimal and to be used as a learning resource, there are other paid versions in the community which are more full-featured:
-
-- https://achromatic.dev
-- https://shipfa.st
-- https://makerkit.dev
-- https://zerotoshipped.com
-- https://turbostarter.dev
+MIT
