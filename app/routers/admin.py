@@ -133,13 +133,16 @@ async def get_database_stats(
         unique_patients = row[0] if row else 0
 
         if uid is not None:
-            cursor = await conn.execute("""
+            cursor = await conn.execute(
+                """
                 SELECT patient_name, patient_hash, workflow_id, created_at
                 FROM patient_workflow_mappings
                 WHERE (created_by = ? OR created_by IS NULL)
                 ORDER BY created_at DESC
                 LIMIT 5
-            """, (uid,))
+            """,
+                (uid,),
+            )
         else:
             cursor = await conn.execute("""
                 SELECT patient_name, patient_hash, workflow_id, created_at

@@ -382,7 +382,8 @@ async def get_all_patients_db(user_id: Optional[str] = None) -> list:
     """
     async with get_db_connection() as conn:
         if user_id is not None:
-            cursor = await conn.execute("""
+            cursor = await conn.execute(
+                """
                 SELECT
                     patient_hash,
                     patient_name,
@@ -392,7 +393,9 @@ async def get_all_patients_db(user_id: Optional[str] = None) -> list:
                 WHERE status = 'active' AND (created_by = ? OR created_by IS NULL)
                 GROUP BY patient_hash
                 ORDER BY latest_workflow DESC
-            """, (user_id,))
+            """,
+                (user_id,),
+            )
         else:
             cursor = await conn.execute("""
                 SELECT
