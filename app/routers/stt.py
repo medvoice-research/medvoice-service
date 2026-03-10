@@ -108,13 +108,7 @@ async def speech_to_text(
     ),
     request: Request = None,
 ) -> Response:
-    """
-    Process an uploaded audio file for speech-to-text conversion.
-
-    Args:
-        file: Audio/video file to process
-        patient_name: Required patient full name (will be encrypted internally for HIPAA compliance)
-    """
+    """Process an uploaded audio file for speech-to-text conversion."""
     logger.info("Received file upload request: %s", file.filename)
 
     validate_extension(file.filename, ALLOWED_EXTENSIONS)
@@ -285,13 +279,7 @@ async def speech_to_text_url(
     ),
     request: Request = None,
 ) -> Response:
-    """
-    Process an audio file from a URL for speech-to-text conversion.
-
-    Args:
-        url: Public URL to audio/video file
-        patient_name: Required patient name for HIPAA-compliant workflow tracking
-    """
+    """Process an audio file from a URL for speech-to-text conversion."""
     logger.info("Received URL for processing: %s", url)
 
     # Use shared uploads directory for Docker environment

@@ -110,20 +110,6 @@ class MedicalRAGWorkflow:
 
     @workflow.run
     async def run(self, input_params: dict) -> dict:
-        """
-        Run medical RAG workflow.
-
-        Args:
-            input_params: Dictionary containing:
-                - transcript: Optional pre-transcribed text
-                - audio_path: Optional audio file path (if transcript not provided)
-                - consultation_id: Unique consultation identifier
-                - patient_id_encrypted: Encrypted patient identifier
-                - provider_id: Provider identifier
-                - encounter_date: Date of encounter
-                - medical_options: Medical processing options
-                - transcription_options: Options for audio transcription (if needed)
-        """
         from app.config import Config
 
         consultation_id = input_params.get("consultation_id", f"med_{uuid.uuid4().hex[:8]}")
@@ -288,13 +274,7 @@ class HybridAudioMedicalWorkflow:
 
     @workflow.run
     async def run(self, audio_path: str, params: dict) -> dict:
-        """
-        Run hybrid workflow: WhisperX processing + Medical RAG.
-
-        Args:
-            audio_path: Path to audio/video file
-            params: Dictionary containing both WhisperX and medical parameters
-        """
+        """Run hybrid workflow: WhisperX processing + Medical RAG."""
         consultation_id = params.get("consultation_id", f"hybrid_{uuid.uuid4().hex[:8]}")
         TemporalMetrics.log_workflow_progress("hybrid_workflow_started", consultation_id)
 

@@ -3,7 +3,7 @@
 	stop-temporal stop temporal-fresh check-activities \
 	test unit-test integration-test e2e-test \
 	docker-build docker-up docker-start docker-restart docker-down down \
-	pgweb pgweb-down
+	pgweb pgweb-down trim-docstrings
 
 # Default target - show help
 help:
@@ -36,6 +36,7 @@ help:
 	@echo "Code quality targets:"
 	@echo "  lint              	- Run all linting checks (ruff, yamllint, etc.)"
 	@echo "  format            	- Format code with ruff"
+	@echo "  trim-docstrings   	- Strip verbose Args/Returns sections from docstrings"
 	@echo ""
 	@echo "Testing targets:"
 	@echo "  test              	- Run all tests (unit + integration)"
@@ -106,6 +107,12 @@ format:
 	uv run ruff check app/ tests/ streamlit_app/ --fix --config pyproject.toml
 	uv run ruff format app/ tests/ streamlit_app/ --config pyproject.toml
 	@echo "Code formatting completed"
+
+# Strip verbose Args/Returns/Raises sections from docstrings (skips config files)
+trim-docstrings:
+	@echo "Trimming verbose docstrings..."
+	@uv run python scripts/trim_docstrings.py .
+	@echo ""
 
 # ============================================================================
 # Run targets

@@ -38,19 +38,7 @@ def _client(
     window_seconds: int = 60,
     rate_limited_paths: set[str] | None = None,
 ) -> TestClient:
-    """Build a TestClient with RateLimitMiddleware using specified config values.
-
-    The TestClient is created while Config patches are active so the middleware
-    instance picks up the overridden values in its __init__.
-
-    Args:
-        max_requests: Max requests per window per IP.
-        window_seconds: Sliding window length in seconds.
-        rate_limited_paths: Paths to rate-limit (defaults to {'/auth/login'}).
-
-    Returns:
-        Configured TestClient.
-    """
+    """Build a TestClient with RateLimitMiddleware using specified config values."""
     if rate_limited_paths is None:
         rate_limited_paths = _RATE_LIMITED
 

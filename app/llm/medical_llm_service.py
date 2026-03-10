@@ -16,23 +16,10 @@ class MedicalLLMService:
     """High-level medical LLM operations using LM Studio."""
 
     def __init__(self, client: LMStudioClient = None):
-        """Initialize medical LLM service.
-
-        Args:
-            client: LM Studio client. If None, creates a new client with default config.
-        """
         self.client = client or LMStudioClient()
 
     async def detect_phi(self, text: str) -> Dict[str, Any]:
-        """
-        Detect Protected Health Information in text.
-
-        Args:
-            text: Medical consultation transcript
-
-        Returns:
-            Dict with PHI entities and their locations
-        """
+        """Detect Protected Health Information in text."""
         system_prompt = """You are a HIPAA-compliant PHI detection system.
 Identify and extract all Protected Health Information including:
 - Names, addresses, dates
@@ -76,15 +63,7 @@ Be precise with character positions. Set confidence based on certainty."""
             return {"phi_detected": False, "entities": [], "error": str(e)}
 
     async def extract_medical_entities(self, text: str) -> List[Dict[str, Any]]:
-        """
-        Extract medical entities from consultation transcript.
-
-        Args:
-            text: Medical consultation transcript
-
-        Returns:
-            List of entities with type, text, confidence, and normalized terms
-        """
+        """Extract medical entities from consultation transcript."""
         system_prompt = """You are a medical entity extraction system.
 Extract and categorize medical information with ICD-10 codes where possible:
 
@@ -128,15 +107,7 @@ Use standard medical terminology and coding systems."""
             return []
 
     async def generate_soap_note(self, transcript: str) -> Dict[str, str]:
-        """
-        Generate SOAP note from consultation transcript.
-
-        Args:
-            transcript: Medical consultation transcript
-
-        Returns:
-            Dict with Subjective, Objective, Assessment, Plan sections
-        """
+        """Generate SOAP note from consultation transcript."""
         system_prompt = """You are a medical documentation specialist.
 Generate a comprehensive SOAP note from the consultation transcript.
 
@@ -169,15 +140,7 @@ Guidelines:
             return {"subjective": "", "objective": "", "assessment": "", "plan": "", "error": str(e)}
 
     async def detect_phi_in_dialogue(self, dialogue_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Detect Protected Health Information in speaker-attributed dialogue.
-
-        Args:
-            dialogue_data: Structured dialogue with speaker roles from TranscriptionTransformer
-
-        Returns:
-            Dict with PHI entities and their locations, including speaker attribution
-        """
+        """Detect Protected Health Information in speaker-attributed dialogue."""
         system_prompt = """You are a HIPAA-compliant PHI detection system.
 Identify and extract all Protected Health Information from this doctor-patient dialogue including:
 - Names, addresses, dates
@@ -223,15 +186,7 @@ Be precise with character positions. Set confidence based on certainty."""
         return self._parse_phi_response(response)
 
     async def extract_entities_with_speaker(self, dialogue_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """
-        Extract medical entities from speaker-attributed dialogue.
-
-        Args:
-            dialogue_data: Structured dialogue with speaker roles from TranscriptionTransformer
-
-        Returns:
-            List of entities with type, text, confidence, normalized terms, and speaker attribution
-        """
+        """Extract medical entities from speaker-attributed dialogue."""
         system_prompt = """You are a medical entity extraction system.
 Extract and categorize medical information from this doctor-patient dialogue with ICD-10 codes where possible.
 
@@ -276,15 +231,7 @@ Use standard medical terminology and coding systems."""
         return self._parse_entities_response(response)
 
     async def generate_soap_from_dialogue(self, dialogue_data: Dict[str, Any]) -> Dict[str, str]:
-        """
-        Generate SOAP note from speaker-attributed dialogue.
-
-        Args:
-            dialogue_data: Structured dialogue with speaker roles from TranscriptionTransformer
-
-        Returns:
-            Dict with Subjective, Objective, Assessment, Plan sections
-        """
+        """Generate SOAP note from speaker-attributed dialogue."""
         system_prompt = """You are a medical documentation specialist.
 Generate a comprehensive SOAP note from this doctor-patient dialogue.
 
@@ -334,27 +281,11 @@ Speaker Summary:
         return self._parse_soap_response(response)
 
     async def process_speaker_dialogue(self, dialogue_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Process speaker-attributed dialogue through full medical pipeline.
+        """Process speaker-attributed dialogue through full medical pipeline.
 
         This is the main entry point for processing WhisperX-transformed dialogue.
         It orchestrates PHI detection, entity extraction, and SOAP note generation
         with speaker context awareness.
-
-        Args:
-            dialogue_data: Structured dialogue from TranscriptionTransformer containing:
-                - dialogue: List of speaker-attributed segments
-                - speaker_mapping: Role assignments
-                - statistics: Speaking time and counts
-                - metadata: Consultation metadata
-
-        Returns:
-            Dict containing:
-                - phi_detection: PHI entities with speaker attribution
-                - entities: Medical entities with speaker context
-                - soap_note: SOAP note leveraging speaker roles
-                - speaker_mapping: Original speaker role assignments
-                - statistics: Dialogue statistics
         """
         try:
             logger.info("Processing speaker-attributed dialogue through medical pipeline")
@@ -401,15 +332,7 @@ Speaker Summary:
             raise
 
     def _format_dialogue_for_prompt(self, dialogue_data: Dict[str, Any]) -> str:
-        """
-        Format speaker-attributed dialogue for LLM prompt consumption.
-
-        Args:
-            dialogue_data: Structured dialogue with speaker roles
-
-        Returns:
-            Formatted dialogue string optimized for LLM processing
-        """
+        """Format speaker-attributed dialogue for LLM prompt consumption."""
         dialogue_segments = dialogue_data.get("dialogue", [])
 
         if not dialogue_segments:
@@ -428,17 +351,7 @@ Speaker Summary:
     async def structure_medical_document(
         self, transcript: str, phi_data: Dict = None, entities: List[Dict] = None
     ) -> Dict[str, Any]:
-        """
-        Create structured medical document from consultation components.
-
-        Args:
-            transcript: Original consultation transcript
-            phi_data: Detected PHI information
-            entities: Extracted medical entities
-
-        Returns:
-            Structured document with all clinical sections
-        """
+        """Create structured medical document from consultation components."""
         context = f"""
 Original Transcript:
 {transcript}
@@ -505,15 +418,7 @@ Extract all clinically relevant information and organize it properly."""
             }
 
     async def generate_clinical_summary(self, structured_document: Dict[str, Any]) -> str:
-        """
-        Generate a concise clinical summary from structured document.
-
-        Args:
-            structured_document: Structured medical document
-
-        Returns:
-            Concise clinical summary
-        """
+        """Generate a concise clinical summary from structured document."""
         try:
             # Extract key information from structured document
             chief_complaint = structured_document.get("sections", {}).get("chief_complaint", {})

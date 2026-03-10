@@ -19,14 +19,7 @@ from app.middleware.auth_middleware import AuthMiddleware, _DEV_USER
 
 
 def _make_app(auth_enabled: bool = True) -> Starlette:
-    """Build a minimal Starlette app with AuthMiddleware for testing.
-
-    Args:
-        auth_enabled: Whether to enable authentication in Config.
-
-    Returns:
-        Starlette test application.
-    """
+    """Build a minimal Starlette app with AuthMiddleware for testing."""
 
     async def protected_endpoint(request: Request) -> Response:
         user = getattr(request.state, "current_user", None)

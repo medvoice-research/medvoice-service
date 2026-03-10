@@ -11,15 +11,7 @@ class TemporalErrorHandler:
 
     @staticmethod
     def classify_error(error: Exception) -> tuple[bool, str]:
-        """
-        Classify an error as retryable or non-retryable.
-
-        Args:
-            error: The exception to classify
-
-        Returns:
-            Tuple of (is_retryable, error_category)
-        """
+        """Classify an error as retryable or non-retryable."""
         error_msg = str(error).lower()
 
         # Non-retryable errors
@@ -50,18 +42,7 @@ class TemporalErrorHandler:
     def create_application_error(
         error: Exception | str, context: str = "", retryable: bool | None = None, force_non_retryable: bool = False
     ) -> ApplicationError:
-        """
-        Create an ApplicationError with appropriate retry settings.
-
-        Args:
-            error: The original exception or error message
-            context: Additional context for the error
-            retryable: Explicit retryability (None = auto-classify from exception type)
-            force_non_retryable: Force the error to be non-retryable
-
-        Returns:
-            ApplicationError with appropriate retry settings
-        """
+        """Create an ApplicationError with appropriate retry settings."""
         # Handle string errors
         if isinstance(error, str):
             error_message = f"{context}: {error}" if context else error

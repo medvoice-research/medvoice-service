@@ -22,19 +22,7 @@ class DialogueFormatter:
     def format_dialogue(
         self, parsed_data: Dict[str, Any], speaker_mapping: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Convert parsed segments into structured dialogue with speaker roles.
-
-        Args:
-            parsed_data: Parsed WhisperX result from WhisperXParser
-            speaker_mapping: Speaker role mapping from SpeakerIdentifier
-
-        Returns:
-            Structured dialogue data with:
-            - dialogue: List of attributed dialogue segments
-            - speaker_mapping: Enhanced speaker information
-            - statistics: Speaking time and segment counts
-            - metadata: Consultation metadata
-        """
+        """Convert parsed segments into structured dialogue with speaker roles."""
         segments = parsed_data.get("segments", [])
         metadata = parsed_data.get("metadata", {})
 
@@ -88,17 +76,7 @@ class DialogueFormatter:
         include_timestamps: bool = False,
         include_confidence: bool = False,
     ) -> str:
-        """Generate formatted transcript from dialogue.
-
-        Args:
-            dialogue: List of dialogue segments
-            format: Output format (plain, markdown, json)
-            include_timestamps: Include timestamps in output
-            include_confidence: Include confidence scores
-
-        Returns:
-            Formatted transcript string
-        """
+        """Generate formatted transcript from dialogue."""
         if format == "json":
             import json
 
@@ -139,14 +117,7 @@ class DialogueFormatter:
         return "\n".join(lines)
 
     def calculate_statistics(self, dialogue: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate speaking time and segment statistics per speaker.
-
-        Args:
-            dialogue: List of dialogue segments
-
-        Returns:
-            Dictionary with per-speaker statistics and totals
-        """
+        """Calculate speaking time and segment statistics per speaker."""
         speaker_stats = {}
 
         for segment in dialogue:
@@ -208,15 +179,6 @@ class DialogueFormatter:
         }
 
     def generate_speaker_summary(self, speaker_mapping: Dict[str, Dict[str, Any]], statistics: Dict[str, Any]) -> str:
-        """Generate human-readable speaker summary.
-
-        Args:
-            speaker_mapping: Speaker role mapping
-            statistics: Speaking statistics
-
-        Returns:
-            Formatted speaker summary string
-        """
         lines = ["Speaker Summary:", ""]
 
         by_speaker = statistics.get("by_speaker", {})
@@ -243,15 +205,7 @@ class DialogueFormatter:
         return "\n".join(lines)
 
     def format_for_llm_prompt(self, dialogue: List[Dict[str, Any]], max_segments: Optional[int] = None) -> str:
-        """Format dialogue optimized for LLM prompt consumption.
-
-        Args:
-            dialogue: List of dialogue segments
-            max_segments: Maximum segments to include (for context limits)
-
-        Returns:
-            LLM-optimized dialogue string
-        """
+        """Format dialogue optimized for LLM prompt consumption."""
         if max_segments:
             dialogue = dialogue[:max_segments]
 
@@ -269,15 +223,7 @@ class DialogueFormatter:
     def extract_role_specific_content(
         self, dialogue: List[Dict[str, Any]], role: Literal["doctor", "patient", "unknown"]
     ) -> List[str]:
-        """Extract all text spoken by a specific role.
-
-        Args:
-            dialogue: List of dialogue segments
-            role: Speaker role to filter by
-
-        Returns:
-            List of text segments from specified role
-        """
+        """Extract all text spoken by a specific role."""
         content = []
 
         for segment in dialogue:

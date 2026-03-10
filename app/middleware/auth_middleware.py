@@ -35,12 +35,6 @@ def _is_public_path(path: str) -> bool:
       but also ``/health/live`` because ``/health`` is a path segment prefix).
     - The bare ``/`` entry matches only the root path to avoid matching every
       request.
-
-    Args:
-        path: The request path to check.
-
-    Returns:
-        True if the path matches any entry in Config.PUBLIC_PATHS.
     """
     for prefix in Config.PUBLIC_PATHS:
         if prefix == "/":
@@ -58,14 +52,7 @@ def _is_public_path(path: str) -> bool:
 
 
 def _json_401(detail: str) -> Response:
-    """Build a plain HTTP 401 JSON response without going through FastAPI.
-
-    Args:
-        detail: Error message for the response body.
-
-    Returns:
-        Starlette Response with status 401.
-    """
+    """Build a plain HTTP 401 JSON response without going through FastAPI."""
     body = json.dumps({"detail": detail})
     return Response(
         content=body,
@@ -90,15 +77,7 @@ class AuthMiddleware(BaseHTTPMiddleware):
     """
 
     async def dispatch(self, request: Request, call_next: Any) -> Response:
-        """Process request through auth validation.
-
-        Args:
-            request: The incoming HTTP request.
-            call_next: Callable to invoke the next middleware or route handler.
-
-        Returns:
-            The HTTP response, either from the route handler or a 401 error.
-        """
+        """Process request through auth validation."""
         if not Config.ENABLE_AUTHENTICATION:
             request.state.current_user = _DEV_USER
             return await call_next(request)

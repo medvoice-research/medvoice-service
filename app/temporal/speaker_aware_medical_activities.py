@@ -23,21 +23,7 @@ async def transform_to_dialogue_activity(
     manual_speaker_mapping: Optional[Dict[str, str]] = None,
     consultation_metadata: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
-    """
-    Transform WhisperX result to speaker-attributed dialogue.
-
-    Args:
-        whisperx_result: Complete WhisperX transcription result
-        workflow_id: Optional workflow ID for context
-        manual_speaker_mapping: Optional manual speaker role mapping
-        consultation_metadata: Optional consultation metadata
-
-    Returns:
-        Speaker-attributed dialogue data with statistics
-
-    Raises:
-        ApplicationError: If transformation fails
-    """
+    """Transform WhisperX result to speaker-attributed dialogue."""
     from app.services.transcription_transformer import TranscriptionTransformer
 
     async with TemporalMetrics.activity_timer("transform_to_dialogue", workflow_id or "unknown"):
@@ -71,18 +57,7 @@ async def transform_to_dialogue_activity(
 
 @activity.defn
 async def detect_phi_in_dialogue_activity(dialogue_data: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Detect PHI with speaker attribution from dialogue data.
-
-    Args:
-        dialogue_data: Speaker-attributed dialogue from transform activity
-
-    Returns:
-        PHI detection results with speaker attribution
-
-    Raises:
-        ApplicationError: If PHI detection fails or LM Studio unavailable
-    """
+    """Detect PHI with speaker attribution from dialogue data."""
     from app.config import Config
     from app.llm.lm_studio_client import LMStudioClient, LMStudioConfig
     from app.llm.medical_llm_service import MedicalLLMService
@@ -135,18 +110,7 @@ async def detect_phi_in_dialogue_activity(dialogue_data: Dict[str, Any]) -> Dict
 
 @activity.defn
 async def extract_entities_with_speaker_activity(dialogue_data: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Extract medical entities with speaker attribution.
-
-    Args:
-        dialogue_data: Speaker-attributed dialogue from transform activity
-
-    Returns:
-        Medical entities with speaker roles
-
-    Raises:
-        ApplicationError: If entity extraction fails or LM Studio unavailable
-    """
+    """Extract medical entities with speaker attribution."""
     from app.config import Config
     from app.llm.lm_studio_client import LMStudioClient, LMStudioConfig
     from app.llm.medical_llm_service import MedicalLLMService
@@ -214,18 +178,7 @@ async def extract_entities_with_speaker_activity(dialogue_data: Dict[str, Any]) 
 
 @activity.defn
 async def generate_soap_from_dialogue_activity(dialogue_data: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Generate SOAP note from speaker-attributed dialogue.
-
-    Args:
-        dialogue_data: Speaker-attributed dialogue from transform activity
-
-    Returns:
-        SOAP note with proper speaker-based categorization
-
-    Raises:
-        ApplicationError: If SOAP generation fails or LM Studio unavailable
-    """
+    """Generate SOAP note from speaker-attributed dialogue."""
     from app.config import Config
     from app.llm.lm_studio_client import LMStudioClient, LMStudioConfig
     from app.llm.medical_llm_service import MedicalLLMService
@@ -307,25 +260,7 @@ async def store_consultation_with_speaker_data_activity(
     entities_result: Optional[Dict[str, Any]] = None,
     soap_result: Optional[Dict[str, Any]] = None,
 ) -> Dict[str, Any]:
-    """
-    Store consultation in vector database with all speaker-attributed data.
-
-    Args:
-        consultation_id: Unique consultation identifier
-        patient_id_encrypted: Encrypted patient ID
-        provider_id: Healthcare provider ID
-        encounter_date: Date of encounter (ISO format)
-        dialogue_data: Speaker-attributed dialogue
-        phi_result: Optional PHI detection results
-        entities_result: Optional entity extraction results
-        soap_result: Optional SOAP note results
-
-    Returns:
-        Storage confirmation with vector ID
-
-    Raises:
-        ApplicationError: If vector storage fails (retryable)
-    """
+    """Store consultation in vector database with all speaker-attributed data."""
     from app.config import Config
     from app.vector_store.medical_vector_store import MedicalDocumentVectorStore
     from app.llm.lm_studio_client import LMStudioClient, LMStudioConfig

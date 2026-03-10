@@ -21,28 +21,10 @@ def wait_for_workflow_completion(
     return_tuple: bool = False,
     verbose: bool = True,
 ) -> Union[dict, Tuple[str, dict], None]:
-    """
-    Poll Temporal workflow until completion.
+    """Poll Temporal workflow until completion.
 
     This is the shared helper for all integration tests. Use consistent parameters
-    across tests to avoid request storms against the server.
-
-    Args:
-        client: HTTP client instance
-        workflow_id: Temporal workflow ID to poll
-        max_wait: Maximum wait time in seconds (default: 300s = 5 minutes)
-        poll_interval: Polling interval in seconds (default: 30s)
-        return_tuple: If True, return (status, result) tuple instead of just result
-        verbose: If True, print progress messages
-
-    Returns:
-        - If return_tuple=False: Workflow result dict if completed, None if timeout
-        - If return_tuple=True: Tuple of (status, result_or_error_dict)
-
-    Raises:
-        ValueError: If workflow fails and return_tuple=False
-        TimeoutError: If timeout and return_tuple=False
-    """
+    across tests to avoid request storms against the server."""
     elapsed = 0
 
     if verbose:

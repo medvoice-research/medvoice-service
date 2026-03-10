@@ -19,14 +19,7 @@ _request_log: Dict[str, Deque[float]] = {}
 
 
 def _get_client_ip(request: Request) -> str:
-    """Extract the client IP from the request, respecting X-Forwarded-For.
-
-    Args:
-        request: The incoming HTTP request.
-
-    Returns:
-        Client IP string; falls back to "unknown" if unavailable.
-    """
+    """Extract the client IP from the request, respecting X-Forwarded-For."""
     forwarded_for = request.headers.get("X-Forwarded-For")
     if forwarded_for:
         return forwarded_for.split(",")[0].strip()
@@ -36,14 +29,7 @@ def _get_client_ip(request: Request) -> str:
 
 
 def _json_429(retry_after: int) -> Response:
-    """Build a plain HTTP 429 JSON response.
-
-    Args:
-        retry_after: Seconds until the rate limit window resets.
-
-    Returns:
-        Starlette Response with status 429.
-    """
+    """Build a plain HTTP 429 JSON response."""
     body = json.dumps({"detail": "Too many requests"})
     return Response(
         content=body,
@@ -62,34 +48,17 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
     All other paths pass through without any counter increment.
 
     The rate limit window and threshold are read from ``Config`` at construction
-    time so they can be overridden in tests via monkeypatching.
-
-    Attributes:
-        _max_requests: Maximum allowed requests per window per IP.
-        _window_seconds: Length of the sliding window in seconds.
-        _rate_limited_paths: Set of path prefixes to apply limits to.
-    """
+    time so they can be overridden in tests via monkeypatching."""
 
     def __init__(self, app: Any) -> None:
-        """Initialise the middleware, reading config from Config class.
-
-        Args:
-            app: The ASGI application to wrap.
-        """
+        """Initialise the middleware, reading config from Config class."""
         super().__init__(app)
         self._max_requests: int = Config.RATE_LIMIT_REQUESTS
         self._window_seconds: int = Config.RATE_LIMIT_WINDOW_SECONDS
         self._rate_limited_paths: set[str] = Config.RATE_LIMITED_PATHS
 
     def _is_rate_limited_path(self, path: str) -> bool:
-        """Check if the given path should be rate-limited.
-
-        Args:
-            path: The request URL path.
-
-        Returns:
-            True if the path matches any entry in RATE_LIMITED_PATHS.
-        """
+        """Check if the given path should be rate-limited."""
         return any(path.startswith(p) for p in self._rate_limited_paths)
 
     def _check_rate_limit(self, ip: str) -> int:
@@ -97,15 +66,7 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
 
         Prunes timestamps older than the window, then counts remaining
         requests. Returns 0 if within the limit; returns the seconds until
-        the oldest request expires if the limit is exceeded.
-
-        Args:
-            ip: Client IP address string.
-
-        Returns:
-            0 if the request is allowed; positive int (retry-after seconds)
-            if the limit has been breached.
-        """
+        the oldest request expires if the limit is exceeded."""
         now = time.monotonic()
         window_start = now - self._window_seconds
 
@@ -127,16 +88,7 @@ class RateLimitMiddleware(BaseHTTPMiddleware):
         return 0
 
     async def dispatch(self, request: Request, call_next: Any) -> Response:
-        """Process the request through the rate-limit check.
-
-        Args:
-            request: The incoming HTTP request.
-            call_next: Callable to invoke the next middleware or route handler.
-
-        Returns:
-            HTTP 429 if the rate limit is exceeded; otherwise the handler
-            response.
-        """
+        """Process the request through the rate-limit check."""
         path = request.url.path
         if not self._is_rate_limited_path(path):
             return await call_next(request)

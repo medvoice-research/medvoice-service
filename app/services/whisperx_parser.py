@@ -35,18 +35,7 @@ class WhisperXParser:
         self.logger = logger
 
     def parse(self, whisperx_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse WhisperX result into structured format.
-
-        Args:
-            whisperx_result: Raw WhisperX transcription result JSON with 'segments'
-                           and 'word_segments' arrays
-
-        Returns:
-            Parsed data with segments, metadata, and validation status
-
-        Raises:
-            WhisperXParseError: If required fields are missing or invalid
-        """
+        """Parse WhisperX result into structured format."""
         try:
             self._validate_schema(whisperx_result)
 
@@ -76,14 +65,7 @@ class WhisperXParser:
             raise WhisperXParseError(f"Parsing failed: {str(e)}") from e
 
     def _validate_schema(self, result: Dict[str, Any]) -> None:
-        """Validate that required top-level fields exist.
-
-        Args:
-            result: WhisperX result JSON
-
-        Raises:
-            WhisperXParseError: If required fields are missing
-        """
+        """Validate that required top-level fields exist."""
         if not isinstance(result, dict):
             raise WhisperXParseError("Result must be a dictionary")
 
@@ -100,14 +82,7 @@ class WhisperXParser:
             raise WhisperXParseError("'word_segments' must be a list")
 
     def _parse_segments(self, segments: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Parse segments array into structured format.
-
-        Args:
-            segments: Raw segments array from WhisperX result
-
-        Returns:
-            List of parsed segment objects with validated fields
-        """
+        """Parse segments array into structured format."""
         parsed = []
 
         for idx, segment in enumerate(segments):
@@ -142,14 +117,7 @@ class WhisperXParser:
         return parsed
 
     def _parse_words(self, words: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Parse words array from a segment.
-
-        Args:
-            words: Raw words array from segment
-
-        Returns:
-            List of parsed word objects
-        """
+        """Parse words array from a segment."""
         parsed = []
 
         for idx, word in enumerate(words):
@@ -173,15 +141,7 @@ class WhisperXParser:
     def _calculate_metadata(
         self, parsed_segments: List[Dict[str, Any]], word_segments: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate metadata from parsed segments.
-
-        Args:
-            parsed_segments: Parsed segments array
-            word_segments: Raw word_segments array for additional stats
-
-        Returns:
-            Metadata dictionary with statistics
-        """
+        """Calculate metadata from parsed segments."""
         if not parsed_segments:
             return {
                 "total_segments": 0,
@@ -232,15 +192,7 @@ class WhisperXParser:
         }
 
     def _validate_parsed_data(self, segments: List[Dict[str, Any]], metadata: Dict[str, Any]) -> None:
-        """Validate parsed data for completeness and consistency.
-
-        Args:
-            segments: Parsed segments
-            metadata: Calculated metadata
-
-        Raises:
-            WhisperXParseError: If validation fails
-        """
+        """Validate parsed data for completeness and consistency."""
         if not segments:
             raise WhisperXParseError("No segments were successfully parsed")
 
@@ -266,15 +218,7 @@ class WhisperXParser:
                 metadata["speaker_labels_partial"] = False
 
     def get_full_transcript(self, parsed_data: Dict[str, Any], include_speakers: bool = True) -> str:
-        """Generate full transcript text from parsed data.
-
-        Args:
-            parsed_data: Parsed WhisperX result from parse()
-            include_speakers: Whether to prepend speaker labels to text
-
-        Returns:
-            Full transcript as continuous text
-        """
+        """Generate full transcript text from parsed data."""
         segments = parsed_data.get("segments", [])
         lines = []
 
@@ -289,14 +233,6 @@ class WhisperXParser:
         return "\n".join(lines)
 
     def get_speaker_statistics(self, parsed_data: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
-        """Calculate statistics per speaker.
-
-        Args:
-            parsed_data: Parsed WhisperX result from parse()
-
-        Returns:
-            Dictionary mapping speaker_id to statistics
-        """
         segments = parsed_data.get("segments", [])
         speaker_stats = {}
 

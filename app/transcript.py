@@ -6,15 +6,7 @@ from .schemas import AlignedTranscription, AlignmentSegment
 def filter_aligned_transcription(
     aligned_transcription: AlignedTranscription,
 ) -> AlignedTranscription:
-    """
-    Filter an AlignedTranscription instance by removing words within each segment that have missing start, end, or score values.
-
-    Args:
-        aligned_transcription (AlignedTranscription): The AlignedTranscription instance to filter.
-
-    Returns:
-        AlignedTranscription: Filtered AlignedTranscription instance.
-    """
+    """Filter an AlignedTranscription instance by removing words within each segment that have missing start, end, or score values."""
     filtered_segments = []
     for segment in aligned_transcription.segments:
         filtered_words = [
