@@ -13,14 +13,7 @@ from ..config import Config
 
 
 def generate_patient_file_id(patient_name: str) -> str:
-    """Generate short hash from plain text patient name.
-
-    Args:
-        patient_name: Plain text patient name/identifier
-
-    Returns:
-        Short 8-character hash for use in filenames
-    """
+    """Generate short hash from plain text patient name."""
     # Create deterministic hash from patient name + salt
     hash_obj = hashlib.sha256(f"{patient_name}{Config.HIPAA_SALT}".encode())
     return hash_obj.hexdigest()[:8]
@@ -36,18 +29,7 @@ def generate_consultation_filename(
     """Generate HIPAA-compliant filename for consultation transcription.
 
     Format: pt_{patient_hash}_{date}_{department}_{seq}{extension}
-    Example: pt_a7f3c8e2_20251227_cardiology_001.json
-
-    Args:
-        patient_name: Plain text patient name/identifier
-        date: Date string (YYYYMMDD), defaults to today
-        department: Department name (sanitized)
-        sequence: Sequence number for multiple consultations same day
-        extension: File extension
-
-    Returns:
-        HIPAA-compliant filename
-    """
+    Example: pt_a7f3c8e2_20251227_cardiology_001.json"""
     patient_hash = generate_patient_file_id(patient_name)
 
     if date is None:
@@ -73,15 +55,7 @@ def generate_workflow_result_filename(workflow_id: str, extension: str = ".json"
     """Generate filename based on workflow ID.
 
     Format: wf_{workflow_id_short}{extension}
-    Example: wf_abc123def456.json
-
-    Args:
-        workflow_id: Temporal workflow ID
-        extension: File extension
-
-    Returns:
-        Filename based on workflow ID
-    """
+    Example: wf_abc123def456.json"""
     # Extract UUID from workflow ID if present
     if "workflow-" in workflow_id:
         wf_uuid = workflow_id.split("workflow-")[-1]
@@ -97,15 +71,7 @@ def generate_anonymous_audio_filename(original_extension: str, patient_name: Opt
     """Generate anonymous filename for uploaded audio files.
 
     If patient_name is provided, uses deterministic hash.
-    Otherwise, uses random UUID.
-
-    Args:
-        original_extension: Original file extension (e.g., '.mp3')
-        patient_name: Optional plain text patient name/identifier
-
-    Returns:
-        Anonymous filename
-    """
+    Otherwise, uses random UUID."""
     if patient_name:
         # Deterministic filename for same patient with collision prevention
         patient_hash = generate_patient_file_id(patient_name)
@@ -119,14 +85,7 @@ def generate_anonymous_audio_filename(original_extension: str, patient_name: Opt
 
 
 def extract_patient_id_from_filename(filename: str) -> Optional[str]:
-    """Extract patient hash from HIPAA-compliant filename.
-
-    Args:
-        filename: Filename in format pt_{hash}_...
-
-    Returns:
-        Patient hash or None if not found
-    """
+    """Extract patient hash from HIPAA-compliant filename."""
     if filename.startswith("pt_"):
         parts = filename.split("_")
         if len(parts) >= 2:
@@ -138,16 +97,7 @@ def generate_result_storage_path(base_dir: str, patient_name: str, filename: str
     """Generate full storage path for result files.
 
     Organizes files by patient hash subdirectory.
-    Format: {base_dir}/{patient_hash[:2]}/{patient_hash}/{filename}
-
-    Args:
-        base_dir: Base storage directory
-        patient_name: Plain text patient name/identifier
-        filename: File filename
-
-    Returns:
-        Full storage path
-    """
+    Format: {base_dir}/{patient_hash[:2]}/{patient_hash}/{filename}"""
     import os
 
     patient_hash = generate_patient_file_id(patient_name)

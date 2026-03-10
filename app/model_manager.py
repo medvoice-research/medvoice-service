@@ -45,18 +45,7 @@ def with_retry(
         TimeoutError,
     ),
 ) -> Callable:
-    """
-    Decorator to retry a function on exception with exponential backoff.
-
-    Args:
-        max_retries: Maximum number of retries
-        retry_delay: Initial delay between retries in seconds
-        backoff_factor: Factor by which the delay increases for each retry
-        retry_exceptions: Exception types that should trigger a retry
-
-    Returns:
-        Decorator function that adds retry logic
-    """
+    """Decorator to retry a function on exception with exponential backoff."""
 
     def decorator(func: Callable[..., T]) -> Callable[..., T]:
         @wraps(func)
@@ -118,23 +107,7 @@ def safe_hf_hub_download(
     force_download: bool = False,
     **kwargs,
 ) -> str:
-    """
-    Safely download a file from the HF Hub with retry logic.
-
-    Args:
-        repo_id: Hugging Face Hub repository ID
-        filename: Name of the file to download
-        revision: The git revision to use
-        cache_dir: Cache directory
-        force_download: Whether to force the download even if the file exists
-        **kwargs: Additional arguments for hf_hub_download
-
-    Returns:
-        Local path to the downloaded file
-
-    Raises:
-        ValueError: With a descriptive message about what went wrong
-    """
+    """Safely download a file from the HF Hub with retry logic."""
     try:
         logger.debug(
             "Downloading file %s from repo %s (revision: %s)",
@@ -177,21 +150,7 @@ def safe_snapshot_download(
     cache_dir: Optional[str] = None,
     **kwargs,
 ) -> str:
-    """
-    Safely download all files from the HF Hub repository with retry logic.
-
-    Args:
-        repo_id: Hugging Face Hub repository ID
-        revision: The git revision to use
-        cache_dir: Cache directory
-        **kwargs: Additional arguments for snapshot_download
-
-    Returns:
-        Local path to the downloaded repository
-
-    Raises:
-        ValueError: With a descriptive message about what went wrong
-    """
+    """Safely download all files from the HF Hub repository with retry logic."""
     try:
         logger.debug(
             "Downloading repository snapshot %s (revision: %s)",
@@ -220,12 +179,7 @@ def safe_snapshot_download(
 
 
 def validate_huggingface_token() -> bool:
-    """
-    Validate that the Hugging Face token is set and working.
-
-    Returns:
-        bool: True if token is valid, False otherwise
-    """
+    """Validate that the Hugging Face token is set and working."""
     token = os.environ.get("HF_TOKEN")
     if not token:
         logger.warning("HF_TOKEN environment variable is not set")
@@ -247,13 +201,7 @@ def validate_huggingface_token() -> bool:
 
 
 def preload_models(models: list, token: Optional[str] = None) -> None:
-    """
-    Preload multiple models to ensure they're available in the cache.
-
-    Args:
-        models: List of model repo IDs to preload
-        token: Optional Hugging Face token
-    """
+    """Preload multiple models to ensure they're available in the cache."""
     for model in models:
         try:
             logger.info("Preloading model: %s", model)

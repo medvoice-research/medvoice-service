@@ -522,19 +522,12 @@ async def medical_chat(
     session_id: Optional[str] = None,
     current_user: Dict[str, Any] = Depends(lambda: {}),
 ):
-    """
-    Query patient medical records using RAG-powered chatbot.
+    """Query patient medical records using RAG-powered chatbot.
 
     This endpoint:
     1. Searches for relevant patient consultations in the vector store
     2. Uses retrieved context to generate informed responses
-    3. Maintains conversation history per session
-
-    Args:
-        query: User's question about the patient
-        patient_id_encrypted: Encrypted patient identifier
-        session_id: Optional session ID for conversation continuity
-    """
+    3. Maintains conversation history per session"""
     if not Config.is_medical_processing_enabled():
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
@@ -610,8 +603,7 @@ async def process_transcript(
     enable_vector_storage: bool = True,
     current_user: Dict[str, Any] = Depends(lambda: {}),
 ):
-    """
-    Process speaker-attributed medical dialogue through the full RAG pipeline.
+    """Process speaker-attributed medical dialogue through the full RAG pipeline.
 
     This endpoint processes dialogue data from WhisperX transcription transformer,
     leveraging speaker attribution (doctor/patient) for improved medical documentation.
@@ -622,22 +614,7 @@ async def process_transcript(
     3. Generates SOAP note leveraging doctor/patient distinction
     4. Creates embeddings and stores in vector database
 
-    Use this after WhisperX transcription + transformation to prepare patient data for the chatbot.
-
-    Args:
-        dialogue_data: Speaker-attributed dialogue from TranscriptionTransformer containing:
-            - dialogue: List of segments with speaker roles
-            - speaker_mapping: Role assignments (doctor/patient)
-            - statistics: Speaking time and counts
-            - metadata: Consultation metadata
-        patient_id: Patient identifier (will be encrypted for storage)
-        provider_id: Healthcare provider identifier
-        encounter_date: Date of encounter (ISO format, defaults to today)
-        enable_*: Flags to enable/disable specific processing steps (for debugging)
-
-    Returns:
-        Comprehensive results with speaker-attributed entities, SOAP note, and storage confirmation
-    """
+    Use this after WhisperX transcription + transformation to prepare patient data for the chatbot."""
     import numpy as np
     import uuid
 
@@ -835,26 +812,13 @@ async def process_whisperx_result(
     background_tasks: BackgroundTasks,
     current_user: Dict[str, Any] = Depends(lambda: {}),
 ):
-    """
-    Process WhisperX transcription result through the complete medical pipeline.
+    """Process WhisperX transcription result through the complete medical pipeline.
 
     This endpoint provides end-to-end processing:
     1. Fetches/accepts WhisperX transcription result
     2. Transforms to speaker-attributed dialogue (via TranscriptionTransformer)
     3. Processes through medical LLM pipeline with speaker context
-    4. Stores in vector database for RAG chatbot queries
-
-    Args:
-        request: Processing request containing either workflow_id or whisperx_result
-
-    Returns:
-        Complete pipeline results including dialogue, speaker mapping, SOAP note,
-        entities with speaker attribution, and vector storage confirmation
-
-    Raises:
-        HTTPException: If neither workflow_id nor whisperx_result provided,
-                      or if any processing step fails critically
-    """
+    4. Stores in vector database for RAG chatbot queries"""
     import numpy as np
     import uuid
     import httpx

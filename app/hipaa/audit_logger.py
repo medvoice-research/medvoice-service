@@ -17,12 +17,6 @@ class HIPAAAuditLogger:
     """Immutable audit logging system for HIPAA compliance."""
 
     def __init__(self, log_dir: str = "./audit_logs"):
-        """
-        Initialize audit logger.
-
-        Args:
-            log_dir: Directory to store audit logs
-        """
         self.log_dir = Path(log_dir)
         self.log_dir.mkdir(exist_ok=True, parents=True)
 
@@ -155,17 +149,7 @@ class HIPAAAuditLogger:
     def log_phi_access(
         self, user_id: str, patient_id: str, action: str, resource: str, result: str = "success", **kwargs
     ):
-        """
-        Log PHI access with complete audit trail.
-
-        Args:
-            user_id: User identifier
-            patient_id: Patient identifier (encrypted)
-            action: Action performed (read, write, delete, etc.)
-            resource: Resource being accessed (consultation_id, file_name, etc.)
-            result: Result of access (success, failure, denied)
-            **kwargs: Additional metadata
-        """
+        """Log PHI access with complete audit trail."""
         entry = {
             "timestamp": datetime.now(Config.TIMEZONE).isoformat(),
             "event_type": "PHI_ACCESS",
@@ -189,14 +173,6 @@ class HIPAAAuditLogger:
         self._write_entry(entry)
 
     def log_system_event(self, event_type: str, user_id: str = None, details: Dict[str, Any] = None):
-        """
-        Log system events.
-
-        Args:
-            event_type: Type of system event
-            user_id: User identifier (if applicable)
-            details: Event details dictionary
-        """
         entry = {
             "timestamp": datetime.now(Config.TIMEZONE).isoformat(),
             "event_type": event_type,
@@ -215,16 +191,7 @@ class HIPAAAuditLogger:
         user_agent: str = None,
         success: bool = True,
     ):
-        """
-        Log authentication events.
-
-        Args:
-            user_id: User identifier
-            event_type: Authentication event type
-            ip_address: Client IP address
-            user_agent: Client user agent
-            success: Whether authentication was successful
-        """
+        """Log authentication events."""
         entry = {
             "timestamp": datetime.now(Config.TIMEZONE).isoformat(),
             "event_type": "AUTHENTICATION",
@@ -246,16 +213,7 @@ class HIPAAAuditLogger:
         resource_id: str,
         changes: Dict[str, Any] = None,
     ):
-        """
-        Log data modification events.
-
-        Args:
-            user_id: User identifier
-            action: Modification action
-            resource_type: Type of resource modified
-            resource_id: Resource identifier
-            changes: Dictionary of changes made
-        """
+        """Log data modification events."""
         entry = {
             "timestamp": datetime.now(Config.TIMEZONE).isoformat(),
             "event_type": "DATA_MODIFICATION",
@@ -272,16 +230,7 @@ class HIPAAAuditLogger:
     def log_export_event(
         self, user_id: str, export_type: str, record_count: int, destination: str, patient_ids: List[str] = None
     ):
-        """
-        Log data export events.
-
-        Args:
-            user_id: User identifier
-            export_type: Type of export (PDF, CSV, JSON, etc.)
-            record_count: Number of records exported
-            destination: Export destination (email, download, etc.)
-            patient_ids: List of patient IDs involved
-        """
+        """Log data export events."""
         entry = {
             "timestamp": datetime.now(Config.TIMEZONE).isoformat(),
             "event_type": "DATA_EXPORT",
@@ -298,15 +247,7 @@ class HIPAAAuditLogger:
     def log_breach_attempt(
         self, description: str, ip_address: str, user_id: str = None, details: Dict[str, Any] = None
     ):
-        """
-        Log security breach attempts.
-
-        Args:
-            description: Description of breach attempt
-            ip_address: Source IP address
-            user_id: User identifier (if applicable)
-            details: Additional details about the attempt
-        """
+        """Log security breach attempts."""
         entry = {
             "timestamp": datetime.now(Config.TIMEZONE).isoformat(),
             "event_type": "SECURITY_BREACH_ATTEMPT",
@@ -329,20 +270,7 @@ class HIPAAAuditLogger:
         event_type: str = None,
         limit: int = 1000,
     ) -> List[Dict[str, Any]]:
-        """
-        Search audit logs with filters.
-
-        Args:
-            start_date: Start date for search
-            end_date: End date for search
-            user_id: Filter by user ID
-            patient_id: Filter by patient ID
-            event_type: Filter by event type
-            limit: Maximum number of results
-
-        Returns:
-            List of matching audit entries
-        """
+        """Search audit logs with filters."""
         results = []
 
         # Determine date range
@@ -413,12 +341,7 @@ class HIPAAAuditLogger:
         return results
 
     def verify_audit_trail(self) -> Dict[str, Any]:
-        """
-        Verify integrity of entire audit trail.
-
-        Returns:
-            Dictionary with verification results
-        """
+        """Verify integrity of entire audit trail."""
         verification_result = {
             "verified": True,
             "errors": [],
@@ -542,14 +465,7 @@ class HIPAAAuditLogger:
 
     @contextmanager
     def audit_context(self, user_id: str, operation: str, resource: str):
-        """
-        Context manager for automatic audit logging.
-
-        Args:
-            user_id: User identifier
-            operation: Operation being performed
-            resource: Resource being operated on
-        """
+        """Context manager for automatic audit logging."""
         start_time = datetime.now(Config.TIMEZONE)
         entry_hash = None
 

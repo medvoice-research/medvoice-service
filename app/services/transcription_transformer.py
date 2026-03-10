@@ -30,13 +30,7 @@ class TranscriptionTransformer:
         identifier: Optional[SpeakerIdentifier] = None,
         formatter: Optional[DialogueFormatter] = None,
     ):
-        """Initialize the transformation pipeline.
-
-        Args:
-            parser: WhisperX parser instance (creates new if None)
-            identifier: Speaker identifier instance (creates new if None)
-            formatter: Dialogue formatter instance (creates new if None)
-        """
+        """Initialize the transformation pipeline."""
         self.parser = parser or WhisperXParser()
         self.identifier = identifier or SpeakerIdentifier()
         self.formatter = formatter or DialogueFormatter()
@@ -48,24 +42,7 @@ class TranscriptionTransformer:
         workflow_id: Optional[str] = None,
         consultation_metadata: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
-        """Execute complete transformation pipeline.
-
-        Args:
-            whisperx_result: Raw WhisperX transcription result JSON
-            workflow_id: Optional WhisperX workflow ID for tracking
-            consultation_metadata: Optional consultation context
-
-        Returns:
-            Complete medical dialogue structure with:
-            - dialogue: Speaker-attributed segments
-            - speaker_mapping: Role assignments
-            - statistics: Speaking time and counts
-            - full_transcript: Formatted text transcript
-            - metadata: Processing and consultation metadata
-
-        Raises:
-            TranscriptionTransformError: If transformation fails at any step
-        """
+        """Execute complete transformation pipeline."""
         try:
             self.logger.info("Starting WhisperX to medical dialogue transformation")
 
@@ -137,17 +114,7 @@ class TranscriptionTransformer:
         workflow_id: Optional[str] = None,
         consultation_metadata: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
-        """Transform with manual speaker role overrides.
-
-        Args:
-            whisperx_result: Raw WhisperX transcription result JSON
-            manual_speaker_mapping: Manual role assignments {speaker_id: role} (optional)
-            workflow_id: Optional WhisperX workflow ID
-            consultation_metadata: Optional consultation context
-
-        Returns:
-            Complete medical dialogue structure with overridden roles
-        """
+        """Transform with manual speaker role overrides."""
         # First do standard transformation
         result = self.transform(whisperx_result, workflow_id, consultation_metadata)
 
@@ -191,14 +158,7 @@ class TranscriptionTransformer:
         return result
 
     def validate_transformation(self, transformed_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate transformed data for completeness and consistency.
-
-        Args:
-            transformed_data: Output from transform() method
-
-        Returns:
-            Validation result with status and any issues found
-        """
+        """Validate transformed data for completeness and consistency."""
         issues = []
         warnings = []
 
@@ -259,16 +219,7 @@ class TranscriptionTransformer:
     def _create_empty_result(
         self, reason: str, workflow_id: Optional[str] = None, consultation_metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Create empty result when transformation cannot proceed.
-
-        Args:
-            reason: Reason for empty result
-            workflow_id: Optional workflow ID
-            consultation_metadata: Optional metadata
-
-        Returns:
-            Empty but valid transformation result
-        """
+        """Create empty result when transformation cannot proceed."""
         return {
             "transformation_metadata": {
                 "workflow_id": workflow_id,

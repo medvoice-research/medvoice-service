@@ -30,8 +30,7 @@ async def get_patient_info_by_hash(
     patient_hash: str,
     current_user: Dict[str, Any] = Depends(get_current_user),
 ):
-    """
-    Get patient information by hash (Admin lookup).
+    """Get patient information by hash (Admin lookup).
 
     **Purpose:** Admin monitoring - map file/workflow hash back to patient
 
@@ -39,14 +38,7 @@ async def get_patient_info_by_hash(
     - File: `audio_154c26a1_20251227.mp3`
     - Hash: `154c26a1`
     - Query: `GET /admin/patient/hash/154c26a1`
-    - Returns: `{ "patient_name": "John Michael Smith", "workflows": [...] }`
-
-    Args:
-        patient_hash: 8-character patient hash from filename/workflow ID
-
-    Returns:
-        Patient name and all associated workflows
-    """
+    - Returns: `{ "patient_name": "John Michael Smith", "workflows": [...] }`"""
     uid = _extract_user_id(current_user)
 
     # Get patient name from DB (plain text)
@@ -73,20 +65,12 @@ async def get_patient_by_workflow_id(
     workflow_id: str,
     current_user: Dict[str, Any] = Depends(get_current_user),
 ):
-    """
-    Get patient information by workflow ID.
+    """Get patient information by workflow ID.
 
     **Example:**
     - Workflow ID: `whisperx-wf-pt_154c26a1-20251227_145128`
     - Query: `GET /admin/workflow/whisperx-wf-pt_154c26a1-20251227_145128/patient`
-    - Returns: `{ "patient_name": "John Michael Smith", ... }`
-
-    Args:
-        workflow_id: Temporal workflow ID
-
-    Returns:
-        Patient information for the workflow
-    """
+    - Returns: `{ "patient_name": "John Michael Smith", ... }`"""
     uid = _extract_user_id(current_user)
 
     mapping = await get_patient_by_workflow(workflow_id, user_id=uid)
@@ -103,14 +87,9 @@ async def get_patient_by_workflow_id(
 async def list_all_patients(
     current_user: Dict[str, Any] = Depends(get_current_user),
 ):
-    """
-    List all patients with workflow counts.
+    """List all patients with workflow counts.
 
-    Administrators see all patients; non-admin users see only their own.
-
-    Returns:
-        Summary of all patients and their workflow counts
-    """
+    Administrators see all patients; non-admin users see only their own."""
     uid = _extract_user_id(current_user)
 
     from ..patients.mapping import get_all_patients

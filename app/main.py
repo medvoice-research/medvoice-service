@@ -29,13 +29,9 @@ load_dotenv()
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """
-    Lifespan context manager for the FastAPI application.
+    """Lifespan context manager for the FastAPI application.
     This function is used to perform startup and shutdown tasks for the FastAPI application.
-    It initializes the patient database, saves the OpenAPI JSON, and connects to the Temporal server.
-    Args:
-        app (FastAPI): The FastAPI application instance.
-    """
+    It initializes the patient database, saves the OpenAPI JSON, and connects to the Temporal server."""
     # Initialize patient database
     from .patients.database import init_db
 

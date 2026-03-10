@@ -21,14 +21,6 @@ class MedicalDocumentVectorStore:
     def __init__(
         self, storage_dir: str = "./vector_storage", embedding_dim: int = 768, index_type: str = "IndexFlatL2"
     ):
-        """
-        Initialize vector store.
-
-        Args:
-            storage_dir: Directory to store vector index and SQLite database
-            embedding_dim: Dimension of embedding vectors (768 for nomic-embed-text-v1.5)
-            index_type: FAISS index type (IndexFlatL2 for exact search)
-        """
         self.storage_dir = Path(storage_dir)
         self.storage_dir.mkdir(exist_ok=True, parents=True)
 
@@ -171,21 +163,7 @@ class MedicalDocumentVectorStore:
         embedding: np.ndarray,
         metadata: Dict[str, Any] = None,
     ) -> int:
-        """
-        Store consultation embedding and metadata.
-
-        Args:
-            consultation_id: Unique consultation identifier
-            patient_id_encrypted: Encrypted patient identifier
-            provider_id: Provider identifier
-            encounter_date: Date of encounter (ISO format)
-            transcript: Full consultation transcript
-            embedding: Vector embedding of transcript
-            metadata: Additional metadata dictionary
-
-        Returns:
-            Vector ID in FAISS index
-        """
+        """Store consultation embedding and metadata."""
         try:
             # Normalize embedding for better search
             embedding_normalized = embedding / np.linalg.norm(embedding)
@@ -229,13 +207,7 @@ class MedicalDocumentVectorStore:
             raise
 
     async def store_medical_entities(self, consultation_id: str, entities: List[Dict[str, Any]]):
-        """
-        Store medical entities for a consultation.
-
-        Args:
-            consultation_id: Consultation identifier
-            entities: List of medical entity dictionaries
-        """
+        """Store medical entities for a consultation."""
         try:
             cursor = self.conn.cursor()
 
@@ -268,13 +240,7 @@ class MedicalDocumentVectorStore:
             raise
 
     async def store_phi_detections(self, consultation_id: str, phi_entities: List[Dict[str, Any]]):
-        """
-        Store PHI detections for a consultation.
-
-        Args:
-            consultation_id: Consultation identifier
-            phi_entities: List of PHI entity dictionaries
-        """
+        """Store PHI detections for a consultation."""
         try:
             cursor = self.conn.cursor()
 
@@ -311,15 +277,7 @@ class MedicalDocumentVectorStore:
         soap_note: Dict[str, str] = None,
         clinical_summary: str = None,
     ):
-        """
-        Store structured medical document.
-
-        Args:
-            consultation_id: Consultation identifier
-            structured_doc: Structured document dictionary
-            soap_note: SOAP note sections
-            clinical_summary: Clinical summary text
-        """
+        """Store structured medical document."""
         try:
             cursor = self.conn.cursor()
 
@@ -353,18 +311,7 @@ class MedicalDocumentVectorStore:
         limit: int = 10,
         similarity_threshold: float = 0.7,
     ) -> List[Dict[str, Any]]:
-        """
-        Search for similar consultations.
-
-        Args:
-            query_embedding: Query vector embedding
-            patient_id_encrypted: Filter by patient (None for all patients)
-            limit: Maximum number of results
-            similarity_threshold: Minimum similarity score
-
-        Returns:
-            List of similar consultations with metadata
-        """
+        """Search for similar consultations."""
         try:
             # Normalize query
             query_normalized = query_embedding / np.linalg.norm(query_embedding)
@@ -443,18 +390,7 @@ class MedicalDocumentVectorStore:
         include_phi: bool = False,
         include_structured: bool = True,
     ) -> Dict[str, Any]:
-        """
-        Get complete consultation details.
-
-        Args:
-            consultation_id: Consultation identifier
-            include_entities: Include medical entities
-            include_phi: Include PHI detections (use carefully)
-            include_structured: Include structured document
-
-        Returns:
-            Complete consultation details
-        """
+        """Get complete consultation details."""
         try:
             cursor = self.conn.cursor()
 
@@ -557,17 +493,7 @@ class MedicalDocumentVectorStore:
     async def get_patient_consultations(
         self, patient_id_encrypted: str, limit: int = 50, offset: int = 0
     ) -> List[Dict[str, Any]]:
-        """
-        Get all consultations for a specific patient.
-
-        Args:
-            patient_id_encrypted: Encrypted patient identifier
-            limit: Maximum number of results
-            offset: Offset for pagination
-
-        Returns:
-            List of consultation summaries
-        """
+        """Get all consultations for a specific patient."""
         try:
             cursor = self.conn.cursor()
 

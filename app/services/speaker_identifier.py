@@ -85,29 +85,7 @@ class SpeakerIdentifier:
         self.patient_regex = re.compile("|".join(self.PATIENT_PATTERNS), re.IGNORECASE)
 
     def identify_roles(self, parsed_data: Dict[str, Any], method: str = "heuristic") -> Dict[str, Dict[str, Any]]:
-        """Identify speaker roles from parsed WhisperX data.
-
-        Args:
-            parsed_data: Parsed WhisperX result from WhisperXParser
-            method: Identification method ("heuristic", "ml", "manual")
-                   Currently only "heuristic" is implemented
-
-        Returns:
-            Dictionary mapping speaker_id to role information:
-            {
-                "SPEAKER_00": {
-                    "role": "doctor",
-                    "confidence": 0.85,
-                    "confidence_level": "high",
-                    "method": "heuristic",
-                    "evidence": {
-                        "medical_terms": 15,
-                        "questions_asked": 8,
-                        "first_speaker": True
-                    }
-                }
-            }
-        """
+        """Identify speaker roles from parsed WhisperX data."""
         if method != "heuristic":
             raise NotImplementedError(f"Method '{method}' not implemented. Use 'heuristic'.")
 
@@ -462,17 +440,7 @@ class SpeakerIdentifier:
     ) -> Dict[str, Dict[str, Any]]:
         """Manually override a speaker's role.
 
-        Useful when heuristics fail or for manual correction.
-
-        Args:
-            speaker_mapping: Existing speaker mapping
-            speaker_id: Speaker ID to override
-            new_role: New role (doctor, patient, unknown)
-            reason: Reason for override
-
-        Returns:
-            Updated speaker mapping
-        """
+        Useful when heuristics fail or for manual correction."""
         if speaker_id not in speaker_mapping:
             raise ValueError(f"Speaker {speaker_id} not found in mapping")
 

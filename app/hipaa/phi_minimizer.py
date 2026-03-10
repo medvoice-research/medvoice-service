@@ -97,17 +97,7 @@ class PHIMinimizer:
         ]
 
     def anonymize_for_research(self, text: str, keep_year_only: bool = True, age_threshold: int = 89) -> str:
-        """
-        Anonymize text for research use (HIPAA Safe Harbor).
-
-        Args:
-            text: Text to anonymize
-            keep_year_only: If True, keep only year from dates
-            age_threshold: Ages above this are removed (HIPAA requirement)
-
-        Returns:
-            Anonymized text
-        """
+        """Anonymize text for research use (HIPAA Safe Harbor)."""
         anonymized = text
 
         # Remove/replace dates
@@ -201,15 +191,7 @@ class PHIMinimizer:
         return age_pattern.sub(age_replacer, text)
 
     def detect_phi(self, text: str) -> Dict[str, List[Dict[str, any]]]:
-        """
-        Detect PHI entities in text.
-
-        Args:
-            text: Text to scan for PHI
-
-        Returns:
-            Dictionary with PHI entities by type
-        """
+        """Detect PHI entities in text."""
         phi_entities = {}
 
         for phi_type, pattern in self.patterns.items():
@@ -250,17 +232,7 @@ class PHIMinimizer:
     def check_minimum_necessary(
         self, requested_fields: List[str], user_role: HealthcareRole, purpose: str
     ) -> List[str]:
-        """
-        Filter fields to minimum necessary for purpose.
-
-        Args:
-            requested_fields: List of requested field names
-            user_role: User's healthcare role
-            purpose: Purpose of access (treatment, research, billing, etc.)
-
-        Returns:
-            Filtered list of allowed fields
-        """
+        """Filter fields to minimum necessary for purpose."""
         # Define minimum necessary fields by role and purpose
         minimum_fields_map = {
             (HealthcareRole.PHYSICIAN, "treatment"): [
@@ -348,19 +320,7 @@ class PHIMinimizer:
         date_fields: List[str] = None,
         keep_reference_ids: bool = False,
     ) -> List[Dict[str, any]]:
-        """
-        De-identify a dataset of records.
-
-        Args:
-            records: List of record dictionaries
-            patient_id_field: Field containing patient ID
-            name_fields: List of fields containing names
-            date_fields: List of fields containing dates
-            keep_reference_ids: If True, keep anonymized reference IDs
-
-        Returns:
-            De-identified records
-        """
+        """De-identify a dataset of records."""
         if name_fields is None:
             name_fields = ["patient_name", "provider_name", "guardian_name"]
         if date_fields is None:
@@ -429,15 +389,7 @@ class PHIMinimizer:
                 return "[YEAR]"
 
     def assess_phi_risk(self, text: str) -> Dict[str, any]:
-        """
-        Assess PHI risk level of text.
-
-        Args:
-            text: Text to assess
-
-        Returns:
-            Risk assessment dictionary
-        """
+        """Assess PHI risk level of text."""
         phi_entities = self.detect_phi(text)
 
         # Count PHI types

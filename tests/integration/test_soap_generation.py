@@ -40,22 +40,7 @@ DEFAULT_LANG = SMALL_AUDIO_LANG if SMALL_AUDIO.exists() else MEDICAL_AUDIO_LANG
 def poll_workflow_status(
     client: httpx.Client, workflow_id: str, max_wait: int = 300, poll_interval: int = 10
 ) -> Dict[str, Any]:
-    """
-    Poll workflow until completion with adaptive interval.
-
-    Args:
-        client: HTTP client
-        workflow_id: Temporal workflow ID
-        max_wait: Maximum wait time in seconds (default: 5 minutes)
-        poll_interval: Polling interval in seconds (default: 10s, was 30s)
-
-    Returns:
-        Workflow status data on completion
-
-    Raises:
-        Exception: If workflow fails
-        TimeoutError: If workflow doesn't complete in time
-    """
+    """Poll workflow until completion with adaptive interval."""
     start_time = time.time()
 
     while time.time() - start_time < max_wait:

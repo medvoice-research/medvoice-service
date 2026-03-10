@@ -27,11 +27,6 @@ class LMStudioClient:
     """OpenAI-compatible client for LM Studio."""
 
     def __init__(self, config: LMStudioConfig = None):
-        """Initialize LM Studio client with configuration.
-
-        Args:
-            config: LM Studio configuration. If None, uses default configuration.
-        """
         self.config = config or LMStudioConfig()
         self.client = httpx.AsyncClient(
             base_url=self.config.base_url,
@@ -50,25 +45,7 @@ class LMStudioClient:
         presence_penalty: Optional[float] = None,
         stream: bool = False,
     ) -> str:
-        """
-        Send chat completion request to LM Studio.
-
-        Args:
-            messages: List of message dicts with 'role' and 'content'
-            temperature: Sampling temperature (overrides config)
-            max_tokens: Max tokens to generate (overrides config)
-            top_p: Top-p sampling parameter (overrides config)
-            frequency_penalty: Frequency penalty (overrides config)
-            presence_penalty: Presence penalty (overrides config)
-            stream: Whether to stream the response
-
-        Returns:
-            Generated text response
-
-        Raises:
-            httpx.HTTPError: If the request fails
-            ValueError: If response format is invalid
-        """
+        """Send chat completion request to LM Studio."""
         for attempt in range(self.config.max_retries):
             try:
                 # Build request payload
@@ -118,20 +95,7 @@ class LMStudioClient:
                 raise
 
     async def generate_embedding(self, text: str, model: str = None) -> List[float]:
-        """
-        Generate embeddings using LM Studio's embedding model.
-
-        Args:
-            text: Text to embed
-            model: Embedding model name (uses default if None)
-
-        Returns:
-            Embedding vector as list of floats
-
-        Raises:
-            httpx.HTTPError: If the request fails
-            ValueError: If response format is invalid
-        """
+        """Generate embeddings using LM Studio's embedding model."""
         try:
             payload = {
                 "input": text,
@@ -155,12 +119,7 @@ class LMStudioClient:
             raise
 
     async def health_check(self) -> bool:
-        """
-        Check if LM Studio server is accessible and has models loaded.
-
-        Returns:
-            True if server is healthy, False otherwise
-        """
+        """Check if LM Studio server is accessible and has models loaded."""
         try:
             response = await self.client.get("/models")
             if response.status_code == 200:
@@ -172,12 +131,6 @@ class LMStudioClient:
             return False
 
     async def list_models(self) -> List[Dict[str, Any]]:
-        """
-        List available models in LM Studio.
-
-        Returns:
-            List of model dictionaries with id, object, created, owned_by fields
-        """
         try:
             response = await self.client.get("/models")
             response.raise_for_status()
@@ -188,15 +141,6 @@ class LMStudioClient:
             return []
 
     async def get_model_info(self, model_id: str) -> Dict[str, Any]:
-        """
-        Get detailed information about a specific model.
-
-        Args:
-            model_id: Model identifier
-
-        Returns:
-            Model information dictionary
-        """
         try:
             response = await self.client.get(f"/models/{model_id}")
             response.raise_for_status()
@@ -206,12 +150,7 @@ class LMStudioClient:
             return {}
 
     async def test_connection(self) -> Dict[str, Any]:
-        """
-        Test connection to LM Studio and return status information.
-
-        Returns:
-            Dictionary with connection status and available models
-        """
+        """Test connection to LM Studio and return status information."""
         is_healthy = await self.health_check()
         models = await self.list_models() if is_healthy else []
 
