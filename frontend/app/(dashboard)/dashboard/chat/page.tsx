@@ -7,10 +7,19 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Send, Bot, User, Loader2, BookOpen } from 'lucide-react';
 
+interface ChatSource {
+    consultation_id?: string;
+    encounter_date?: string;
+    similarity_score?: number;
+    provider_id?: string;
+    soap_note?: Record<string, string>;
+    has_phi?: boolean;
+}
+
 interface ChatMessage {
     role: 'user' | 'assistant';
     content: string;
-    sources?: { content: string; metadata?: Record<string, unknown> }[];
+    sources?: ChatSource[];
 }
 
 export default function ChatPage() {
@@ -52,7 +61,7 @@ export default function ChatPage() {
 
             const assistMsg: ChatMessage = {
                 role: 'assistant',
-                content: data.answer || 'No response received.',
+                content: data.response || 'No response received.',
                 sources: data.sources,
             };
             setMessages((prev) => [...prev, assistMsg]);
@@ -146,15 +155,27 @@ export default function ChatPage() {
                                 <div className="mt-3 pt-3 border-t border-border/50">
                                     <div className="flex items-center gap-1 text-xs font-medium text-muted-foreground mb-2">
                                         <BookOpen className="w-3 h-3" />
-                                        Sources
+                                        {msg.sources.length} Source{msg.sources.length !== 1 && 's'}
                                     </div>
                                     {msg.sources.map((src, j) => (
                                         <div
                                             key={j}
-                                            className="text-xs text-muted-foreground bg-background/50 rounded p-2 mt-1"
+                                            className="text-xs text-muted-foreground bg-background/50 rounded p-2 mt-1 space-y-1"
                                         >
-                                            {src.content.slice(0, 200)}
-                                            {src.content.length > 200 && '...'}
+                                            <div className="flex items-center justify-between">
+                                                <span className="font-medium">
+                                                    📊 {((src.similarity_score ?? 0) * 100).toFixed(0)}% match
+                                                </span>
+                                                {src.has_phi ? (
+                                                    <span className="text-yellow-600">🔒 PHI Protected</span>
+                                                ) : (
+                                                    <span className="text-green-600">✅ No PHI</span>
+                                                )}
+                                            </div>
+                                            <div className="flex gap-3">
+                                                {src.encounter_date && <span>📅 {src.encounter_date}</span>}
+                                                {src.provider_id && <span>👨‍⚕️ {src.provider_id}</span>}
+                                            </div>
                                         </div>
                                     ))}
                                 </div>
