@@ -2,7 +2,7 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ChevronDown, ChevronUp, Download, FileText, AlertTriangle, Stethoscope, Shield, Database, ClipboardList } from 'lucide-react';
+import { ChevronDown, ChevronUp, Download, FileText, AlertTriangle, Shield, Database, ClipboardList } from 'lucide-react';
 import { useState } from 'react';
 import type {
     BackendWorkflowResult,
@@ -171,7 +171,6 @@ function markdownToHtml(md: string): string {
 
 export function MedicalResultsSection({ result }: { result: BackendWorkflowResult }) {
     const hasSomething =
-        result.dialogue_transformation ||
         result.phi_detection ||
         result.entity_extraction ||
         result.soap_generation ||
@@ -183,19 +182,6 @@ export function MedicalResultsSection({ result }: { result: BackendWorkflowResul
 
     return (
         <div className="space-y-4">
-            {/* Dialogue */}
-            {result.dialogue_transformation && (
-                <Card>
-                    <CardHeader className="py-3 px-4">
-                        <CardTitle className="text-sm font-medium flex items-center gap-2">
-                            <Stethoscope className="w-4 h-4" /> Dialogue
-                        </CardTitle>
-                    </CardHeader>
-                    <CardContent className="px-4 pb-4 pt-0">
-                        <DialogueDisplay dialogue={result.dialogue_transformation} />
-                    </CardContent>
-                </Card>
-            )}
 
             {/* PHI Detection */}
             {result.phi_detection && <PHISection data={result.phi_detection} />}
