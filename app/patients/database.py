@@ -61,18 +61,18 @@ async def init_database(fresh_start: bool = True):
             ON patient_workflow_mappings(status)
         """)
 
-        # Create index on created_by for user-scoped queries
-        await conn.execute("""
-            CREATE INDEX IF NOT EXISTS idx_created_by
-            ON patient_workflow_mappings(created_by)
-        """)
-
         # Migration: add created_by column to existing databases that lack it
         try:
             await conn.execute("ALTER TABLE patient_workflow_mappings ADD COLUMN created_by TEXT")
             logger.info("Migrated: added created_by column to patient_workflow_mappings")
         except Exception:
             pass  # Column already exists
+
+        # Create index on created_by for user-scoped queries
+        await conn.execute("""
+            CREATE INDEX IF NOT EXISTS idx_created_by
+            ON patient_workflow_mappings(created_by)
+        """)
 
         await conn.commit()
 
