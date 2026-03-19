@@ -438,7 +438,7 @@ up:
 	@$(MAKE) list-servers
 
 down:
-	docker-compose down
+	docker-compose down -v
 	@echo "Docker services stopped"
 
 restart:

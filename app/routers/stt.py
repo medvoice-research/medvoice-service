@@ -10,7 +10,11 @@ import os
 import uuid
 
 import httpx
-from fastapi import APIRouter, Depends, File, Form, HTTPException, Request, UploadFile
+from typing import Any, Dict
+
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
+
+from ..auth.dependencies import get_current_user
 
 from ..compatibility import log_compatibility_warnings
 from ..files import ALLOWED_EXTENSIONS, save_temporary_file, validate_extension
@@ -106,7 +110,7 @@ async def speech_to_text(
         None,
         description="Date of encounter in ISO format (optional, defaults to today)",
     ),
-    request: Request = None,
+    current_user: Dict[str, Any] = Depends(get_current_user),
 ) -> Response:
     """Process an uploaded audio file for speech-to-text conversion."""
     logger.info("Received file upload request: %s", file.filename)
@@ -165,10 +169,8 @@ async def speech_to_text(
     from ..patients.mapping import reserve_patient_workflow, commit_patient_workflow, rollback_patient_workflow
 
     try:
-        # Extract user_id from request state (set by AuthMiddleware)
-        created_by = None
-        if request and hasattr(request.state, "current_user") and request.state.current_user:
-            created_by = request.state.current_user.get("user_id")
+        # Extract user_id from the get_current_user dependency (consistent with admin endpoints)
+        created_by = current_user.get("user_id")
 
         await reserve_patient_workflow(
             patient_name=patient_name,
@@ -277,7 +279,7 @@ async def speech_to_text_url(
         pattern=r".*\S.*",
         description="Patient full name for HIPAA-compliant identification (required for workflow tracking)",
     ),
-    request: Request = None,
+    current_user: Dict[str, Any] = Depends(get_current_user),
 ) -> Response:
     """Process an audio file from a URL for speech-to-text conversion."""
     logger.info("Received URL for processing: %s", url)
@@ -362,10 +364,8 @@ async def speech_to_text_url(
     from ..patients.mapping import reserve_patient_workflow, commit_patient_workflow, rollback_patient_workflow
 
     try:
-        # Extract user_id from request state (set by AuthMiddleware)
-        created_by = None
-        if request and hasattr(request.state, "current_user") and request.state.current_user:
-            created_by = request.state.current_user.get("user_id")
+        # Extract user_id from the get_current_user dependency (consistent with admin endpoints)
+        created_by = current_user.get("user_id")
 
         await reserve_patient_workflow(
             patient_name=patient_name,
