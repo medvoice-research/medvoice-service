@@ -20,6 +20,21 @@ Production-ready REST API for audio processing using WhisperX with Temporal work
 - Docker Desktop - Container runtime ([download](https://www.docker.com/products/docker-desktop/))
 - LM Studio - Local LLM server for medical AI features ([download](https://lmstudio.ai/))
 
+## Dataset
+
+The simulated patient-physician interview dataset (OSCE respiratory cases, ~1 GB, CC0) is
+**not stored in this repository** to keep clones small. Download it with:
+
+```bash
+make datasets        # downloads + extracts + verifies into datasets/
+# or
+python scripts/download_datasets.py
+```
+
+Source: [Springer Nature Figshare - A dataset of simulated patient-physician medical interviews](https://springernature.figshare.com/collections/A_dataset_of_simulated_patient-physician_medical_interviews_with_a_focus_on_respiratory_cases/5545842/1)
+
+Small sample audio files (`datasets/audios/`) are kept in-repo for tests.
+
 ### Prerequisites (macOS)
 
 **System Dependencies:**

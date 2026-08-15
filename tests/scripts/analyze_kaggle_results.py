@@ -126,7 +126,7 @@ if __name__ == "__main__":
     ground_truth_file = (
         sys.argv[2]
         if len(sys.argv) > 2
-        else "datasets/kaggle-simulated-patient-physicia-interviews/transcripts/RES0001.txt"
+        else "datasets/kaggle-simulated-patient-physician-interviews/transcripts/RES0001.txt"
     )
 
     analyze_whisperx_result(result_file, ground_truth_file)

@@ -1,7 +1,7 @@
 .PHONY: help install install-prod-gpu install-dev install-dev-gpu \
 	dev server worker web start-temporal lint format \
 	stop-temporal stop temporal-fresh check-activities \
-	test unit-test integration-test \
+	test unit-test integration-test datasets \
 	docker-build docker-up docker-start docker-restart docker-down down
 
 # Default target - show help
@@ -36,6 +36,7 @@ help:
 	@echo "  test              	- Run all tests (unit + integration)"
 	@echo "  unit-test         	- Run unit tests only"
 	@echo "  integration-test  	- Run integration tests only"
+	@echo "  datasets          	- Download the simulation dataset (~1 GB, see README)"
 	@echo ""
 	@echo "Environment Variables:"
 	@echo "  TEMPORAL_DB_PATH  	- Path for Temporal database (default: ./temporal_data/temporal.db)"
@@ -308,6 +309,17 @@ temporal-fresh:
 	@echo " [OK] Clean Temporal CLI namespace"
 
 	@echo "============================================"
+
+# ============================================================================
+# Dataset management
+# ============================================================================
+
+# Download the simulated patient-physician interview dataset (Figshare, ~1 GB)
+# The dataset is intentionally not stored in the repository to keep clones small.
+datasets:
+	@echo "Downloading simulation dataset (~1 GB) from Figshare..."
+	@uv run python scripts/download_datasets.py
+	@echo "Dataset ready in datasets/kaggle-simulated-patient-physician-interviews/"
 
 # ============================================================================
 # Testing targets

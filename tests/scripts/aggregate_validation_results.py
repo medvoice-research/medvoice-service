@@ -123,17 +123,17 @@ if __name__ == "__main__":
     samples_config = [
         (
             "/tmp/kaggle_res0029_result.json",
-            "datasets/kaggle-simulated-patient-physicia-interviews/transcripts/RES0029.txt",
+            "datasets/kaggle-simulated-patient-physician-interviews/transcripts/RES0029.txt",
             "RES0029 (Respiratory)",
         ),
         (
             "/tmp/kaggle_car0001_result.json",
-            "datasets/kaggle-simulated-patient-physicia-interviews/transcripts/CAR0001.txt",
+            "datasets/kaggle-simulated-patient-physician-interviews/transcripts/CAR0001.txt",
             "CAR0001 (Cardiology)",
         ),
         (
             "/tmp/kaggle_msk0001_result.json",
-            "datasets/kaggle-simulated-patient-physicia-interviews/transcripts/MSK0001.txt",
+            "datasets/kaggle-simulated-patient-physician-interviews/transcripts/MSK0001.txt",
             "MSK0001 (Musculoskeletal)",
         ),
     ]
