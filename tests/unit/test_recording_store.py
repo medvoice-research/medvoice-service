@@ -41,3 +41,32 @@ def test_delete_recording(store):
     assert store.delete_recording(rid) is True
     assert store.load_meta(rid) is None
     assert store.delete_recording(rid) is False
+
+
+@pytest.mark.parametrize("bad_id", ["..", "../..", "rec_../../evil", "/etc", "rec_TEST", "", "rec_a/../../b"])
+def test_store_rejects_ids_outside_the_allowlist(store, bad_id):
+    with pytest.raises(ValueError):
+        store.load_meta(bad_id)
+    with pytest.raises(ValueError):
+        store.delete_recording(bad_id)
+
+
+def test_audio_filename_is_confined_to_the_recording_dir(store, tmp_path):
+    rid = store.create_recording(patient_name="A", language="en", audio_filename="../../../evil.mp4")
+    assert store.audio_path(rid).parent == (tmp_path / rid).resolve()
+    assert store.audio_path(rid).name == "evil.mp4"
+
+
+def test_finalize_without_meta_raises_filenotfound(store):
+    with pytest.raises(FileNotFoundError):
+        store.finalize("rec_20260101_000000_deadbeef")
+
+
+def test_list_recordings_tolerates_corrupt_metadata(store, tmp_path):
+    good = store.create_recording(patient_name="A", language="en", audio_filename="a.m4a")
+    (tmp_path / "rec_20260101_000000_00000000").mkdir()
+    (tmp_path / "rec_20260101_000000_00000000" / "meta.json").write_text("{}")
+    (tmp_path / "not_a_recording").mkdir()
+    items = store.list_recordings()
+    assert good in [i["recording_id"] for i in items]
+    assert "not_a_recording" not in [i.get("recording_id") for i in items]
