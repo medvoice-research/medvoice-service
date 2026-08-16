@@ -8,13 +8,13 @@ import time
 from contextlib import asynccontextmanager
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, status
+from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse, RedirectResponse
 from scalar_fastapi import get_scalar_api_reference
 
 from .config import Config
 from .logger import logger
-from .routers import medical, patient_workflows, stt, stt_services, temporal_tasks
+from .routers import medical, patient_workflows, recordings, stt, stt_services, temporal_tasks
 from .routers import admin
 from .temporal.manager import temporal_manager
 from .trace_middleware import TraceMiddleware
@@ -218,6 +218,13 @@ app.include_router(temporal_tasks.temporal_router)
 app.include_router(medical.router)
 app.include_router(patient_workflows.router)
 app.include_router(admin.router)  # Admin endpoints
+app.include_router(recordings.router)
+
+
+@app.exception_handler(recordings.RecordingError)
+async def recording_error_handler(request: Request, exc: recordings.RecordingError) -> JSONResponse:
+    """Flat error envelope required by the mobile contract: {"detail", "error_code"}."""
+    return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail, "error_code": exc.error_code})
 
 # Initialize SQLAdmin for database management
 from sqladmin import Admin

@@ -86,7 +86,8 @@ ipython_config.py
 #   Similar to Pipfile.lock, it is generally recommended to include uv.lock in version control.
 #   This is especially recommended for binary packages to ensure reproducibility, and is more
 #   commonly ignored for libraries.
-uv.lock
+#   This is an application, not a library: uv.lock is tracked so Docker builds are reproducible.
+#uv.lock
 
 # pdm
 #   Similar to Pipfile.lock, it is generally recommended to include pdm.lock in version control.
@@ -181,6 +182,9 @@ CLAUDE.md
 # db
 *.db
 vector_storage
+
+# Local recordings storage (uploaded audio, transcripts, medical documents)
+data/recordings/
 
 # Large dataset (download via `make datasets` - see README)
 datasets/kaggle-simulated-patient-physician-interviews/

@@ -7,9 +7,12 @@ on:
     paths:
       - "app/**"
       - "tests/**"
-      - "dockerfile"
-      - "docker-compose.yml"
-      - "requirements/**"
+      - "streamlit_app/**"
+      - "Dockerfile"
+      - "docker-compose.yaml"
+      - "docker-compose.gpu.yaml"
+      - "pyproject.toml"
+      - "uv.lock"
   workflow_dispatch: # Allows manual triggering of the workflow
 permissions:
   contents: write
@@ -47,7 +50,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@0.31.0
+        uses: aquasecurity/trivy-action@v0.36.0
         with:
           image-ref: "whisperx-fastapi:latest"
           format: "table"
@@ -72,7 +75,7 @@ jobs:
             --env DEVICE=cpu \
             --env COMPUTE_TYPE=int8 \
             --entrypoint /bin/bash whisperx-fastapi:latest \
-            -c "pip install pytest==8.3.5 pytest-cov==6.1.1 && pytest"
+            -c "uv run --frozen --group dev pytest tests/unit/"
   dependabot:
     runs-on: ubuntu-latest
     needs: [build-and-test]

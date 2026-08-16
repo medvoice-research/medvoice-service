@@ -149,6 +149,11 @@ class Config:
     MEDICAL_ACTIVITY_TIMEOUT_MINUTES = _get_yaml_nested("temporal", "timeouts", "medical_activity_minutes", 15)
     MEDICAL_WORKFLOW_TIMEOUT_MINUTES = _get_yaml_nested("temporal", "timeouts", "medical_workflow_minutes", 30)
 
+    # Recordings API (synchronous mobile-app path)
+    RECORDINGS_STORAGE_DIR = _get_yaml("recordings", "storage_dir", "./data/recordings")
+    RECORDINGS_SYNC_TIMEOUT_SECONDS = int(_get_yaml("recordings", "sync_timeout_seconds", 300))
+    RECORDINGS_MAX_UPLOAD_BYTES = int(_get_yaml("recordings", "max_upload_mb", 200)) * 1024 * 1024
+
     @classmethod
     def validate_medical_config(cls) -> list[str]:
         """Validate medical configuration and return list of required missing settings."""
