@@ -42,6 +42,8 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 # Copy application code
 COPY app/ ./app/
 COPY scripts/ ./scripts/
+# tests/ ships in the image so CI can run the suite inside the built container
+COPY tests/ ./tests/
 COPY pyproject.toml uv.lock ./
 
 # Install the project itself (fast since dependencies are already installed)
