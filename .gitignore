@@ -182,5 +182,8 @@ CLAUDE.md
 *.db
 vector_storage
 
+# Local recordings storage (uploaded audio, transcripts, medical documents)
+data/recordings/
+
 # Large dataset (download via `make datasets` - see README)
 datasets/kaggle-simulated-patient-physician-interviews/
