@@ -109,6 +109,19 @@ Client → FastAPI → Temporal → Activities (Transcribe → Align → Diarize
 - `POST /speech-to-text-url` - Process from URL
 - `GET /tasks/{task_id}` - Check workflow status
 
+### Recordings (mobile app contract)
+- `POST /recordings` - Upload audio (multipart: `file`, optional `patient_name`, `language`), returns `201` with `transcript` (`full_text` + speaker segments) and `medical_document` (`soap`, `entities`, `phi`)
+- `GET /recordings` - List recordings, newest first
+- `GET /recordings/{recording_id}` - Recording detail (meta + transcript + medical document)
+- `DELETE /recordings/{recording_id}` - Delete a recording, returns `204`
+
+Synchronous processing; Temporal not required for this path. Results are stored under
+`recordings.storage_dir` in `config.yaml` (default `./data/recordings/{recording_id}/`) as
+`transcript.json`, `medical.json`, `meta.json` plus the original upload. Timeout and upload
+cap come from `recordings.sync_timeout_seconds` and `recordings.max_upload_mb`. SOAP,
+entities, and PHI need LM Studio; without it the transcript still returns and the medical
+sections come back empty.
+
 ### Medical (requires LM Studio)
 - `POST /medical/process` - Full medical pipeline
 - `POST /medical/soap` - Generate SOAP note
