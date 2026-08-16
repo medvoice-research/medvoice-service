@@ -4,6 +4,7 @@ Reuses the same WhisperX functions the Temporal activities call, plus the
 medical LLM service, but runs inline (no Temporal dependency).
 """
 
+import asyncio
 from typing import Any, Dict, List, Tuple, Type
 
 from pydantic import BaseModel
@@ -29,8 +30,8 @@ def _defaults(model_cls: Type[BaseModel]) -> Dict[str, Any]:
     }
 
 
-async def run_stt(audio_path: str, language: str = "en", model: str = "base") -> Dict[str, Any]:
-    """Transcribe + align + diarize, returning the WhisperX result with speakers."""
+def _run_stt_sync(audio_path: str, language: str, model: str) -> Dict[str, Any]:
+    """Blocking WhisperX work. Runs in a worker thread; see run_stt."""
     audio = process_audio_file(audio_path)
     mp = WhisperModelParams(**{**_defaults(WhisperModelParams), "language": language, "model": model})
     result = transcribe_with_whisper(
@@ -68,6 +69,18 @@ async def run_stt(audio_path: str, language: str = "en", model: str = "base") ->
     for seg in result.get("segments", []):
         seg.setdefault("speaker", "SPEAKER_00")
     return result
+
+
+async def run_stt(audio_path: str, language: str = "en", model: str = "base") -> Dict[str, Any]:
+    """Transcribe + align + diarize, returning the WhisperX result with speakers.
+
+    The stages are CPU-bound and run for minutes, so they go to a worker thread:
+    the single-worker event loop keeps serving other requests and the caller's
+    ``asyncio.wait_for`` can actually fire. A timed-out thread still runs to
+    completion in the background (Python cannot kill it); bounding that needs
+    process isolation.
+    """
+    return await asyncio.to_thread(_run_stt_sync, audio_path, language, model)
 
 
 def _full_text(segments: List[Dict[str, Any]]) -> str:
