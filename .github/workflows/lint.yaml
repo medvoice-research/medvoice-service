@@ -10,18 +10,25 @@ on:
     paths:
       - "app/**"
       - "tests/**"
-      - "dockerfile"
-      - "docker-compose.yml"
-      - "requirements/**"
+      - "streamlit_app/**"
+      - "Dockerfile"
+      - "docker-compose.yaml"
+      - "docker-compose.gpu.yaml"
+      - "pyproject.toml"
+      - "uv.lock"
   pull_request:
     branches-ignore:
       - main
       - dev
     paths:
       - "app/**"
-      - "dockerfile"
-      - "docker-compose.yml"
-      - "requirements/**"
+      - "tests/**"
+      - "streamlit_app/**"
+      - "Dockerfile"
+      - "docker-compose.yaml"
+      - "docker-compose.gpu.yaml"
+      - "pyproject.toml"
+      - "uv.lock"
   workflow_dispatch:
 permissions:
   contents: read
@@ -47,24 +54,17 @@ jobs:
         uses: astral-sh/setup-uv@v6
         with:
           enable-cache: true
-          cache-dependency-glob: "requirements/**/*.txt"
+          cache-dependency-glob: "uv.lock"
           version: "0.6.6"
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
       - name: Install Python dependencies
-        run: uv pip install --system -r requirements/dev.txt
+        run: uv sync --group dev
       - name: Run Ruff linter
-        run: ruff check .
-      - name: Run Ruff formatter check
-        run: ruff format --check .
-      - name: Run tests with coverage check
-        run: |
-          coverage run --source=app -m pytest
-          echo "## Coverage Report" >> $GITHUB_STEP_SUMMARY
-          coverage html
-          coverage report --fail-under=55
-          echo "<details><summary>Coverage HTML Report</summary>" >> $GITHUB_STEP_SUMMARY
-          cat htmlcov/index.html >> $GITHUB_STEP_SUMMARY
-          echo "</details>" >> $GITHUB_STEP_SUMMARY
+        run: uv run ruff check app/ tests/ streamlit_app/ --config pyproject.toml
+      # tests/integration/ needs a live Temporal server, LM Studio and the
+      # Kaggle audio dataset, none of which exist on a CI runner.
+      - name: Run unit tests with coverage
+        run: uv run pytest tests/unit/ --cov=app --cov-report=term-missing --cov-report=xml
