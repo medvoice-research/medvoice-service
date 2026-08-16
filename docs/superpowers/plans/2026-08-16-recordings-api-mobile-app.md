@@ -570,7 +570,11 @@ Delete these files (no longer referenced after repository rewrite — verify wit
 - `lib/domain/entities/recording/sentences_response.dart`
 - `lib/data/repository_impl/ask_repository_impl.dart` (Q&A deferred)
 
-For each file: `grep -rn "import.*<filename_without_ext>" lib/ test/` — if zero references, `git rm` it. If referenced, fix the importer first. Run `flutter analyze` after; expect zero errors.
+For each file: `grep -rn "import.*<filename_without_ext>" lib/ test/` — if zero references, `git rm` it. If referenced, fix the importer first.
+
+**CRITICAL — pubspec.yaml assets entry:** `flutter test` fails to compile ANY test with `Error: unable to find directory entry in pubspec.yaml: assets/google_api_auth_key/` because that directory (the GCS service-account key) is NOT in the repo (secret, gitignored). In `pubspec.yaml`, remove the `assets/google_api_auth_key/` entry from the `flutter: assets:` section (and remove the `assets/vosk_model` entry only if it's also absent from disk — verify with `ls assets/` first). Also check `lib/data/repository_impl/audio_repository_impl.dart`'s `rootBundle.loadString('assets/google_api_auth_key/...')` reference is gone after the rewrite. After removal, `fvm flutter test` must get past the pubspec asset error.
+
+**Baseline test note:** `test/widget_test.dart` is entirely commented out (no `main()`) — it fails to LOAD (`Undefined name 'main'`). This is pre-existing and unrelated to this work; if the plan's later steps say "update widget_test", either uncomment-and-fix it or leave it as-is (it never ran before). Do not treat it as a regression.
 
 - [ ] **Step 8: Commit**
 
