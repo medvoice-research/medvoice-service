@@ -4,7 +4,7 @@ Reuses the same WhisperX functions the Temporal activities call, plus the
 medical LLM service, but runs inline (no Temporal dependency).
 """
 
-from typing import Any, Dict, Tuple, Type
+from typing import Any, Dict, List, Tuple, Type
 
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo
@@ -70,8 +70,16 @@ async def run_stt(audio_path: str, language: str = "en", model: str = "base") ->
     return result
 
 
-async def run_medical(transcript: Dict[str, Any]) -> Dict[str, Any]:
-    """PHI + entities + SOAP via the existing medical LLM service. Degrades per-step."""
+def _full_text(segments: List[Dict[str, Any]]) -> str:
+    return " ".join(s["text"].strip() for s in segments if s.get("text"))
+
+
+async def run_medical(whisperx_result: Dict[str, Any]) -> Dict[str, Any]:
+    """PHI + entities + SOAP via the existing medical LLM service. Degrades per-step.
+
+    Takes the raw WhisperX result (segments + word_segments), which is what
+    TranscriptionTransformer parses for speaker-attributed dialogue.
+    """
     from app.llm.lm_studio_client import LMStudioClient, LMStudioConfig
     from app.llm.medical_llm_service import MedicalLLMService
     from app.services.transcription_transformer import TranscriptionTransformer
@@ -79,11 +87,11 @@ async def run_medical(transcript: Dict[str, Any]) -> Dict[str, Any]:
     result: Dict[str, Any] = {"soap": {}, "entities": [], "phi": {"detected": False, "entities": []}}
 
     try:
-        dialogue = TranscriptionTransformer().transform({"segments": transcript.get("segments", [])})
+        dialogue = TranscriptionTransformer().transform(whisperx_result)
     except Exception as e:
         logger.warning(f"Dialogue transformation failed, using flat transcript: {e}")
         dialogue = {
-            "dialogue": [{"speaker": "unknown", "text": transcript.get("full_text", "")}],
+            "dialogue": [{"speaker": "unknown", "text": _full_text(whisperx_result.get("segments", []))}],
             "speaker_mapping": {},
         }
 
@@ -123,9 +131,5 @@ async def run_medical(transcript: Dict[str, Any]) -> Dict[str, Any]:
 async def run_recording_pipeline(audio_path: str, language: str = "en") -> Tuple[Dict[str, Any], Dict[str, Any]]:
     stt = await run_stt(audio_path, language=language)
     segments = stt.get("segments", [])
-    transcript = {
-        "full_text": " ".join(s["text"].strip() for s in segments if s.get("text")),
-        "segments": segments,
-    }
-    medical = await run_medical(transcript)
-    return transcript, medical
+    medical = await run_medical(stt)
+    return {"full_text": _full_text(segments), "segments": segments}, medical
