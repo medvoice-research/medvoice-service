@@ -56,3 +56,9 @@ medical:
     soap_generation: true
     document_structuring: true
     vector_storage: true
+
+# Recordings API
+recordings:
+  storage_dir: ./data/recordings
+  sync_timeout_seconds: 300
+  max_upload_mb: 200

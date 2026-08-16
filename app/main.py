@@ -14,7 +14,7 @@ from scalar_fastapi import get_scalar_api_reference
 
 from .config import Config
 from .logger import logger
-from .routers import medical, patient_workflows, stt, stt_services, temporal_tasks
+from .routers import medical, patient_workflows, recordings, stt, stt_services, temporal_tasks
 from .routers import admin
 from .temporal.manager import temporal_manager
 from .trace_middleware import TraceMiddleware
@@ -218,6 +218,7 @@ app.include_router(temporal_tasks.temporal_router)
 app.include_router(medical.router)
 app.include_router(patient_workflows.router)
 app.include_router(admin.router)  # Admin endpoints
+app.include_router(recordings.router)
 
 # Initialize SQLAdmin for database management
 from sqladmin import Admin
