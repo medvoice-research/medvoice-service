@@ -167,8 +167,9 @@ fvm flutter run -d chrome      # backend must be up (step 1)
 - `web/` platform support was added with `fvm flutter create --platforms web .`
 - vosk offline speech recognition has no web support: a conditional-import
   web stub lets the app build/load on web while Android/iOS keep the real
-  vosk. The recording screen shows a notice that offline recognition is
-  unavailable on web.
+  vosk. Attempting offline recognition on web surfaces
+  "Offline recognition is unavailable on web" through the existing error
+  path (no dedicated banner yet).
 - Hot reload works in Chrome; the app talks to localhost:8000 directly.
 
 ### Running on a phone/emulator instead
