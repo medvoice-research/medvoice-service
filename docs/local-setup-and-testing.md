@@ -204,8 +204,26 @@ option; offline recognition is stubbed on web). For real mobile testing:
 - Emulator system images are ~1.5 GB; first Gradle build takes several
   minutes.
 
-**Option C — iOS simulator:** requires Xcode (~15 GB) — not installed on this
-machine; skip unless you need iOS specifically.
+**Option C — iOS simulator (chosen):**
+- Requires FULL Xcode (~15 GB, manual install — this Mac currently only has
+  CommandLineTools, and `xcrun simctl` is unavailable). Install from the Mac
+  App Store (needs your Apple ID) or `brew install --cask xcodes` + `xcodes
+  install --latest` (also needs Apple ID sign-in). No way around the manual
+  step; Hermes won't handle your credentials.
+- After Xcode is installed (first launch accepts the license):
+  ```
+  sudo xcode-select -s /Applications/Xcode.app/Contents/Developer   # if needed
+  xcodebuild -runFirstLaunch
+  open -a Simulator              # boots the default iPhone simulator
+  cd ~/Projects/medvoice-mobile
+  fvm flutter doctor             # expect [✓] Xcode
+  fvm flutter run                # targets the booted simulator
+  ```
+- GOOD NEWS vs Android: the iOS simulator shares the host network, so
+  `Constants.baseUrl` stays `http://localhost:8000/` — NO app change needed.
+  (Android emulator would need 10.0.2.2; a physical phone needs your LAN IP.)
+- Caveats: no microphone on the simulator (record flow limited), and the
+  first iOS build (pod install + compile) takes several minutes.
 
 ### Troubleshooting
 
