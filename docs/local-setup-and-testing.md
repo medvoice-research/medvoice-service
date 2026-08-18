@@ -174,15 +174,40 @@ fvm flutter run -d chrome      # backend must be up (step 1)
 
 ### Running on a phone/emulator instead
 
-Not set up on this machine (no Android SDK / Xcode). To do it:
-- Android: install Android Studio, accept SDK licenses, `fvm flutter doctor`,
-  then `fvm flutter run` with a device connected.
-- The API base URL is `lib/data/network/constants.dart`
-  (`Constants.baseUrl`); for a physical phone, change it to your Mac's LAN
-  IP (e.g. `http://192.168.x.x:8000/`) and ensure the API container listens
-  on 0.0.0.0 (it does).
+The `web/` platform lets you test UI flows in Chrome on any machine (fastest
+option; offline recognition is stubbed on web). For real mobile testing:
 
-## Troubleshooting
+**Option A — Physical Android phone over USB (recommended, cheapest):**
+- This Mac needs the Android SDK command-line tools first:
+  `brew install --cask android-commandlinetools`, then
+  `sdkmanager "platform-tools" "platforms;android-34" "build-tools;34.0.0"`,
+  and accept licenses (`sdkmanager --licenses`). Set `ANDROID_HOME` and add
+  `platform-tools` to PATH. Then `fvm flutter doctor` should show the Android
+  toolchain ✓.
+- On the phone: enable Developer Options -> USB debugging, plug in via USB,
+  accept the RSA prompt.
+- `fvm flutter devices` should list the phone; then `fvm flutter run`.
+- IMPORTANT: on a physical phone, `localhost:8000` is the PHONE itself, not
+  your Mac. Change `lib/data/network/constants.dart` `Constants.baseUrl` to
+  `http://<your-mac-LAN-IP>:8000/` (e.g. `http://192.168.1.23:8000/`) and
+  make sure the API container listens on 0.0.0.0 (it does by default).
+  That's a one-line app change — per project convention it goes through omp.
+
+**Option B — Android emulator (no physical device needed):**
+- After installing the SDK tools (above), add the emulator + a system image:
+  `sdkmanager "emulator" "system-images;android-34;google_apis;arm64-v8a"`,
+  then `avdmanager create avd -n medvoice -k "system-images;android-34;google_apis;arm64-v8a"`,
+  then `fvm flutter emulators --launch medvoice` and `fvm flutter run`.
+- IMPORTANT: the Android emulator reaches your host's loopback at
+  `http://10.0.2.2:8000/` (not localhost). Change `Constants.baseUrl`
+  accordingly (one-line app change, via omp).
+- Emulator system images are ~1.5 GB; first Gradle build takes several
+  minutes.
+
+**Option C — iOS simulator:** requires Xcode (~15 GB) — not installed on this
+machine; skip unless you need iOS specifically.
+
+### Troubleshooting
 
 | Symptom | Cause / Fix |
 |---|---|
