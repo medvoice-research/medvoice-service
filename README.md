@@ -94,13 +94,74 @@ make dev
 
 ## Architecture
 
+### System overview
+
+```mermaid
+flowchart TD
+    subgraph Clients
+        App["MedVoice Flutter app<br/>(iOS / Android / web)"]
+        Web["Streamlit web UI :8501"]
+        Curl["curl / API clients"]
+    end
+
+    subgraph Backend["medvoice-service (FastAPI, whisperx-api :8000)"]
+        Router["Routers<br/>recordings / stt / medical / admin"]
+        Store["RecordingStore<br/>./data/recordings/{id}/"]
+        Sync["Sync pipeline<br/>transcribe → align → diarize<br/>(asyncio.to_thread)"]
+        Medical["Medical LLM stage<br/>PHI → entities → SOAP<br/>(per-step graceful degradation)"]
+        Temp["Temporal workflow<br/>/speech-to-text path"]
+    end
+
+    subgraph Infra
+        HF["Hugging Face Hub<br/>WhisperX + pyannote models<br/>(HF_TOKEN for gated)"]
+        LMS["LM Studio :1234<br/>(optional, local LLM)"]
+        DB[("SQLite<br/>patients / tasks")]
+        Disk[("Local disk<br/>audio + transcript.json + medical.json")]
+    end
+
+    App -->|"POST /recordings (multipart)"| Router
+    App -->|"GET/DELETE /recordings[/{id}]"| Router
+    Web -->|"upload + monitor"| Router
+    Curl -->|"REST"| Router
+
+    Router --> Store
+    Router --> Sync
+    Sync --> Medical
+    Sync --> HF
+    Medical --> LMS
+    Store --> Disk
+    Router --> Temp
+    Temp --> DB
 ```
-Client → FastAPI → Temporal → Activities (Transcribe → Align → Diarize)
-                    ↓
-                 Patient DB (SQLite)
-                    ↓
-              Medical LLM (LM Studio)
+
+### Recordings flow (mobile app contract, synchronous)
+
+```mermaid
+sequenceDiagram
+    participant App as MedVoice app
+    participant API as FastAPI /recordings
+    participant ST as RecordingStore
+    participant WX as WhisperX (worker thread)
+    participant LLM as LM Studio (optional)
+
+    App->>API: POST /recordings (file, patient_name?, language?)
+    API->>API: validate extension + size (415 / 413)
+    API->>ST: create_recording() → recording_id
+    API->>ST: stream upload → audio file
+    API->>WX: run_stt() — transcribe → align → diarize (speakers)
+    WX-->>API: transcript {full_text, segments[]}
+    API->>LLM: run_medical() — PHI / entities / SOAP
+    LLM-->>API: medical_document (or empty when offline)
+    API->>ST: save transcript.json + medical.json + finalize
+    API-->>App: 201 {recording_id, transcript, medical_document}
+
+    App->>API: GET /recordings → history list
+    App->>API: GET /recordings/{id} → full detail
+    App->>API: DELETE /recordings/{id} → 204
 ```
+
+The `/speech-to-text` endpoints use the Temporal worker for async processing;
+the recordings API is self-contained and does not require Temporal.
 
 ## API Endpoints
 
