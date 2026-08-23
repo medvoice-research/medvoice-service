@@ -229,3 +229,31 @@ def test_delete_and_404(client):
     rid = c.get("/recordings").json()["recordings"][0]["recording_id"]
     assert c.delete(f"/recordings/{rid}").status_code == 204
     assert c.get(f"/recordings/{rid}").status_code == 404
+
+
+def test_audio_url_and_audio_endpoint_serve_the_stored_file(real_client):
+    c, storage = real_client
+    rid = c.post("/recordings", files={"file": ("a.wav", io.BytesIO(b"RIFFfake"), "audio/wav")}).json()["recording_id"]
+
+    detail = c.get(f"/recordings/{rid}").json()
+    assert detail["audio_url"] == f"/recordings/{rid}/audio"
+
+    audio = c.get(detail["audio_url"])
+    assert audio.status_code == 200
+    assert audio.content == b"RIFFfake"
+
+
+def test_audio_endpoint_404s_for_unknown_and_traversal_ids(real_client):
+    c, _ = real_client
+    _assert_flat_envelope(c.get("/recordings/rec_20260101_000000_deadbeef/audio"), 404, "recording_not_found")
+    _assert_flat_envelope(c.get("/recordings/%2e%2e/audio"), 404, "recording_not_found")
+
+
+def test_missing_audio_file_yields_null_url_and_404(real_client):
+    """Meta can outlive the audio blob; the detail payload must say so instead of linking a 404."""
+    c, storage = real_client
+    rid = c.post("/recordings", files={"file": ("a.wav", io.BytesIO(b"RIFFfake"), "audio/wav")}).json()["recording_id"]
+    (storage / rid / "audio.wav").unlink()
+
+    assert c.get(f"/recordings/{rid}").json()["audio_url"] is None
+    _assert_flat_envelope(c.get(f"/recordings/{rid}/audio"), 404, "recording_not_found")

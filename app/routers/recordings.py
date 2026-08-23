@@ -5,7 +5,7 @@ from pathlib import Path
 from typing import Optional
 
 from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
-from fastapi.responses import Response
+from fastapi.responses import FileResponse, Response
 
 from app.config import Config
 from app.services.recording_pipeline import run_recording_pipeline
@@ -34,6 +34,15 @@ def get_store() -> RecordingStore:
 
 def _not_found() -> RecordingError:
     return RecordingError(404, "Recording not found", "recording_not_found")
+
+
+def _audio_file(store: RecordingStore, recording_id: str) -> Optional[Path]:
+    """Stored audio path, or None when the recording's meta or the file itself is gone."""
+    try:
+        path = store.audio_path(recording_id)
+    except FileNotFoundError:
+        return None
+    return path if path.exists() else None
 
 
 async def _save_upload(file: UploadFile, dest: Path) -> None:
@@ -113,12 +122,24 @@ async def get_recording(recording_id: str):
     meta = store.load_meta(recording_id)
     if not meta:
         raise _not_found()
+    audio = _audio_file(store, recording_id)
     return {
         **meta,
+        "audio_url": f"/recordings/{recording_id}/audio" if audio else None,
         "transcript": store.load_transcript(recording_id) or {"full_text": "", "segments": []},
         "medical_document": store.load_medical(recording_id)
         or {"soap": {}, "entities": [], "phi": {"detected": False, "entities": []}},
     }
+
+
+@router.get("/recordings/{recording_id}/audio", summary="Serve the stored audio file")
+async def get_recording_audio(recording_id: str):
+    if not is_valid_recording_id(recording_id):
+        raise _not_found()
+    audio = _audio_file(get_store(), recording_id)
+    if not audio:
+        raise _not_found()
+    return FileResponse(audio)
 
 
 @router.delete("/recordings/{recording_id}", status_code=204)
