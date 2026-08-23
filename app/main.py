@@ -8,13 +8,13 @@ import time
 from contextlib import asynccontextmanager
 
 from dotenv import load_dotenv
-from fastapi import FastAPI, Request, status
+from fastapi import FastAPI, HTTPException, Request, status
 from fastapi.responses import JSONResponse, RedirectResponse
 from scalar_fastapi import get_scalar_api_reference
 
 from .config import Config
 from .logger import logger
-from .routers import medical, patient_workflows, recordings, stt, stt_services, temporal_tasks
+from .routers import auth, medical, patient_workflows, recordings, stt, stt_services, temporal_tasks
 from .routers import admin
 from .temporal.manager import temporal_manager
 from .trace_middleware import TraceMiddleware
@@ -38,6 +38,12 @@ async def lifespan(app: FastAPI):
     fresh_start = Config.DB_FRESH_START
     init_db(fresh_start=fresh_start)
     logger.info(f"Patient database initialized (fresh_start={fresh_start})")
+
+    # Initialize user store and seed mock accounts (idempotent)
+    from .services import user_store
+
+    user_store.init_user_store()
+    user_store.seed_mock_accounts()
 
     # Connect to Temporal
     await temporal_manager.get_client()
@@ -219,10 +225,12 @@ app.include_router(medical.router)
 app.include_router(patient_workflows.router)
 app.include_router(admin.router)  # Admin endpoints
 app.include_router(recordings.router)
+app.include_router(auth.router)
 
 
 @app.exception_handler(recordings.RecordingError)
-async def recording_error_handler(request: Request, exc: recordings.RecordingError) -> JSONResponse:
+@app.exception_handler(auth.AuthError)
+async def flat_error_handler(request: Request, exc: HTTPException) -> JSONResponse:
     """Flat error envelope required by the mobile contract: {"detail", "error_code"}."""
     return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail, "error_code": exc.error_code})
 
