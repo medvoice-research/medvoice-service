@@ -233,10 +233,13 @@ def test_delete_and_404(client):
 
 def test_audio_url_and_audio_endpoint_serve_the_stored_file(real_client):
     c, storage = real_client
-    rid = c.post("/recordings", files={"file": ("a.wav", io.BytesIO(b"RIFFfake"), "audio/wav")}).json()["recording_id"]
+    created = c.post("/recordings", files={"file": ("a.wav", io.BytesIO(b"RIFFfake"), "audio/wav")}).json()
+    rid = created["recording_id"]
+    # The app deserializes the 201 body straight into its detail model, so the link must ship with it.
+    assert created["audio_url"] == f"/recordings/{rid}/audio"
 
     detail = c.get(f"/recordings/{rid}").json()
-    assert detail["audio_url"] == f"/recordings/{rid}/audio"
+    assert detail["audio_url"] == created["audio_url"]
 
     audio = c.get(detail["audio_url"])
     assert audio.status_code == 200

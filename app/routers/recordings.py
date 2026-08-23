@@ -91,7 +91,12 @@ async def create_recording(
         store.finalize(recording_id)
 
         meta = store.load_meta(recording_id)
-        return {**meta, "transcript": transcript, "medical_document": medical}
+        return {
+            **meta,
+            "audio_url": f"/recordings/{recording_id}/audio" if _audio_file(store, recording_id) else None,
+            "transcript": transcript,
+            "medical_document": medical,
+        }
     except Exception as e:
         # Anything past create_recording would otherwise strand a permanent `processing` entry.
         store.delete_recording(recording_id)
