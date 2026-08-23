@@ -135,6 +135,7 @@ class Config:
     # Database paths
     MEDICAL_DB_PATH = _get_yaml("database", "medical_db_path", "./medical_metadata.db")
     PATIENT_DB_PATH = _get_yaml("database", "patient_db_path", "./data/patient_mappings.db")
+    USERS_DB_PATH = _get_yaml("database", "users_db_path", "./data/users.db")
 
     # Performance
     ENABLE_PARALLEL_MEDICAL_PROCESSING = _get_yaml("performance", "parallel_medical_processing", True)
