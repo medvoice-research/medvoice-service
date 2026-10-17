@@ -188,3 +188,4 @@ data/recordings/
 
 # Large dataset (download via `make datasets` - see README)
 datasets/kaggle-simulated-patient-physician-interviews/
+datasets/vietmed/

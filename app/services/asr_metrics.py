@@ -1,17 +1,56 @@
 """Text metrics for the Vietnamese ASR benchmark (scripts/asr_benchmark.py).
 
 Tone marks are meaning in Vietnamese ("má" mother vs "mà" but), so normalization keeps
-them: Unicode NFC, lowercase, punctuation stripped, whitespace collapsed.
+them: Unicode NFC, lowercase, punctuation stripped, whitespace collapsed. VietMed references
+spell numbers out ("năm mươi lăm"), while Whisper often emits digits, so digits are spelled
+the same way before scoring.
 """
 
 import re
 import unicodedata
 
 _PUNCT = re.compile(r"[^\w\s]", re.UNICODE)
+_NUMBER = re.compile(r"\d+")
+_DIGITS = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"]
+_GROUPS = ["", "nghìn", "triệu", "tỷ"]
+
+
+def _three(n: int, full: bool) -> list[str]:
+    """Read 0-999; ``full`` forces "không trăm"/"linh" for non-leading groups."""
+    h, t, u = n // 100, n // 10 % 10, n % 10
+    out = []
+    if h or full:
+        out += [_DIGITS[h], "trăm"]
+    if t == 0:
+        if u and out:
+            out.append("linh")
+    elif t == 1:
+        out.append("mười")
+    else:
+        out += [_DIGITS[t], "mươi"]
+    if u:
+        out.append("mốt" if u == 1 and t >= 2 else "lăm" if u == 5 and t >= 1 else _DIGITS[u])
+    return out
+
+
+def spell_number(n: int) -> str:
+    # ponytail: integers only, up to 999 tỷ; decimals ("1,5") read as two numbers.
+    if n == 0:
+        return _DIGITS[0]
+    groups = []
+    while n:
+        groups.append(n % 1000)
+        n //= 1000
+    words = []
+    for i in range(len(groups) - 1, -1, -1):
+        if groups[i]:
+            words += _three(groups[i], full=i < len(groups) - 1) + ([_GROUPS[i]] if _GROUPS[i] else [])
+    return " ".join(words)
 
 
 def normalize(text: str) -> str:
-    text = unicodedata.normalize("NFC", text).lower()
+    text = unicodedata.normalize("NFC", text).lower().replace("%", " phần trăm ")
+    text = _NUMBER.sub(lambda m: f" {spell_number(int(m.group()))} " if len(m.group()) <= 12 else m.group(), text)
     return " ".join(_PUNCT.sub(" ", text).split())
 
 
