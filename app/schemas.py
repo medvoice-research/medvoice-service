@@ -179,6 +179,10 @@ class WhisperModel(str, Enum):
     distil_small_en = "distil-small.en"
     distil_large_v3 = "distil-large-v3"
     faster_crisper_whisper = "nyrahealth/faster_CrisperWhisper"
+    # Vietnamese fine-tunes (vinai/PhoWhisper, BSD-3) converted to CTranslate2.
+    phowhisper_small = "mad1999/pho-whisper-small-ct2"
+    phowhisper_medium = "mad1999/pho-whisper-medium-ct2"
+    phowhisper_large = "mad1999/pho-whisper-large-ct2"
 
 
 class Device(str, Enum):

@@ -2,7 +2,7 @@ import asyncio
 import threading
 
 import pytest
-from unittest.mock import AsyncMock, patch
+from unittest.mock import AsyncMock, MagicMock, patch
 
 from app.services.recording_pipeline import run_recording_pipeline, run_stt
 
@@ -79,3 +79,25 @@ async def test_run_stt_does_not_block_the_event_loop(tmp_path):
         release.set()
         assert finished.wait(10)
         await asyncio.sleep(0.05)
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    ("language", "expected"),
+    [("vi", "mad1999/pho-whisper-small-ct2"), ("fr", "base")],
+)
+async def test_run_stt_picks_model_by_language(tmp_path, language, expected):
+    """Vietnamese gets its configured model; languages without an entry fall back to WHISPER_MODEL."""
+    from app.config import Config
+
+    transcribe = MagicMock(return_value={"segments": [], "language": language})
+    with (
+        patch.object(Config, "WHISPER_MODELS_BY_LANGUAGE", {"vi": "mad1999/pho-whisper-small-ct2"}),
+        patch.object(Config, "WHISPER_MODEL", "base"),
+        patch("app.services.recording_pipeline.process_audio_file", return_value="audio"),
+        patch("app.services.recording_pipeline.transcribe_with_whisper", transcribe),
+        patch("app.services.recording_pipeline.diarize", side_effect=RuntimeError("no diarization")),
+    ):
+        await run_stt(str(tmp_path / "a.m4a"), language=language)
+
+    assert transcribe.call_args.kwargs["model"].value == expected

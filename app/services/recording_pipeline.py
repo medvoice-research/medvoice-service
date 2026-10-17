@@ -71,7 +71,7 @@ def _run_stt_sync(audio_path: str, language: str, model: str) -> Dict[str, Any]:
     return result
 
 
-async def run_stt(audio_path: str, language: str = "en", model: str = "base") -> Dict[str, Any]:
+async def run_stt(audio_path: str, language: str = "en", model: str | None = None) -> Dict[str, Any]:
     """Transcribe + align + diarize, returning the WhisperX result with speakers.
 
     The stages are CPU-bound and run for minutes, so they go to a worker thread:
@@ -80,6 +80,7 @@ async def run_stt(audio_path: str, language: str = "en", model: str = "base") ->
     completion in the background (Python cannot kill it); bounding that needs
     process isolation.
     """
+    model = model or Config.WHISPER_MODELS_BY_LANGUAGE.get(language, Config.WHISPER_MODEL)
     return await asyncio.to_thread(_run_stt_sync, audio_path, language, model)
 
 
