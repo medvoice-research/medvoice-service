@@ -66,7 +66,8 @@ def test_issued_token_decodes_to_user_id(client):
     from jose import jwt
 
     from app.config import Config
+    from app.routers.auth import JWT_SECRET
 
     token = _login(client, *MOCK_DOCTOR).json()["access_token"]
-    payload = jwt.decode(token, Config.JWT_SECRET_KEY, algorithms=[Config.JWT_ALGORITHM])
+    payload = jwt.decode(token, JWT_SECRET, algorithms=[Config.JWT_ALGORITHM])
     assert payload["sub"].isdigit()

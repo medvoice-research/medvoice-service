@@ -7,6 +7,7 @@ import pytest
 from fastapi.testclient import TestClient
 
 from app.config import Config
+from app.services import user_store
 
 _TRANSCRIPT = {
     "full_text": "Hello doctor",
@@ -41,11 +42,11 @@ def real_client(tmp_path):
     storage = tmp_path / "storage"
     with (
         patch.object(Config, "RECORDINGS_STORAGE_DIR", str(storage)),
+        patch.object(user_store, "DB_PATH", tmp_path / "users.db"),
         patch("app.routers.recordings.run_recording_pipeline", new=AsyncMock(return_value=(_TRANSCRIPT, _MEDICAL))),
     ):
         with TestClient(app) as c:
             yield c, storage
-
 
 
 class _FakeStore:

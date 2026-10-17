@@ -144,7 +144,8 @@ async def get_recording_audio(recording_id: str):
     audio = _audio_file(get_store(), recording_id)
     if not audio:
         raise _not_found()
-    return FileResponse(audio)
+    # PHI: keep patient audio out of HTTP and player disk caches.
+    return FileResponse(audio, headers={"Cache-Control": "no-store"})
 
 
 @router.delete("/recordings/{recording_id}", status_code=204)

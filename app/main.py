@@ -234,6 +234,7 @@ async def flat_error_handler(request: Request, exc: HTTPException) -> JSONRespon
     """Flat error envelope required by the mobile contract: {"detail", "error_code"}."""
     return JSONResponse(status_code=exc.status_code, content={"detail": exc.detail, "error_code": exc.error_code})
 
+
 # Initialize SQLAdmin for database management
 from sqladmin import Admin
 from .patients.models import engine
