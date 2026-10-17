@@ -304,14 +304,7 @@ def cmd_vocab(args) -> None:
     print(f"wrote {VOCAB.relative_to(ROOT)}: {len(terms)} terms (min count {args.min_count})")
 
 
-def cmd_report(args) -> None:
-    rows = []
-    for f in sorted(OUT_DIR.glob("*.json")):
-        if f.name == "manifest.json" or f.stem.endswith("-limit"):
-            continue
-        r = json.loads(f.read_text(encoding="utf-8"))
-        vm, ner = r["sets"].get("vietmed", {}).get("summary", {}), r["sets"].get("ner", {}).get("summary", {})
-        rows.append((r["model"] + (f" ({r['tag']})" if r.get("tag") else ""), vm, ner, r.get("peak_rss_mb")))
+def _table(rows: list) -> str:
     base = next((vm.get("wer") for name, vm, _, _ in rows if name == "base"), None)
     lines = [
         "| Model | VietMed WER | ΔWER vs base | VietMed CER | NER WER | Term recall | RTF (VietMed) | Peak RSS MB |",
@@ -323,7 +316,22 @@ def cmd_report(args) -> None:
             f"| {name} | {vm.get('wer', '—')} | {delta} | {vm.get('cer', '—')} | {ner.get('wer', '—')} | "
             f"{ner.get('term_recall', '—')} | {vm.get('rtf', '—')} | {rss} |"
         )
-    table = "\n".join(lines)
+    return "\n".join(lines)
+
+
+def cmd_report(args) -> None:
+    full, limited = [], []
+    for f in sorted(OUT_DIR.glob("*.json")):
+        if f.name == "manifest.json":
+            continue
+        r = json.loads(f.read_text(encoding="utf-8"))
+        vm, ner = r["sets"].get("vietmed", {}).get("summary", {}), r["sets"].get("ner", {}).get("summary", {})
+        row = (r["model"] + (f" ({r['tag']})" if r.get("tag") else ""), vm, ner, r.get("peak_rss_mb"))
+        (limited if f.stem.endswith("-limit") else full).append(row)
+    table = f"### Full subset (VietMed 300, NER 200)\n\n{_table(full)}\n"
+    if limited:
+        n = limited[0][1].get("n")
+        table += f"\n### Accuracy ceiling (first {n} utterances per set; ΔWER vs base on the same {n})\n\n{_table(limited)}\n"
     print(table)
     readme = OUT_DIR / "README.md"
     header = (
