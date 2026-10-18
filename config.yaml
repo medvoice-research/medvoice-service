@@ -5,6 +5,8 @@
 whisperx:
   model: base                # tiny, base, small, medium, large-v3, large-v3-turbo
   language: en               # en, vi, zh, yue
+  models_by_language:        # per-language override of `model`; results in benchmarks/asr/README.md
+    vi: mad1999/pho-whisper-small-ct2
 
 # Temporal Orchestration
 temporal:
