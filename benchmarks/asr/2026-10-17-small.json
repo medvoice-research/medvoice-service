@@ -1,0 +1,5042 @@
+{
+ "model": "small",
+ "tag": null,
+ "date": "2026-10-17",
+ "device": "cpu",
+ "compute_type": "int8",
+ "threads": 8,
+ "cpu": "Apple M4 Pro",
+ "prompt": null,
+ "sets": {
+  "vietmed": {
+   "summary": {
+    "n": 300,
+    "audio_seconds": 1952.0,
+    "wer": 0.4291,
+    "cer": 0.3584,
+    "rtf": 0.3064
+   },
+   "items": [
+    {
+     "id": 21,
+     "ref": "thuyên tắc huyết khối tĩnh mạch và xây dựng được một chiến lược dự phòng hiệu quả cho người bệnh phẫu thuật tiêu",
+     "hyp": "tắc khí khối tỉnh mạnh và xây dựng nụt một chiến lược dự phòng hiệu quả cho người bệnh phẫu thuật tiêu",
+     "word_edits": 5,
+     "words": 23,
+     "time": 2.409
+    },
+    {
+     "id": 30,
+     "ref": "là trung sĩ ạ anh chia sẻ cho bác sĩ năm nay tôi ba mươi tuổi mới mổ ruột thừa cách đây hai ngày",
+     "hyp": "Chào bác sĩ, năm nay tôi 30 tuổi mới bổ sụt thừa cách đây 2 ngày.",
+     "word_edits": 10,
+     "words": 24,
+     "time": 1.837
+    },
+    {
+     "id": 33,
+     "ref": "tôi khá lo lắng không biết mình có nằm trong diện là có đối tượng nguy",
+     "hyp": "Tôi khá lo lắng không biết mình có nằm trong diện là có đối tụi Nguyên.",
+     "word_edits": 2,
+     "words": 16,
+     "time": 1.46
+    },
+    {
+     "id": 39,
+     "ref": "mặt phẫu thuật tạo hình hàm mặt những trường hợp bị lệch lạc xương hàm trầm trọng hay cần phải thay đổi cấu trúc",
+     "hyp": "phẫu thuật tạo hình hàm mặt, những trường hợp bị lệnh lạc xương hàm trăm trồng, hay cần phải thay đổi phẫu trúc.",
+     "word_edits": 5,
+     "words": 24,
+     "time": 2.762
+    },
+    {
+     "id": 43,
+     "ref": "người bệnh phẫu thuật tiêu hóa và nguy cơ mắc",
+     "hyp": "Người bệnh phẫu thuộc tiêu hóa và nguy cơ mắc.",
+     "word_edits": 1,
+     "words": 10,
+     "time": 1.616
+    },
+    {
+     "id": 49,
+     "ref": "câu hỏi và gửi gắm tất cả các thắc mắc trong phần bình luận bên dưới để được các bác sĩ giải đáp ngay",
+     "hyp": "câu hỏi và gửi gấm tất cả các thác mắc trong phần bình luận bên dưới để được các bác sĩ giải đáp nghe.",
+     "word_edits": 3,
+     "words": 24,
+     "time": 2.468
+    },
+    {
+     "id": 62,
+     "ref": "nhất thẩm mỹ nhất cho người bệnh còn đối với các dịch vụ da liễu thẩm mỹ",
+     "hyp": "Công đối với các dịch vụ gian liệu thẩm mỹ.",
+     "word_edits": 10,
+     "words": 17,
+     "time": 1.372
+    },
+    {
+     "id": 73,
+     "ref": "nhờ hỏi con trai tôi biết cách chơi facebook nhờ hỏi con gái tôi biết cách selfie nhờ hỏi bác sĩ tôi biết rõ hơn về",
+     "hyp": "Nhờ hỏi con trai. Tôi biết cách chờ Facebook. Nhờ hỏi con gái. Tôi biết cách selfie. Nhờ hỏi bác sĩ. Tôi biết rõ hơn về bác sĩ.",
+     "word_edits": 3,
+     "words": 26,
+     "time": 2.508
+    },
+    {
+     "id": 78,
+     "ref": "về các dấu hiệu nguy cơ của thuyên tắc huyết khối tĩnh mạch cũng như hướng xử lý bệnh quý khán giả đừng ngại hãy",
+     "hyp": "về các dấu hiệu nguy cơ của thuyên tác khối tỉnh mạch, cũng như hướng sự lý bệnh.",
+     "word_edits": 10,
+     "words": 25,
+     "time": 2.368
+    },
+    {
+     "id": 84,
+     "ref": "nguy hiểm này không hoặc ít xảy ra bằng các chiến lược dự phòng cụ thể theo thực trạng bệnh lý của mỗi người phải bằng cách nào",
+     "hyp": "Với nguy hiểm này không hoặc ít xảy ra bằng các chiến lược dự phòng cụ thể theo thực trạng bền lý của mỗi người. Với bằng cách nào?",
+     "word_edits": 3,
+     "words": 28,
+     "time": 2.249
+    },
+    {
+     "id": 107,
+     "ref": "nó giúp vận chuyển lượng máu đã trao đổi ở mô và tế bào quay trở lại vòng tuần hoàn để tiếp tục quay trở về tim vì",
+     "hyp": "Nó giúp vận chuyển lượng máu đã trao đổi ở mô và tế bào, quay trở lại vòng Tân Hoàng để tiếp tục quay trở về piêm.",
+     "word_edits": 4,
+     "words": 28,
+     "time": 3.28
+    },
+    {
+     "id": 110,
+     "ref": "thuyên tắc huyết khối tĩnh mạch tại việt nam bệnh huyết khối tĩnh mạch là bệnh mạch máu thường gặp chỉ sau",
+     "hyp": "Tuyên tắc với khối tỉnh mặt. Tại Việt Nam, bệnh với khối tỉnh mặt là bệnh mặt máu thường gặp.",
+     "word_edits": 10,
+     "words": 22,
+     "time": 1.841
+    },
+    {
+     "id": 112,
+     "ref": "chọn lựa phương pháp nào chào anh cảm ơn phần chia sẻ của bác sĩ vừa rồi và chúng ta vẫn sẽ tiếp tục chương trình ngày",
+     "hyp": "Cảm ơn phần chia sẻ của bác sĩ vừa rồi và chúng ta vẫn sẽ tiếp tục chương trình nhé.",
+     "word_edits": 8,
+     "words": 27,
+     "time": 1.764
+    },
+    {
+     "id": 116,
+     "ref": "nguy hiểm của bệnh lý huyết khối gây ra tuy nhiên nguy cơ thuyên tắc huyết khối tĩnh mạch có thể vẫn còn sau khi người",
+     "hyp": "nguy hiểm của bình liều hiệu khối gây ra. Tuy nhiên, nguy cơ thuyền tác hiệu khối tỉnh mạch có thể phẫn con.",
+     "word_edits": 12,
+     "words": 26,
+     "time": 2.409
+    },
+    {
+     "id": 122,
+     "ref": "thưa quý khán giả về thuyên tắc huyết khối tĩnh mạch cũng như nhận biết được nguy cơ và dự phòng bệnh hiệu quả thưa quý vị trước khi bắt đầu",
+     "hyp": "về thuyên tác, viết khối tỉnh bạch cũng như nhận biết được nguy cơ và dự phòng bệnh hiệu quả.",
+     "word_edits": 15,
+     "words": 31,
+     "time": 1.814
+    },
+    {
+     "id": 201,
+     "ref": "tháo que thế còn định kỳ hàng năm mình vẫn phải đến khám để xem que còn tác dụng",
+     "hyp": "Thao quê, còn định trì hàng năm, mình vẫn phải đến khám để xem quê còn tắc dụng.",
+     "word_edits": 6,
+     "words": 19,
+     "time": 1.668
+    },
+    {
+     "id": 202,
+     "ref": "cũng như ban đầu trao đổi là các bạn trước khi đặt vòng bạn phải đến khám với bác sĩ chuyên khoa để được tư vấn",
+     "hyp": "Cũng như ban đầu, trao đổi là các bạn trước khi đặt vòng bạn phim đến khám với bác sĩ trên khoa để được tư vấn.",
+     "word_edits": 2,
+     "words": 26,
+     "time": 2.009
+    },
+    {
+     "id": 205,
+     "ref": "hiện tại là bạn dùng được bao nhiêu năm nhỉ dạ em từ hai năm rồi ạ trong",
+     "hyp": "Hiện tại bạn dùng được bao nhiêu năm? Dạ em dùng được 2 năm rồi ạ.",
+     "word_edits": 5,
+     "words": 18,
+     "time": 1.701
+    },
+    {
+     "id": 206,
+     "ref": "chọn biện pháp tránh thai khác bởi vì khi mà mình uống thuốc tránh thai hoặc là dùng",
+     "hyp": "bởi vì khi mà mình uống số sánh thai hoặc là dùng...",
+     "word_edits": 8,
+     "words": 18,
+     "time": 1.565
+    },
+    {
+     "id": 207,
+     "ref": "bảo hạnh phúc cho gia đình trên trang fanpage của chương trình thì chúng tôi cũng nhận được một câu hỏi của một bạn",
+     "hyp": "và bảo hạnh phúc cho gia đình, trên trang fanpage của chương trình thì chúng tôi cũng nhận được một câu hỏi của bộp đà.",
+     "word_edits": 3,
+     "words": 24,
+     "time": 2.2
+    },
+    {
+     "id": 211,
+     "ref": "thì chu kỳ kinh nguyệt không đều nhưng mà vẫn ra ít và bạn ấy có tái khám tháng",
+     "hyp": "chú kì kinh nguyệt không đèo nhưng mà vẫn ra ít và bạn có tái khám",
+     "word_edits": 6,
+     "words": 19,
+     "time": 1.196
+    },
+    {
+     "id": 212,
+     "ref": "còn với những trường hợp chị em sau sinh thường mà chưa có hành kinh là chúng ta ngoài ba tháng chúng ta vẫn",
+     "hyp": "Còn với những trường hợp chị em, sau sinh thường mà chưa có hành kinh, ngoài 3 tháng chúng ta vẫn...",
+     "word_edits": 3,
+     "words": 24,
+     "time": 2.049
+    },
+    {
+     "id": 219,
+     "ref": "và không gây đau đớn gần như là không để lại một cái di chứng gì sẹo trên cùng cấy que và chị em có thể tự kiểm",
+     "hyp": "và không cây đau đớn, gần như là không để lại mà cứ di chứng gì, cái sẹo trên vùng cây quê.",
+     "word_edits": 14,
+     "words": 28,
+     "time": 2.187
+    },
+    {
+     "id": 221,
+     "ref": "tôi không biết là tôi cũng có sử dụng được biện pháp này hay không và",
+     "hyp": "Tôi không biết là có sử dụng được điện thoát này hay không?",
+     "word_edits": 5,
+     "words": 16,
+     "time": 1.896
+    },
+    {
+     "id": 238,
+     "ref": "thì bạn có thể đến các cơ sở y tế như tôi vừa trao đổi là có uy tín",
+     "hyp": "thì bạn có thể đến cái cơ sở y tế như tôi với trao đổi là có y tín.",
+     "word_edits": 3,
+     "words": 19,
+     "time": 2.373
+    },
+    {
+     "id": 245,
+     "ref": "khi anh để vòng lâu có thể là gây dính vòng này gây vòng lạc chỗ này",
+     "hyp": "khi anh để vòng lâu có thể là gây dính vòng này, gây vòng lạc chỗ này",
+     "word_edits": 0,
+     "words": 17,
+     "time": 1.618
+    },
+    {
+     "id": 254,
+     "ref": "rất là nhiều loại trong đó phổ biến bây giờ là vòng tránh thai hình chữ t",
+     "hyp": "trong đó phụ biến bây giờ là vòng tránh thai, mình chữ T.",
+     "word_edits": 6,
+     "words": 17,
+     "time": 1.673
+    },
+    {
+     "id": 263,
+     "ref": "rất là nhiều những cái kiến thức những cái vấn đề mà bấy lâu nay chị em chúng ta có lẽ là cũng không phải là ai cũng biết",
+     "hyp": "Chúng ta có lẽ không phải là ai cũng biết",
+     "word_edits": 19,
+     "words": 29,
+     "time": 1.134
+    },
+    {
+     "id": 283,
+     "ref": "ví dụ như là có những cái bệnh phụ khoa kèm theo như là bệnh rong kinh",
+     "hyp": "Ví dụ như là có những bệnh phụ khoa kèm theo như là bệnh gong kinh kinh.",
+     "word_edits": 3,
+     "words": 17,
+     "time": 1.72
+    },
+    {
+     "id": 307,
+     "ref": "quang hoặc là ruột thế nhưng mà tỷ lệ này không nhiều tỷ lệ không nhiều theo thống kê của tổ chức",
+     "hyp": "hoặc là ruột. Thế nhưng mà tỷ lệ này không nhiều, tỷ lệ không nhiều. Theo thống kê của tổ chức",
+     "word_edits": 1,
+     "words": 22,
+     "time": 1.857
+    },
+    {
+     "id": 317,
+     "ref": "cũng như là trong quá trình chị em vệ sinh không đảm bảo sạch sẽ",
+     "hyp": "cũng như trong quá trình, chị em vệ sinh không đoàn bà sẽ sẽ.",
+     "word_edits": 4,
+     "words": 15,
+     "time": 1.416
+    },
+    {
+     "id": 331,
+     "ref": "kinh lại hồi bé được ba tháng nay em bé được sáu tháng tuổi em muốn đi",
+     "hyp": "em lại hồi bé được 3 tháng, nay em bé được 6 tháng tuổi.",
+     "word_edits": 4,
+     "words": 17,
+     "time": 1.623
+    },
+    {
+     "id": 335,
+     "ref": "có muốn có con ngay sau khi cưới thì tuy nhiên lại cũng không muốn sử dụng các cái phương pháp tránh thai thông thường như là sử dụng bao",
+     "hyp": "Tuy nhiên lại cũng không muốn sử dụng các phương pháp tránh thai thông thường như là sử dụng bác phim.",
+     "word_edits": 12,
+     "words": 30,
+     "time": 2.233
+    },
+    {
+     "id": 348,
+     "ref": "bị bệnh động kinh và những người đang ra máu ấy khi mà",
+     "hyp": "bị vậy động kinh và những người đang ra máu.",
+     "word_edits": 4,
+     "words": 13,
+     "time": 1.439
+    },
+    {
+     "id": 380,
+     "ref": "một câu hỏi nữa là tôi năm nay hai bảy tuổi vừa sinh con trai đầu lòng được năm tháng tuổi do điều kiện",
+     "hyp": "Một câu hỏi nữa là tôi năm nay 27 tuổi vừa sinh con trai đầu lòng được 5 tháng tuổi.",
+     "word_edits": 4,
+     "words": 24,
+     "time": 2.238
+    },
+    {
+     "id": 382,
+     "ref": "cái hai là có thực hiện hai phương pháp này thế còn thì tất nhiên các",
+     "hyp": "Cái 2 là có thực hiện, 2 phương pháp này.",
+     "word_edits": 6,
+     "words": 16,
+     "time": 1.203
+    },
+    {
+     "id": 385,
+     "ref": "chuyển sang luôn cái cái cái cấy que tránh thai ấy ạ thì em có chuyển sang cái luôn không hay là phải ngâm bao lâu thì mới có thể chuyển sang",
+     "hyp": "Cảm ơn các bạn đã quay lại video này. Hẹn gặp lại.",
+     "word_edits": 32,
+     "words": 32,
+     "time": 1.619
+    },
+    {
+     "id": 403,
+     "ref": "có những cái mặt ưu nhược điểm nhất định ạ và phương pháp cấy que tránh thai cũng hay là đặt vòng thì cũng vậy vậy thì",
+     "hyp": "và phương pháp quay tránh thai cũng hay là đặt vòng thì cũng vậy.",
+     "word_edits": 14,
+     "words": 27,
+     "time": 1.573
+    },
+    {
+     "id": 404,
+     "ref": "với những trường hợp bạn tập gym thường xuyên thì vẫn có thể đặt vòng được nhưng mà khi đặt vòng",
+     "hyp": "Với những trường hợp bạn tập diên thường xuyên thì vẫn có thể đặt vòng được nhưng mà khi đặt vòng",
+     "word_edits": 1,
+     "words": 21,
+     "time": 1.839
+    },
+    {
+     "id": 432,
+     "ref": "và cái hiệu quả tránh thai của cái đặt vòng thì rất là cao tỷ lệ lên đến chín mươi tám phần trăm",
+     "hyp": "và hiệu quả tránh thai của tạt vòng thì rất là cao, tỷ lệ lên đến 98%.",
+     "word_edits": 3,
+     "words": 23,
+     "time": 1.906
+    },
+    {
+     "id": 451,
+     "ref": "rong huyết này hoặc là bệnh u xơ u nang thì có thể đặt vòng được thế nhưng mà",
+     "hyp": "hoặc là bệnh u sơ u năng thì có thể lật lòng được.",
+     "word_edits": 10,
+     "words": 19,
+     "time": 1.677
+    },
+    {
+     "id": 452,
+     "ref": "tư vấn khám và chẩn đoán có chỉ định đặt vòng hay cấy que hay không thì",
+     "hyp": "tư vấn, khám và chân đoán có chỉ định đạt vòng hay quay hay không?",
+     "word_edits": 5,
+     "words": 17,
+     "time": 1.744
+    },
+    {
+     "id": 462,
+     "ref": "do đó thì khi mà đi khám thai xác định có thai và tuổi thai thì bác sĩ sẽ tư vấn",
+     "hyp": "Do đó thì khi mà đi khám thai xót định và có thai và tuổi thai thì bác sĩ chất tư vấn đề.",
+     "word_edits": 4,
+     "words": 21,
+     "time": 2.328
+    },
+    {
+     "id": 479,
+     "ref": "ham muốn thì liệu có đúng như vậy không và",
+     "hyp": "thì liệu có đúng như vậy không?",
+     "word_edits": 3,
+     "words": 10,
+     "time": 1.051
+    },
+    {
+     "id": 502,
+     "ref": "với trường hợp phụ nữ trên bốn mươi tuổi vẫn có thể sử dụng phương pháp cấy que tránh thai",
+     "hyp": "Với những trường hợp phụ nữ trên 40 tuổi vẫn có thể sử dụng phương pháp kế que chính thằng.",
+     "word_edits": 4,
+     "words": 20,
+     "time": 2.023
+    },
+    {
+     "id": 505,
+     "ref": "vấn đề gì bất thường để bác sĩ sẽ cho lời khuyên hoặc là đưa ra phương pháp điều trị phù hợp với lại tình trạng của bạn và vâng xin cảm ơn",
+     "hyp": "Vâng, xin cảm ơn cơ hội.",
+     "word_edits": 31,
+     "words": 33,
+     "time": 1.2
+    },
+    {
+     "id": 530,
+     "ref": "ban đầu đã trao đổi với các bạn là hiệu quả tránh thai lên đến trên chín chín phần trăm thế còn",
+     "hyp": "bàn đầu đã trao đổi với các bạn là hiệu quả tránh 2 lên đến chân 99%",
+     "word_edits": 6,
+     "words": 22,
+     "time": 1.763
+    },
+    {
+     "id": 561,
+     "ref": "xin trả lời nhanh câu hỏi của của cô thì cái răng thưa mà thông thường thì tùy ví dụ như là khi mà với những bạn trẻ",
+     "hyp": "Xin chả lời nhanh câu hỏi của cô thì cái răng thơ mà tông thường thì tôi, ví dụ như là khi mà với những bạn kẹ",
+     "word_edits": 6,
+     "words": 28,
+     "time": 2.478
+    },
+    {
+     "id": 563,
+     "ref": "bác sĩ Lâm tư vấn vậy ở ngoài hà nội tôi làm ở chỗ nào mà tốt như ở",
+     "hyp": "Vậy ở ngoài Hà Nội tôi làm ở chỗ nào mà tốt như...",
+     "word_edits": 6,
+     "words": 19,
+     "time": 1.419
+    },
+    {
+     "id": 566,
+     "ref": "tiện hay không nhất là những lúc mà chụp mri hoặc là xquang thì có nguy hiểm hay không thì",
+     "hyp": "Nhất là những lúc mà chụp Embride hoặc là X1 thì có nguy hiểm hay không.",
+     "word_edits": 7,
+     "words": 20,
+     "time": 1.779
+    },
+    {
+     "id": 572,
+     "ref": "bị mất răng mà nguyên hàm thì mình kể theo tôi thì phương pháp hiệu quả nhất vẫn là",
+     "hyp": "Vì mất răng mà nguyên hàm thì theo tôi thì phương pháp mà hiệu quả nhất vẫn là",
+     "word_edits": 4,
+     "words": 19,
+     "time": 1.827
+    },
+    {
+     "id": 580,
+     "ref": "còn ngoài ra cái cách thứ hai mà hiện tại bây giờ nhiều người cũng cũng",
+     "hyp": "Còn ngoài ra cái cách thứ 2 mà hiện tại bây giờ nhiều người cũng...",
+     "word_edits": 1,
+     "words": 16,
+     "time": 1.254
+    },
+    {
+     "id": 617,
+     "ref": "giống y như một răng thật thì khi đó nó tình trạng xương nó vẫn được giữ theo lâu dài mà còn nếu như mà mình trồng",
+     "hyp": "Mình chạy rửa hàng ngày giống ấy như một trăng thật, khi đó tình trạng xưa vẫn được giữ theo lâu dài.",
+     "word_edits": 18,
+     "words": 27,
+     "time": 2.201
+    },
+    {
+     "id": 618,
+     "ref": "thì hiện giờ hầu như rất là hiếm gặp là bởi vì trước mỗi lần nhổ răng thì thường bác sĩ và phải chụp cái phim rất là cẩn",
+     "hyp": "Bởi vì trước mỗi lần nhổ răng thì thường bác sĩ phải chụp chụp.",
+     "word_edits": 16,
+     "words": 29,
+     "time": 1.801
+    },
+    {
+     "id": 661,
+     "ref": "bị tiêu xương còn mức độ thì mình phải chụp xquang còn cách khắc phục thì nếu mà cái răng mà bị mất ở ngay cái những",
+     "hyp": "Chúng ta có thể chạy chạy chạy chạy chạy chạy.",
+     "word_edits": 27,
+     "words": 27,
+     "time": 1.517
+    },
+    {
+     "id": 669,
+     "ref": "mầm răng vĩnh viễn thì như vậy sau khi răng sữa bị rụng đi thì không không có mọc cái răng không có mọc răng răng vĩnh",
+     "hyp": "Vậy sau khi răng sửa bị rồn đi, không có mập răng.",
+     "word_edits": 18,
+     "words": 27,
+     "time": 1.471
+    },
+    {
+     "id": 692,
+     "ref": "chẳng hạn như vậy thì khi làm chắc chắn sẽ không đau rồi thứ hai sau khi làm xong thì cũng sẽ có những cái cái",
+     "hyp": "Khi làm tất cản sẽ không đau.",
+     "word_edits": 21,
+     "words": 26,
+     "time": 0.96
+    },
+    {
+     "id": 699,
+     "ref": "nha chu tức là nó sẽ phá hủy những cái mô mà xung quanh cái răng nâng đỡ răng có cái xương với cái cái nướu thì nó nó",
+     "hyp": "Nó sẽ phá hủy những mô xung quanh răng, nâng đợi răng là có cái xương với cái nữ rất là xương.",
+     "word_edits": 14,
+     "words": 29,
+     "time": 1.804
+    },
+    {
+     "id": 705,
+     "ref": "không nó có phức tạp hay không và có thể giải thích cho bà con hiểu rõ hơn ghép xương là như thế nào hay là đem xương bỏ",
+     "hyp": "Có đơn giản hay không? Nó có phức tạp hay không? Và có thể giải thích cho bà con hiểu rõ hơn ghép xương là như thế nào?",
+     "word_edits": 9,
+     "words": 29,
+     "time": 1.752
+    },
+    {
+     "id": 715,
+     "ref": "trồng implant còn những trường hợp mà có một số trường hợp mà mất răng nhưng mà",
+     "hyp": "Thì đó mình phải trọng ibland, còn những trường hợp mà có một số trường hợp mà...",
+     "word_edits": 10,
+     "words": 17,
+     "time": 1.907
+    },
+    {
+     "id": 732,
+     "ref": "xương ghép xương cùng cùng lúc luôn rồi sau đó chú sẽ có một cái cái hàm răng tạm trên cái implant rồi mình đợi mình phải",
+     "hyp": "Cái hàm răng tạm trên kim len.",
+     "word_edits": 22,
+     "words": 27,
+     "time": 1.275
+    },
+    {
+     "id": 750,
+     "ref": "tiêu cái xương này đi thì như vậy nó cũng là làm tiêu cái xương hàm từ đó nguyên nhân đầu tiên là bệnh lý về nha",
+     "hyp": "Nó làm siêu cái sương này đi. Thì như vậy nó cũng là làm siêu cái sương hà. Thì đó nguyên nhân đầu tiên là bệnh lý vậy nha.",
+     "word_edits": 9,
+     "words": 27,
+     "time": 2.963
+    },
+    {
+     "id": 753,
+     "ref": "thường chơi thể thao bình thường thì nhưng mà cái cái một số trường hợp này thấy là nó sẽ trở nên nó nhẹ hơn rất là",
+     "hyp": "bình thường chơi thở tha bình thường, nhưng một số trường hợp sẽ trở nên",
+     "word_edits": 16,
+     "words": 27,
+     "time": 1.699
+    },
+    {
+     "id": 770,
+     "ref": "chọn đó là làm implant thì implant mình có thể là làm một cái hàm toàn hàm mà cố",
+     "hyp": "Đó là làm ím len. Thì ím len mình có thể là làm 1 cái toàn hàm.",
+     "word_edits": 8,
+     "words": 19,
+     "time": 1.711
+    },
+    {
+     "id": 773,
+     "ref": "thì sẽ không có trồng lại ở vị trí răng số tám cảm ơn bác sĩ chúng tôi xin được",
+     "hyp": "Ở vị trí này thì sẽ không trồng lại ở vị trí răng số 8",
+     "word_edits": 13,
+     "words": 20,
+     "time": 1.497
+    },
+    {
+     "id": 786,
+     "ref": "định trên implant luôn thì cái việc này là chi phí hơi cao so với lại cái hàm",
+     "hyp": "Hãy subscribe kênh Ghiền Mì Gõ Để không bỏ lỡ những video hấp dẫn",
+     "word_edits": 18,
+     "words": 18,
+     "time": 1.743
+    },
+    {
+     "id": 789,
+     "ref": "chú đến khám thì có những cái cái phim chụp phim ct phim ba chiều thì bác sĩ có thể chẩn đoán chính xác là cái thiếu",
+     "hyp": "Đó là bác sĩ có thể chặn đoán chính xác là",
+     "word_edits": 19,
+     "words": 27,
+     "time": 1.375
+    },
+    {
+     "id": 801,
+     "ref": "cái răng nó đó nhưng mà xương bên dưới chân răng nó đã bị tiêu nhiều ha thì khi nhổ răng ra thì bản thân là ngay chỗ đó",
+     "hyp": "Cái răng ở đó, nhưng mà xương bên dưới chân răng đã bị tiêu nhiều, thì khi nhổ răng ra thì bản thân là",
+     "word_edits": 6,
+     "words": 29,
+     "time": 1.842
+    },
+    {
+     "id": 805,
+     "ref": "cái xương lên đủ rồi đó thì cái đó là mới trồng trồng cái răng trên implant trong implant khi mà trồng implant xong thì",
+     "hyp": "Khi sương lên đủ rồi đó, thì mấy trồng đăng trên im len, trồng im len. Khi mình trồng im len xong,",
+     "word_edits": 17,
+     "words": 25,
+     "time": 1.955
+    },
+    {
+     "id": 812,
+     "ref": "ít rồi cái tỷ lệ cũng khá là cao tại vì khi mà khi vào những cô chú nhưng bà con mà chúng ta bị mất răng mà không có làm",
+     "hyp": "Cái tệ là cũng khá là cao tại vì khi và những cô chú với bà con mà chúng ta bị mất răng mà không có lãnh",
+     "word_edits": 9,
+     "words": 31,
+     "time": 1.297
+    },
+    {
+     "id": 835,
+     "ref": "lớn tuổi đều bị tiêu xương hàm làm thế nào để cho mình biết được có bị tiêu xương",
+     "hyp": "người lớn tuổi đều bị tiêu sương, làm thế nào để mình biết được bị tiêu sương hơn.",
+     "word_edits": 7,
+     "words": 19,
+     "time": 1.515
+    },
+    {
+     "id": 860,
+     "ref": "và ít xâm lấn hơn tất nhiên sau khi mà ghép xương xong đó thì bác sĩ thường sẽ có những biện pháp",
+     "hyp": "Tất nhiên, sau khi gép xương xong, bác sĩ thường sợi khu",
+     "word_edits": 14,
+     "words": 23,
+     "time": 1.705
+    },
+    {
+     "id": 864,
+     "ref": "phải thực hiện trên từng cá thể hay là cái phương pháp đó mình bệnh nhân có được quyền lựa chọn thông thường thì",
+     "hyp": "những phương pháp đó phải thực hiện trên từng cá thể hay là phương pháp đó mình bận dân có được quyền lựa chờ? Thông thường thì bệnh nhân sẽ biết là mình bị tiêu sương thì mức nào thôi và bác sĩ là người sẽ chọn cái cách mà phù hợp nhất trên từng trường hợp của cô chú. Chẳng là một số tên huống thì anh nên dùng cái tác đầu sương như vậy. Một số tên huống khác phải dùng cái sương khối, sương miếng, chẳng hạn. Nhưng mà cái đó sẽ tuy thuộc vào cái chuyên môn của bác sĩ. Và cái mục tiêu sau cùng là sẽ tái tạo và sẽ làm đầy lại cái bằng xương mà đã bị tiêu Và tất cả điều là an toàn Những biên pháp ngày nay rất là an toàn. Trước khi được làm trên người đã được chứng minh rất là nhiều nghiên cứu và làm trên nghiên cứu lâu dài. Những biên pháp áp dụng sẽ rất là an toàn. Chúng tôi nhận được câu hỏi của nhiều khán giả muốn biết.",
+     "word_edits": 167,
+     "words": 24,
+     "time": 8.585
+    },
+    {
+     "id": 865,
+     "ref": "thấy đau thì để mà biết mà cách điều trị thì thông thường là bác sĩ phải chẩn",
+     "hyp": "nhưng mà vẫn thấy đau thì để mà biết cách điều trị thông thương là bác sĩ phải...",
+     "word_edits": 7,
+     "words": 18,
+     "time": 1.766
+    },
+    {
+     "id": 869,
+     "ref": "xin mời quý khán giả cùng theo dõi ghi nhận sau đây",
+     "hyp": "tương nhiều làm như thế nào. Xin mời quý khán giả cùng thay dõi ghi nhận sau đây.",
+     "word_edits": 7,
+     "words": 12,
+     "time": 1.968
+    },
+    {
+     "id": 875,
+     "ref": "mình sẽ không cần ghép và tái tạo lại toàn bộ như là khi trẻ tức là ghép vừa đủ những vị trí mà có thể cấy implant đủ",
+     "hyp": "Gép vừa đủ, mình sẽ không cần gép tái tạo lại toàn bộ như là khi trẻ, là gép vừa đủ những vị trí mà có thể cấy kim len đủ.",
+     "word_edits": 9,
+     "words": 29,
+     "time": 2.772
+    },
+    {
+     "id": 895,
+     "ref": "giờ nghe nghe chú chú kể đó thì có thể là chú bị một cái bình mà rất là thường gặp trong trong nha khoa là bệnh lý về",
+     "hyp": "Nãy giờ nghe chú kẹ đó thì có thể là chú bị 1 cái bình rất thương gặp trong nhà khoa.",
+     "word_edits": 13,
+     "words": 29,
+     "time": 2.05
+    },
+    {
+     "id": 909,
+     "ref": "làm những phẫu thuật rất là lớn phải lấy những cái phần xương xương sọ xương cái xương xương của chân là xương những",
+     "hyp": "Cái phần xương như xương xỏ, xương xương xương của chân là xương...",
+     "word_edits": 14,
+     "words": 24,
+     "time": 1.999
+    },
+    {
+     "id": 911,
+     "ref": "răng nhân tạo đó cái implant mình cấy implant vô rồi sau này chú sẽ có cái hàm răng mới là giống như một cái bộ răng",
+     "hyp": "Cái chân răng dân vào đó, mình cấy cái im len, hát mình cấy cái im len vô, rồi sau này chú sẽ có cái hàm răng mới.",
+     "word_edits": 19,
+     "words": 27,
+     "time": 2.716
+    },
+    {
+     "id": 921,
+     "ref": "nhìn nó rất là xấu đi nó nó sụp xuống và bị già đi thì đó là hai nguyên nhân rất là thường gặp và gây ra cái",
+     "hyp": "Nó là 2 nguyên nhân, rất thường gặp.",
+     "word_edits": 20,
+     "words": 28,
+     "time": 1.255
+    },
+    {
+     "id": 938,
+     "ref": "thêm một điều nữa là cô mang hàm giả thì mang cái hàm tháo lắp mà đè trên cái phần xương mà cái chỗ mất răng á thì",
+     "hyp": "Cô mang hàm giả thì mang hàm tháo lấp đè trên phần xương chỗ mất răng.",
+     "word_edits": 13,
+     "words": 28,
+     "time": 1.853
+    },
+    {
+     "id": 946,
+     "ref": "bảy tám cái răng nhờ bác sĩ tư vấn giúp là tôi muốn gây mê nhổ hết mấy cái răng còn lại rồi làm lại nguyên cái hàm răng giả",
+     "hyp": "Cảm ơn các bạn. Hẹn gặp lại.",
+     "word_edits": 29,
+     "words": 30,
+     "time": 1.334
+    },
+    {
+     "id": 978,
+     "ref": "nếu chúng ta bị nhiễm ký sinh trùng sốt rét và có cơn sốt thì đấy gọi là sốt rét in phát",
+     "hyp": "Nếu chúng ta bị nhếm tí trùng do dev và có cơn xuất thì đấy gọi là do dev phìm pha.",
+     "word_edits": 10,
+     "words": 22,
+     "time": 2.077
+    },
+    {
+     "id": 990,
+     "ref": "với bệnh viêm gan b không có người lành mang kháng nguyên của virus mà chỉ có",
+     "hyp": "Với bệnh video này không có người lạnh mang kháng nguyên của video.",
+     "word_edits": 8,
+     "words": 17,
+     "time": 1.414
+    },
+    {
+     "id": 1018,
+     "ref": "lại uống thuốc giảm đau vào thì nó rất có hại cho sức khỏe và tới câu hỏi thứ hai nữa là nếu như trong",
+     "hyp": "Vì vậy, chúng ta lại uống quốc, giảm đau vào thì nó rất là khó hại cho sức khỏe. Và tới cái câu hỏi thứ 2 là nếu như",
+     "word_edits": 10,
+     "words": 25,
+     "time": 2.681
+    },
+    {
+     "id": 1019,
+     "ref": "ý thức và thói quen có lợi cho việc nâng cao sức đề kháng của người dân từng bước được nâng cao từ việc trang bị những",
+     "hyp": "ý thức và thó quan có lợi cho việc nâng cao sức địa khán của người dân, tân bước được nâng cao.",
+     "word_edits": 10,
+     "words": 27,
+     "time": 2.309
+    },
+    {
+     "id": 1024,
+     "ref": "chúng ta phải đi khám bác sĩ chuyên khoa về thần kinh cái đã nghĩa là chúng ta cho",
+     "hyp": "và tưởng pha phải đi khám bác sĩ Chiền Hoa về thần kinh, chứ đã, nhá là tưởng pha.",
+     "word_edits": 10,
+     "words": 19,
+     "time": 1.833
+    },
+    {
+     "id": 1026,
+     "ref": "chế di chuyển đi đến những nơi đông người từ đó mỗi người cũng tự trang bị cho mình những kiến thức cơ bản trong xử",
+     "hyp": "để hạn chế di chuyển đi đến những người đồng người. Từ đó, mỗi người cũng tự trang bị cho mình những chiến thức cơ bản trong xử lý các trường.",
+     "word_edits": 8,
+     "words": 26,
+     "time": 2.848
+    },
+    {
+     "id": 1029,
+     "ref": "cần chữa trị kịp thời vì rất dễ ảnh hưởng lâu dài cho chị em những người lớn tuổi đặc biệt là những",
+     "hyp": "Vì rất dễ ảnh hưởng lâu dài cho chị em.",
+     "word_edits": 13,
+     "words": 23,
+     "time": 1.268
+    },
+    {
+     "id": 1033,
+     "ref": "kiến thức bảo hộ an toàn cho mình tránh lây nhiễm virus đến việc thay đổi luyện tập ra dinh dưỡng hàng ngày khoa học",
+     "hyp": "Hình kiến thức bảo hộ, an toàn cho mình, tránh lây nhiễm virus, đến việc thay đổi luyện tập và dính dưỡng hàng ngày qua học.",
+     "word_edits": 4,
+     "words": 25,
+     "time": 2.89
+    },
+    {
+     "id": 1057,
+     "ref": "như chẳng may là mình là những covid19 thì cái xử lý ban đầu sốt ở tại nhà có nên hay là không nên",
+     "hyp": "Nếu như chẳng mai làm bình là nhiễm COVID-19 thì sự lý ban đầu xốt ở tại nhà có nên hay không nên?",
+     "word_edits": 9,
+     "words": 26,
+     "time": 2.153
+    },
+    {
+     "id": 1074,
+     "ref": "người dân rất là đáng để mà quan tâm và ngưỡng mộ",
+     "hyp": "người dân rất đáng để quan tâm và ngưỡng ngộ.",
+     "word_edits": 3,
+     "words": 12,
+     "time": 1.287
+    },
+    {
+     "id": 1078,
+     "ref": "phụ các thuốc đó cho đó những người mà đang điều trị các bệnh lý mãn tính như là tiểu đường tăng huyết áp hoặc là dự",
+     "hyp": "Đó là những người đang điều trị các hoạch lý mản tính như là tiểu đường tăng quyết áp hoặc là nhiệm thông.",
+     "word_edits": 11,
+     "words": 27,
+     "time": 2.129
+    },
+    {
+     "id": 1086,
+     "ref": "biết đây là hiện tượng bình thường của người làm việc văn phòng và chỉ cho tôi những bài tập hướng dẫn để giảm đau và cho tôi biết tôi mỏi khi",
+     "hyp": "Chị cho biết đây là hiện tượng bình huồn của người làm việc con phòng và chỉ cho tôi những bài tập hướng dẫn để giảm đau.",
+     "word_edits": 11,
+     "words": 32,
+     "time": 1.556
+    },
+    {
+     "id": 1094,
+     "ref": "ba mẹ ông bà lúc này lại giúp bé cảm thấy an tâm làm sao để có thể giảm thiểu",
+     "hyp": "để ông bà lúc này là giúp bé cảm thấy an tâm, làm sao để có thể giảm thiểu được",
+     "word_edits": 4,
+     "words": 20,
+     "time": 1.805
+    },
+    {
+     "id": 1103,
+     "ref": "sữa không cần núm vú không cần bồng bế mệt mỏi trên tay đọc sách vừa có thể là",
+     "hyp": "Đọc sách vừa có thể là thật.",
+     "word_edits": 14,
+     "words": 19,
+     "time": 1.237
+    },
+    {
+     "id": 1116,
+     "ref": "dù biểu hiện rất kịch tính và có vẻ cực kỳ nguy hiểm đến tính mạng đây lại là",
+     "hyp": "Mặc dù biểu hiện xuất kịch tính và có phải cực kì nguy hiểm đến tính mạng.",
+     "word_edits": 7,
+     "words": 19,
+     "time": 2.091
+    },
+    {
+     "id": 1128,
+     "ref": "nhưng vì đây là một giai đoạn phát triển tâm sinh lý bình thường của trẻ nên người lớn chúng ta chỉ còn một cách là",
+     "hyp": "nhưng vị đây là một giai đoạn phát triển tâm sinh lý bình thường của trẻ nên người lớn chúng ta chỉ còn một cách là nhận",
+     "word_edits": 2,
+     "words": 26,
+     "time": 2.47
+    },
+    {
+     "id": 1139,
+     "ref": "được sự đột ngột cũng như sự khó chịu dùm cho bé cũng như nếu được huấn luyện",
+     "hyp": "sự đột ngột cũng như sự khó chịu dùng cho bé, cũng như nếu được huấn luyện",
+     "word_edits": 2,
+     "words": 18,
+     "time": 1.848
+    },
+    {
+     "id": 1186,
+     "ref": "có thể sau đó trấn an bé bằng cách tươi cười thân mật với người lạ sau đó tạo ra",
+     "hyp": "bạn có thể sau đó chứng an bé bằng cách tươi cười thân mật với người lạ, sau đó tạo",
+     "word_edits": 3,
+     "words": 20,
+     "time": 1.967
+    },
+    {
+     "id": 1205,
+     "ref": "quá mặc dù bị giật tóc nếu tay đau muốn chết nhầm muốn tỏ cho trẻ biết bạn không",
+     "hyp": "người tươi quá, mặc dù bị chật tốc, nhéo tai, đau muốn chít, nhằm muốn tỏ cho trẻ biết bạn.",
+     "word_edits": 9,
+     "words": 19,
+     "time": 2.378
+    },
+    {
+     "id": 1209,
+     "ref": "toàn lành tính không để lại hậu quả nào cho trẻ mặc dù có thể nhìn thấy rất ghê",
+     "hyp": "hoàn toàn lạnh tính, không để lại hậu quả nào cho trẻ mặc dù có thể nhìn thấy rất ghê",
+     "word_edits": 2,
+     "words": 19,
+     "time": 2.043
+    },
+    {
+     "id": 1234,
+     "ref": "trong những tháng đầu đời bạn có cảm giác bù đầu bù cổ vì chăm con mọn",
+     "hyp": "Trong những tháng đồ đời, bạn có cảm giác bù đầu bù cổ vì chăm con mọn.",
+     "word_edits": 1,
+     "words": 17,
+     "time": 1.792
+    },
+    {
+     "id": 1242,
+     "ref": "vắcxin giúp phòng ngừa giảm nguy cơ bệnh sởi cũng như các biến chứng nặng do bệnh",
+     "hyp": "là loại vắc xin dưới phòng ngừa giảm nguy cơ bệnh sởi cũng như các biến chứng nặng do bệnh sởi.",
+     "word_edits": 6,
+     "words": 17,
+     "time": 2.612
+    },
+    {
+     "id": 1249,
+     "ref": "đột ngột đụng vào vật gì đó hoặc té nhẹ chẳng hạn vì những kích thích khó",
+     "hyp": "như đột ngột, đụng vào vật gì đó, hoặc tế nhẹ, chẳng hạn vì những kết thức khó.",
+     "word_edits": 4,
+     "words": 17,
+     "time": 2.309
+    },
+    {
+     "id": 1259,
+     "ref": "mới bắt đầu lo sợ khi trẻ lớn dần cơ phát triển mạnh hơn các xương bắt đầu",
+     "hyp": "và mới bắt đầu lo sở khi trẻ lớn dần cơ phát triển mạnh hơn các xương.",
+     "word_edits": 4,
+     "words": 18,
+     "time": 1.833
+    },
+    {
+     "id": 1266,
+     "ref": "ngay đến bé bị nhập hay bị lên đồng và vì vậy cảm thấy rất lo sợ với những biểu",
+     "hyp": "đến bé bị nhập hay bị lên đồng. Và vì vậy, cảm thấy rất lo sợ với những",
+     "word_edits": 2,
+     "words": 20,
+     "time": 1.598
+    },
+    {
+     "id": 1268,
+     "ref": "mà thôi trẻ bị đau hoặc thực hiện khi đi trẻ có chiều cao thấp bất thường so với",
+     "hyp": "một bên mà thôi, sẽ bị đau hoặc khập khiển khi đi, sẽ có chiều cao thấp bất thường.",
+     "word_edits": 8,
+     "words": 19,
+     "time": 2.023
+    },
+    {
+     "id": 1277,
+     "ref": "quá mức hoặc ảnh hưởng đến sinh hoạt gia đình quá nhiều nếu bạn nghĩ bé bị rối",
+     "hyp": "lo lắng quá mức hoặc ảnh hưởng đến sinh hoạt gia đình quá nhiều. Nếu bạn nghĩ bé bị rung",
+     "word_edits": 3,
+     "words": 18,
+     "time": 2.057
+    },
+    {
+     "id": 1283,
+     "ref": "cần mua thứ gì không nhỉ nếu bạn muốn mua thì vẫn có thể mua thôi nhưng thật",
+     "hyp": "Cần mua thứ gì không dĩ. Nếu bạn muốn mua thì vẫn có thể mua thôi.",
+     "word_edits": 3,
+     "words": 18,
+     "time": 1.888
+    },
+    {
+     "id": 1292,
+     "ref": "cùng với gia đình hoặc là việc luyện ngủ cho con trẻ cai bú đêm cho con khi trẻ",
+     "hyp": "các thức ăn cùng với gia đình, hoặc là việc luyện ngủ cho con trẻ cai bú đêm cho con khi trẻ được.",
+     "word_edits": 4,
+     "words": 19,
+     "time": 2.019
+    },
+    {
+     "id": 1294,
+     "ref": "nhau ồ làm sao để nói khi người kia không biết nói chẳng biết có hiểu hay",
+     "hyp": "Ồ, làm sao để nói khi người Chi không biết nói, chẳng biết có hiểu.",
+     "word_edits": 3,
+     "words": 17,
+     "time": 1.15
+    },
+    {
+     "id": 1300,
+     "ref": "khỏe tinh thần tốt cho ngày hôm sau chúc bà mẹ và ông bà bình tĩnh tự tin thông",
+     "hyp": "tinh thần tốt cho ngày hôm sau. Chúc bà mẹ và ông bà bình tĩnh, tự tin.",
+     "word_edits": 2,
+     "words": 19,
+     "time": 1.966
+    },
+    {
+     "id": 1303,
+     "ref": "quan trọng nhất và là vật thể tình cảm mà trẻ trân trọng nhất dõi theo và noi",
+     "hyp": "người quan trọng nhất và là vật thể tình cảm mà trễ chân trọng nhất, giỏi theo và noi theo.",
+     "word_edits": 5,
+     "words": 18,
+     "time": 2.005
+    },
+    {
+     "id": 1306,
+     "ref": "nên điêu luyện hơn trẻ có thể với đến cầm nắm những vật thể nhỏ hơn và từ từ",
+     "hyp": "trở nên điêu luyện hơn, trẻ có thể với đến gầm nắm những phật thể nhỏ hơn và từ từ có thể",
+     "word_edits": 5,
+     "words": 19,
+     "time": 1.955
+    },
+    {
+     "id": 1346,
+     "ref": "bạn để bạn ra ngoài vui chơi một xíu xả stress lấy lại tinh thần thì dễ như",
+     "hyp": "để bạn ra ngoài vui chơi một xíu, thả stress, lấy lại tinh thần thì",
+     "word_edits": 4,
+     "words": 18,
+     "time": 1.194
+    },
+    {
+     "id": 1355,
+     "ref": "bình thường cho người tiếp cận bé rằng đây là một vấn đề bình thường của tuổi bé và nên kiên nhẫn tiếp cận bằng cách",
+     "hyp": "cách bình thường cho người tiếp cận bé, sẵn đây là một quấn đề bình thường của tuổi bé, và nên kiên nhẫn tiếp cận bằng cách",
+     "word_edits": 3,
+     "words": 26,
+     "time": 2.082
+    },
+    {
+     "id": 1360,
+     "ref": "nhún nhảy với điệu nhạc mà mình yêu thích ngôn ngữ của trẻ ngày càng nhiều",
+     "hyp": "Mắc lư, nhúng chảy với điều nhạc mà mình yêu thích. Ngôn ngữ của trẻ cài càng nhiều hơn.",
+     "word_edits": 7,
+     "words": 16,
+     "time": 2.098
+    },
+    {
+     "id": 1372,
+     "ref": "không nên vì cảm thấy mất mặt xấu hổ mà đâm ra la mắng con mình hoặc vì cảm thấy",
+     "hyp": "không nên vì cảm thấy mất mặt số hổ mà đâm ra la mắng con mình hoặc vì cảm thấy",
+     "word_edits": 1,
+     "words": 20,
+     "time": 2.661
+    },
+    {
+     "id": 1377,
+     "ref": "trong nhà hoặc dẫn trẻ đi dạo ngoài trời thư thả bạn có thể nói về những điều vui",
+     "hyp": "với trẻ trong nhà hoặc dẫn trẻ đi vào ngoài trời thư thả, bạn có thể nói về những điều",
+     "word_edits": 4,
+     "words": 19,
+     "time": 1.772
+    },
+    {
+     "id": 1381,
+     "ref": "cho con trẻ bạn nên bình tĩnh đặt trẻ nằm nghiêng nằm xuống một mặt phẳng an",
+     "hyp": "cho con trẻ, bạn nên bình tĩnh, đặt trẻ nằm nghiên, nằm xuống một mặt sẵn an.",
+     "word_edits": 2,
+     "words": 17,
+     "time": 2.285
+    },
+    {
+     "id": 1389,
+     "ref": "sự ra đi không mong muốn nên biểu lộ tâm can thấy rõ khóc lóc",
+     "hyp": "có sự ra đi không mong muốn nên biểu lộ tâm can thấy rõ, khóc lóc mè nhé.",
+     "word_edits": 3,
+     "words": 15,
+     "time": 1.886
+    },
+    {
+     "id": 1422,
+     "ref": "khi nào như thế nào có những vấn đề gì cần phải lưu ý trẻ có ăn uống đủ đúng và",
+     "hyp": "Khi nào, như thế nào, có những vấn đề gì cần phải lưu ý, trẻ có ăn uống đủ, đúng và có thật.",
+     "word_edits": 2,
+     "words": 21,
+     "time": 2.246
+    },
+    {
+     "id": 1424,
+     "ref": "hoặc lo việc phát triển tâm thần vận động của con nếu bé đã có những vấn đề",
+     "hyp": "hoặc lo về phát triển tâm thần vận động của con, nếu bé đã có những phấn đề.",
+     "word_edits": 2,
+     "words": 18,
+     "time": 1.822
+    },
+    {
+     "id": 1425,
+     "ref": "trẻ đều có cong chân ở một mức độ nào đó nhưng chẳng ai thèm để ý khi trẻ bắt đầu",
+     "hyp": "đều có công chân ở một mức độ nào đó, nhưng chẳng ai thèm để ý. Chi trẻ bắt đầu",
+     "word_edits": 3,
+     "words": 21,
+     "time": 2.049
+    },
+    {
+     "id": 1452,
+     "ref": "chúng ta có thể làm là ôm ấp hỗ trợ bé để có thể giảm stress cho con mình điều",
+     "hyp": "điều chúng ta có thể làm là ôm ấp, hỗ trợ bé để có thể giảm stress cho con mình.",
+     "word_edits": 2,
+     "words": 20,
+     "time": 1.832
+    },
+    {
+     "id": 1456,
+     "ref": "bất kỳ lo lắng nào như đã nói ở trên sẽ có những hoàn cảnh hoặc các kích thích gây ra cơn",
+     "hyp": "các kỳ lo lắng nào. Nhiều đã nói ở trên sẽ có những hoàn cảnh hoặc chắc kích thức gây ra cơn ngưng",
+     "word_edits": 5,
+     "words": 22,
+     "time": 2.253
+    },
+    {
+     "id": 1461,
+     "ref": "sau còn gì hơn thế nữa trẻ độ tuổi này thường làm những việc khá mất vệ sinh như",
+     "hyp": "trách về sau, còn gì hơn thế nữa, trẻ đồ tuổi này thường làm những việc khá mất vệ sinh.",
+     "word_edits": 4,
+     "words": 19,
+     "time": 1.35
+    },
+    {
+     "id": 1473,
+     "ref": "cho con và tìm cách giảm nỗi lo sợ này bằng những biện pháp đơn giản và tích",
+     "hyp": "và tìm cách giảm nổi lo sợ này bằng những biện pháp đơn giản và tích cực.",
+     "word_edits": 4,
+     "words": 18,
+     "time": 2.06
+    },
+    {
+     "id": 1491,
+     "ref": "tĩnh mạch nó sẽ làm hai dạng là huyết khối tĩnh mạch sâu và thuyên tắc huyết khối ở",
+     "hyp": "Cảm ơn các bạn. Hẹn gặp lại video này.",
+     "word_edits": 19,
+     "words": 19,
+     "time": 1.383
+    },
+    {
+     "id": 1497,
+     "ref": "thuyên tắc phổi hay là huyết khối tĩnh mạch sâu chi dưới là gì và bệnh có chữa",
+     "hyp": "hiệu của Thuyên tác phổi hay là khuyết khối tỉnh mạch sâu chi dưới là gì?",
+     "word_edits": 9,
+     "words": 18,
+     "time": 1.699
+    },
+    {
+     "id": 1507,
+     "ref": "về những chia sẻ vô cùng hữu ích và thiết thực vừa rồi ạ có thể thấy là hầu hết người bệnh nằm điều",
+     "hyp": "về những chia sẻ vô cùng hữu ích và thiết thức vừa rồi, có thể thấy là hầu hết người bờ 5 điều",
+     "word_edits": 4,
+     "words": 24,
+     "time": 2.203
+    },
+    {
+     "id": 1524,
+     "ref": "nguy cơ biến chứng vì được cung cấp đầy đủ thông tin giúp người bệnh an tâm khi tiến hành phẫu thuật loại bỏ tâm lý",
+     "hyp": "vi cơ biến chứng. Việc được cung cấp đầy đủ thông tin giúp người bệnh an tâm khi tiến hành phẫu thuật, loại bỏ tâm ní hôn.",
+     "word_edits": 4,
+     "words": 26,
+     "time": 2.964
+    },
+    {
+     "id": 1535,
+     "ref": "trong thời gian bao lâu cũng xin nhờ bác sĩ tư vấn kỹ hơn về cách chăm sóc theo dõi dự phòng khi điều trị",
+     "hyp": "thời gian bao lâu. Cũng xin nhờ bác sĩ tư vấn kỷ hơn về cách chăm sóc theo dõi dự phòng khi điều trị",
+     "word_edits": 2,
+     "words": 25,
+     "time": 2.58
+    },
+    {
+     "id": 1573,
+     "ref": "sẽ tập trung để bàn về những vấn đề đâu sẽ là những giải pháp an toàn để mỗi người dân",
+     "hyp": "Đó sẽ là những giải pháp an toàn để mỗi người dân.",
+     "word_edits": 10,
+     "words": 21,
+     "time": 1.479
+    },
+    {
+     "id": 1603,
+     "ref": "nhân bị bệnh nặng liên quan đến covid vấn đề thứ ba đó là chúng ta phải",
+     "hyp": "Vấn đề thứ ba đó là chúng ta phải",
+     "word_edits": 8,
+     "words": 17,
+     "time": 1.059
+    },
+    {
+     "id": 1608,
+     "ref": "những tỉnh thành đã đạt các cái tiêu chí là kiểm soát tốt được dịch bệnh và các tỉnh thành đạt được các tiêu",
+     "hyp": "Các tình hành đạt các tiêu chí kiểm soát tốt được tiền bệnh.",
+     "word_edits": 15,
+     "words": 24,
+     "time": 1.767
+    },
+    {
+     "id": 1638,
+     "ref": "và các chủng delta thì cái mức độ mà lây nhiễm nó sẽ cao thì với cái chỉ",
+     "hyp": "Vì là việc cái chủng data thì cái mức độ mà lây nhiễm nó sẽ cao thì với cái chỉ",
+     "word_edits": 5,
+     "words": 18,
+     "time": 1.757
+    },
+    {
+     "id": 1644,
+     "ref": "y tế đang phải thực hiện càng nhanh càng tốt đó chính là phủ vắcxin trên",
+     "hyp": "Đang phải thực hiện càng nhanh càng tốt. Nó chính là phủ vắc xin cho",
+     "word_edits": 6,
+     "words": 16,
+     "time": 1.659
+    },
+    {
+     "id": 1650,
+     "ref": "dân nhưng mà cách làm xét nghiệm như thế nào cho tốt thì đó là công tác tổ chức",
+     "hyp": "Nhưng mà cách làm xét nghiệm như thế nào cho tổ, thì đó là công tác tổ giúp.",
+     "word_edits": 3,
+     "words": 19,
+     "time": 1.766
+    },
+    {
+     "id": 1653,
+     "ref": "để thông tin là những quy định mà ban chỉ đạo quốc gia phòng chống dịch covid19 cũng như ban chỉ đạo phòng chống covid",
+     "hyp": "thông tin là những quy định mà ban chỉ đạo quốc gia phòng chống dịch Covid-19 cũng như ban chỉ đạo phòng chống Covid-19.",
+     "word_edits": 3,
+     "words": 27,
+     "time": 2.206
+    },
+    {
+     "id": 1660,
+     "ref": "trong những cái vấn đề là tâm lý của người dân khi mà tôi tham gia điều trị cũng như đã tham gia tư vấn cho bệnh nhân",
+     "hyp": "trong những vấn đề là tâm lý của người dân khi mà tôi tham gia điều trị cũng như là tham gia tư vấn cho bệnh nhân.",
+     "word_edits": 2,
+     "words": 28,
+     "time": 2.188
+    },
+    {
+     "id": 1661,
+     "ref": "thành phố Hồ Chí Minh có ba quận huyện đó là quận bảy đó là Củ chi và Cần Iiờ thì đã",
+     "hyp": "Cũ Chí Minh có ba quận huyện. Đó là quận 7. Đó là Cũ Chí và Tân Giờ.",
+     "word_edits": 9,
+     "words": 22,
+     "time": 1.974
+    },
+    {
+     "id": 1670,
+     "ref": "để điều trị covid chia làm ba tầng nhẹ thì tự chăm sóc ở nhà nặng hơn một chút nghĩa là có triệu",
+     "hyp": "Để liều diễn Covid chia làm 3 tầng nhẹ thì tự căm sóc ở nhà nặng hơn 1 chút, nghĩa là có chiều",
+     "word_edits": 4,
+     "words": 23,
+     "time": 2.36
+    },
+    {
+     "id": 1673,
+     "ref": "những việc này thì chúng ta sẽ từng bước là giảm bớt gỡ bỏ để giãn cách xã hội ở",
+     "hyp": "thì chúng ta sẽ từng bước là giảm bước cỡ bỏ cho giảm cách xã hội.",
+     "word_edits": 8,
+     "words": 20,
+     "time": 1.787
+    },
+    {
+     "id": 1678,
+     "ref": "thì có thể có những trường hợp đã là f0 mà bị chích ngừa thì cái chuyện đó là lãng phí vắc xin và không có lợi cho",
+     "hyp": "thì có thể có những trường hợp đã lại ép không mà mình chích ngừa là lãng phí vaccine và không có lợi nhân",
+     "word_edits": 10,
+     "words": 29,
+     "time": 1.97
+    },
+    {
+     "id": 1696,
+     "ref": "tư vấn về vấn đề sức khỏe thế thì cái nút này thì theo đánh giá của Sở",
+     "hyp": "Tư bấn về vấn đề sức hoạch. Thế thì cái nút này thì theo đánh giá của sợ.",
+     "word_edits": 3,
+     "words": 18,
+     "time": 1.814
+    },
+    {
+     "id": 1706,
+     "ref": "vai trò nền móng cho xương vitamin D cần cho thấy có vai trò bảo vệ cơ thể làm giảm nguy cơ ung thư ruột",
+     "hyp": "có vai trò nền móng cho sương, vitamin D còn cho thấy có vai trò bảo vệ cơ thể, làm giảm nguy cơ ung thư ruột.",
+     "word_edits": 3,
+     "words": 25,
+     "time": 2.304
+    },
+    {
+     "id": 1716,
+     "ref": "bú tốt đủ hay không tốt không đủ bạn nên thay đổi bên vú mỗi lần cho bú ví dụ",
+     "hyp": "bố tốt, đủ, hay không tốt, không đủ. Bạn nên thay đổi bên bố mỗi lần cho bố.",
+     "word_edits": 5,
+     "words": 20,
+     "time": 2.259
+    },
+    {
+     "id": 1718,
+     "ref": "khác nhau khá lớn giữa hai trẻ cùng độ tuổi vì vậy không nên đánh đồng hoặc so sánh",
+     "hyp": "các nhau khá lớn giữa hai trẻ cùng độ tuổi, vì vậy không nên đánh đồng hoặc so sánh.",
+     "word_edits": 1,
+     "words": 19,
+     "time": 2.037
+    },
+    {
+     "id": 1731,
+     "ref": "ruột mãn tính trẻ bú mẹ ít nguy cơ bị bệnh viêm đường ruột mãn tính",
+     "hyp": "Trả bố mẹ, ít nguy cơ bị bệnh viêm đường ruột mảng tinh.",
+     "word_edits": 7,
+     "words": 16,
+     "time": 1.856
+    },
+    {
+     "id": 1753,
+     "ref": "nước lọc không mà thải luôn một số chất điện giải quan trọng trong người trẻ trong đó quan trọng nhất là natri trong khi đó",
+     "hyp": "nước lập không mà thải luôn một số chất điện giải quan trọng trong người trẻ. Trong đó, quan trọng nhất là Nazi.",
+     "word_edits": 5,
+     "words": 26,
+     "time": 2.251
+    },
+    {
+     "id": 1772,
+     "ref": "không đủ khi khi cho bú bạn nghe nhiều tiếng liếm môi liếm lưỡi trẻ không thỏa mãn sau bú",
+     "hyp": "Khi cho bố, bạn nghe nhiều tiếng lím môi, lím lưỡi, trẻ không thả mạng sau bố.",
+     "word_edits": 9,
+     "words": 20,
+     "time": 1.962
+    },
+    {
+     "id": 1776,
+     "ref": "chín và dụng cụ đựng đút cho bé được vệ sinh sạch sẽ tóm lại ngộ độc nước là một tình trạng",
+     "hyp": "và dùng cụ đựng đút cho bé được về sinh sạch sẻ. Tóm lại, ngộ độc nước là một tình trạng.",
+     "word_edits": 4,
+     "words": 22,
+     "time": 2.216
+    },
+    {
+     "id": 1822,
+     "ref": "đóng gói từ ai trữ thế nào để khi có chuyện gì xảy ra còn biết lần ra đầu mối",
+     "hyp": "Để khi có chuyện gì xảy ra, còn biết lần ra đầu môi.",
+     "word_edits": 8,
+     "words": 20,
+     "time": 1.453
+    },
+    {
+     "id": 1825,
+     "ref": "số lần trẻ muốn bú mỗi ngày dao động khá nhiều ở mỗi trẻ theo thời gian và cũng",
+     "hyp": "lần trẻ muốn bú mỗi ngày, trao động khá nhiều ở mỗi trẻ theo thời gian.",
+     "word_edits": 4,
+     "words": 19,
+     "time": 2.127
+    },
+    {
+     "id": 1839,
+     "ref": "là dòng sữa đầu mỗi cử bú sữa đầu dòng chứa nhiều nước và đáp ứng nhu cầu nước của trẻ khi trẻ tiếp tục bú sữa cuối dòng",
+     "hyp": "Khi trẻ tiếp tục bú, sử cuối dòng sử dụng sử dụng sử dụng sử dụng sử dụng sử dụng sử dụng sử dụng sử dụng sử dụng sử dụng sử dụng sử dụng sử dụng",
+     "word_edits": 35,
+     "words": 29,
+     "time": 3.706
+    },
+    {
+     "id": 1840,
+     "ref": "cơ bản kể trên FDA khuyến cáo rằng nếu bạn nghĩ đến việc cho con uống sữa từ nguồn",
+     "hyp": "cơ bản kể trên. FDA quyến cáo rằng nếu bạn nghị đánh việc cho con uống sữa từ nguồn",
+     "word_edits": 3,
+     "words": 19,
+     "time": 1.862
+    },
+    {
+     "id": 1854,
+     "ref": "cảm giác đầy sữa vào thì bằng biết sữa non thay đổi thành sữa mẹ bình thường nếu sau",
+     "hyp": "Sửa vào thì bạn biết sửa non thay đổi thành sứ mẹ bình thường.",
+     "word_edits": 9,
+     "words": 19,
+     "time": 2.565
+    },
+    {
+     "id": 1865,
+     "ref": "khuyến cáo không nên cho trẻ dưới sáu tháng tuổi uống nhiều nước trẻ bú mẹ hoàn toàn không cần uống nước thêm vì việc uống",
+     "hyp": "Quyến cáo không nên cho trẻ dưới 6 tháng tuổi uống nhiều nước. Trẻ bố mẹ hoàn toàn không cần uống nước thêm vì vì uống",
+     "word_edits": 3,
+     "words": 26,
+     "time": 2.577
+    },
+    {
+     "id": 1881,
+     "ref": "microwave để rã đông sữa mẹ bún sữa đã đông không thể dùng để tái đông lại được",
+     "hyp": "microwave để rả đông sửa mè. 4. Sửa đã rả đông không thể dùng để tái đông lại được.",
+     "word_edits": 6,
+     "words": 18,
+     "time": 2.036
+    },
+    {
+     "id": 1899,
+     "ref": "dùng xem thời gian trữ sữa cho phép trong bảng dưới hai không nên trộn sữa đã",
+     "hyp": "Xem thời gian tự sửa cho phép trong bản dưới.",
+     "word_edits": 10,
+     "words": 17,
+     "time": 1.892
+    },
+    {
+     "id": 1913,
+     "ref": "hành này vì vậy chúng ta nên chờ để được cập nhật thêm trong tương lai ở trẻ",
+     "hyp": "vì vậy chúng ta nên chờ để được gặp nhật thêm trong tương lai.",
+     "word_edits": 5,
+     "words": 18,
+     "time": 1.645
+    },
+    {
+     "id": 1914,
+     "ref": "truyền đủ vitamin d của mẹ cho con trong lúc mang thai và vì vậy làm",
+     "hyp": "truyền đủ vitamin D của mẹ cha con trong lúc mang thai, và vì vậy làm",
+     "word_edits": 1,
+     "words": 16,
+     "time": 1.145
+    },
+    {
+     "id": 1932,
+     "ref": "trẻ mỗi ngày mà chúng ta có thể chỉ cần cho trẻ ra ngoài chơi khi có mặt trời",
+     "hyp": "mỗi ngày mà chúng ta có thể chỉ cần cho trẻ ra ngoài chơi khi có mặt trời.",
+     "word_edits": 1,
+     "words": 19,
+     "time": 1.648
+    },
+    {
+     "id": 1940,
+     "ref": "trẻ phát triển nhanh đặc biệt vào những tháng đầu đời ở nước ta vẫn",
+     "hyp": "phát triển nhanh, đặc biệt vào những tháng đầu đời. Ở nước ta vẫn",
+     "word_edits": 1,
+     "words": 15,
+     "time": 1.543
+    },
+    {
+     "id": 1941,
+     "ref": "còn trẻ ngày càng được nhận biết và khẳng định là vì vậy rất nhiều ba mẹ đều có",
+     "hyp": "con trẻ ngày càng được nhận biết và khẳng định, và vì vậy rất nhiều ba mẹ đều có",
+     "word_edits": 2,
+     "words": 19,
+     "time": 1.927
+    },
+    {
+     "id": 1945,
+     "ref": "mà không cần phải bổ sung vitamin d thêm cho trẻ nghiên cứu này cũng cho thấy không có phản ứng phụ nào hoặc",
+     "hyp": "mà không cần phải bổ sung vitamin D thêm cho trẻ. Nghiên cứu này cũng cho thấy không có phản ứng phụ nào hoặc",
+     "word_edits": 0,
+     "words": 24,
+     "time": 2.012
+    },
+    {
+     "id": 1954,
+     "ref": "phát triển trong hội chứng này trẻ đột ngột tử vong không rõ nguyên nhân",
+     "hyp": "phát triển, trong hội chứng này trẻ đột ngục tử vong không rõ nguyên nhân.",
+     "word_edits": 1,
+     "words": 15,
+     "time": 1.696
+    },
+    {
+     "id": 1967,
+     "ref": "trùng bằng nhiệt này cũng thực hiện giống như quá trình tiệt trùng sữa bò vậy và vì vậy sẽ mất",
+     "hyp": "tiệt trùng bằng nhiệt này cũng thực hiện giống như quá trình tiệt trùng sữa bò vậy. Và vì vậy sẽ mất",
+     "word_edits": 1,
+     "words": 21,
+     "time": 1.997
+    },
+    {
+     "id": 1978,
+     "ref": "một số trẻ nhỏ có các bệnh lý đặc biệt thường rất hiếm gặp nhưng có bằng chứng nghiên cứu cho thấy trẻ sẽ có thể",
+     "hyp": "Một số trải nhỏ có các bệnh lý đặc biệt, thường rất hiếm gặp, nhưng có bằng chứng nghiên cứu cho thấy trẻ sẽ có thể.",
+     "word_edits": 1,
+     "words": 26,
+     "time": 2.541
+    },
+    {
+     "id": 1986,
+     "ref": "lần trước bú bên phải trước thì lần sau bú bên trái trước trẻ bú tốt khi",
+     "hyp": "Lần trước bú bên phải trước thì lần sau bú bên trái trước. Chẻ bú tốt khi.",
+     "word_edits": 1,
+     "words": 17,
+     "time": 1.731
+    },
+    {
+     "id": 1992,
+     "ref": "ta thấy rằng khi mẹ uống vitamin d liều cao thì nồng độ vitamin d trong sữa mẹ sẽ tăng",
+     "hyp": "ta thấy rằng khi mẹ uống vitamin D liệu cao thì nồng độ vitamin D trong sứa mẹ sẽ tăng.",
+     "word_edits": 2,
+     "words": 20,
+     "time": 1.384
+    },
+    {
+     "id": 1993,
+     "ref": "và để trẻ tự uống theo nhu cầu của mình khi trẻ bệnh và có nguy cơ mất nước nhiều sức",
+     "hyp": "và để trẻ tự uống theo nhu cầu của mình. Khi trẻ bệnh và có nguy cơ mất nước,",
+     "word_edits": 2,
+     "words": 21,
+     "time": 1.987
+    },
+    {
+     "id": 2054,
+     "ref": "tuyến vú bạn vẫn có thể cho con bú mẹ trực tiếp bình thường ở một số trường hợp khi bầu ngực",
+     "hyp": "tiến phú, bạn vẫn có thể cho con bú mẹ trực tiếp bình thường. Ở một số trường hợp khi bầu người",
+     "word_edits": 3,
+     "words": 22,
+     "time": 2.082
+    },
+    {
+     "id": 2065,
+     "ref": "sữa mẹ đông lạnh sẽ khác nhau tùy loại tủ lạnh tủ lạnh một cửa nhiệt độ tủ đông âm 15",
+     "hyp": "tư sứ mẹ Đông Lạnh sẽ khác nhau tùy loại tủ lạnh. Tủ lạnh 1 cửa, nhiệt độ tủ đông âm 15",
+     "word_edits": 2,
+     "words": 22,
+     "time": 1.882
+    },
+    {
+     "id": 2072,
+     "ref": "ra trữ đông cũng là một việc ngày càng được các bà mẹ tìm hiểu sâu về sữa mẹ nghĩ đến và",
+     "hyp": "ra Trử Đông cũng là một việc ngày càng được các ba mẹ tìm hiểu sâu về sữa mẹ nghĩ đến.",
+     "word_edits": 3,
+     "words": 22,
+     "time": 1.233
+    },
+    {
+     "id": 2077,
+     "ref": "khuyến cáo hiện nay ở Úc người ta cho trẻ tại nhóm nguy cơ thiếu vitamin d nếu trẻ sinh non",
+     "hyp": "Quyến cáo hiện nay ở Úc, người ta cho trẻ vào nhóm nguy cơ thiếu vitamin D nếu trẻ sinh non.",
+     "word_edits": 2,
+     "words": 21,
+     "time": 2.144
+    },
+    {
+     "id": 2112,
+     "ref": "ở trong y học thì phải đó là nó chen rễ thần kinh do thoát vị đĩa đệm hoặc là là là gai cột sống gì đó ừ hoặc là viêm",
+     "hyp": "Ở trong y học thì có đó là nó chàng vẽ thần kinh do thoát vị đê đệm hoặc là gai cuộc sống gì đó hoặc là viên thần",
+     "word_edits": 10,
+     "words": 31,
+     "time": 2.424
+    },
+    {
+     "id": 2120,
+     "ref": "để như à như ăn uống do đó chúng ta ăn thức ăn nhanh là béo phì mà béo thì là",
+     "hyp": "Vì vậy, chúng ta ăn thức ăn nhanh, là béo phì mà béo thì.",
+     "word_edits": 9,
+     "words": 21,
+     "time": 1.671
+    },
+    {
+     "id": 2124,
+     "ref": "giống như là cái cây nó già nó sẽ mục đi thì nó là giống như cái xương của mình nó lão già đó thì cái dinh dưỡng nó có liên",
+     "hyp": "Cái cây nó già, nó mục đi, thì nó là giống như xương của mình, nó lọn như vậy đó.",
+     "word_edits": 15,
+     "words": 31,
+     "time": 1.738
+    },
+    {
+     "id": 2127,
+     "ref": "chúng ta lớn lên và chúng ta phải già đi khi trẻ là chúng ta phát triển hiện sưng lên đến một mức độ nào đó và",
+     "hyp": "Chúng ta lướng lên và chúng ta phải dạy xí trẻ, là chúng ta phát triển, hiển xương lên đến 1 mức độ nào đó.",
+     "word_edits": 7,
+     "words": 27,
+     "time": 2.149
+    },
+    {
+     "id": 2138,
+     "ref": "ta phải cho nó phơi nắng rồi cho nó ví dụ hồi nhỏ mình cũng biết là bà",
+     "hyp": "Mình phải cho nó phân án rồi. Hồi nhỏ mình cũng biết rồi.",
+     "word_edits": 9,
+     "words": 18,
+     "time": 1.313
+    },
+    {
+     "id": 2143,
+     "ref": "những người đó là sau này lớn lên là ta già ta sẽ khung xương rất yếu và người ta sẽ không làm được việc gì",
+     "hyp": "Và người đó là sau này lớn lên người ta già, người ta sẽ không khung sương, người ta rất yếu và người ta sẽ không làm được việc gì.",
+     "word_edits": 7,
+     "words": 26,
+     "time": 2.107
+    },
+    {
+     "id": 2151,
+     "ref": "và nó gây buồn ói nó không có liên quan tới thiếu hụt và nó cũng không liên quan tới thừa canxi nghĩa là khi mình ăn một hải sản",
+     "hyp": "và nó gây buồn ối, nó không có liên quan thế thiếu hục và nó không có liên quan thế thường là khi mình ăn 1 hải sản",
+     "word_edits": 9,
+     "words": 30,
+     "time": 2.491
+    },
+    {
+     "id": 2153,
+     "ref": "đã nói là khi thiếu bác sĩ nó bạn loãng xương thì bạn đi bộ vào buổi nắng buổi sáng sớm",
+     "hyp": "Chúng ta đã nói là thiếu bác sĩ nó bàn loạn sư, thì bàn đi bộ vào buổi nắng, buổi sáng sư.",
+     "word_edits": 8,
+     "words": 21,
+     "time": 2.314
+    },
+    {
+     "id": 2158,
+     "ref": "không biết nó đi tới đâu nhưng mà có cũng không không không không biết",
+     "hyp": "không biết nó đi tới đầu, nhưng mà có, không không không không không biết",
+     "word_edits": 2,
+     "words": 15,
+     "time": 1.318
+    },
+    {
+     "id": 2180,
+     "ref": "ta thấy tim của chúng ta thường nó sẽ nằm trong được bảo vệ mà khung xương do đó là xương là rất là quan trọng và dự trữ và",
+     "hyp": "Các trái tim của chúng ta thường sẽ nằm trong một lần được bảo vệ và khung sương. Do đó là sương là rất là quan tạng và giữ trữ và mùa sương.",
+     "word_edits": 12,
+     "words": 30,
+     "time": 2.961
+    },
+    {
+     "id": 2182,
+     "ref": "là các collagen và điều trị bằng thuốc thực phẩm bổ sung vô cùng khó tại sao tôi nói vô cùng",
+     "hyp": "và điều đẩy bản thúc thực phẩm bố sông vô cùng khó. Tại sao tôi nói vô cùng khó.",
+     "word_edits": 9,
+     "words": 21,
+     "time": 2.051
+    },
+    {
+     "id": 2183,
+     "ref": "nhớ đây ngay ngày đó là sinh nhật của bà mới vụ đó là một món quà tặng cho bà vô bệnh viện tiện cả đêm về tối",
+     "hyp": "Một môn quà tặng cho bà trở ra điện truyền ca đêm về.",
+     "word_edits": 21,
+     "words": 28,
+     "time": 1.628
+    },
+    {
+     "id": 2196,
+     "ref": "và một phần trăm còn lại nằm trong máu mà nếu mà có lượng canxi này nó bị hạ đi thì nó sẽ gây ra hiện tượng là chúng",
+     "hyp": "Một thần trăm còn lại nằm trong máu, nếu lượng căn xí bị hạ đi thì nó sẽ gây ra.",
+     "word_edits": 12,
+     "words": 29,
+     "time": 2.246
+    },
+    {
+     "id": 2197,
+     "ref": "làm chúng ta thiếu vitamin d giống như ngày xưa mình như một đứa trẻ này chúng ta có nói là một đứa trẻ thường nó thiếu",
+     "hyp": "và chúng ta thiếu NDE với nhiều như ngày xưa mình đưa 1 đứa trẻ đó. Hồi nãy chúng ta có nói 1 đứa trẻ thường nó thiếu.",
+     "word_edits": 9,
+     "words": 27,
+     "time": 2.515
+    },
+    {
+     "id": 2199,
+     "ref": "nói với các bạn về dinh dưỡng để điều trị và phòng ngừa loãng xương đây là một vấn đề mà chúng ta rất là quan tâm theo mình",
+     "hyp": "và các bạn về dinh dưỡng để điều trị vào phòng người lõ sương. Đây là một vấn đề mà chúng ta rất là quan tâm.",
+     "word_edits": 8,
+     "words": 29,
+     "time": 2.311
+    },
+    {
+     "id": 2206,
+     "ref": "cho chúng ta là gây hội chứng trào ngược dạ dày thực quản gây viêm thực quản",
+     "hyp": "cho chúng ta là gây hậu trứng trồng được dài dài thật quản, gây viên thật quản.",
+     "word_edits": 9,
+     "words": 17,
+     "time": 1.95
+    },
+    {
+     "id": 2208,
+     "ref": "đi khám suốt tiểu đường nó vẫn mệt mỏi vô khám tai biến bộ não vô khám nhưng mà xương thì nó loãng xương",
+     "hyp": "Nó có thể giúp đỡ các bạn, các bạn có thể giúp đỡ các bạn, các bạn có thể giúp đỡ các bạn, các bạn có thể giúp đỡ các bạn",
+     "word_edits": 31,
+     "words": 24,
+     "time": 2.681
+    },
+    {
+     "id": 2211,
+     "ref": "không phải là tập thể hình mình sử dụng để xử lại giống dáng vóc của mình và tuyệt nhiên không nên ăn kiêng ăn kiêng là một trong",
+     "hyp": "Không phải là tập tin hình mà sử dụng để chữ lại giám vác của mình, và thiệt nhiên không nên ăn kiên. Ăn kiên là một trong",
+     "word_edits": 9,
+     "words": 29,
+     "time": 2.507
+    },
+    {
+     "id": 2212,
+     "ref": "bác sĩ cũng không nhắc bệnh viện cũng không gọi tới tái khám một năm sau bà quanh lại là bác sĩ bác sĩ ơi tôi gãy chân bên",
+     "hyp": "Bác sĩ không nhắc bệnh viện cũng không gọi tới tái khám. Một năm sau bà quanh lại gặp bác sĩ, bác sĩ ơi tui gãy trên bình thường.",
+     "word_edits": 6,
+     "words": 29,
+     "time": 3.037
+    },
+    {
+     "id": 2220,
+     "ref": "là một bệnh mạn tính liên quan đến lối sống và không thể điều trị được anh nhớ một điều mà có tin mà chúng ta chắc",
+     "hyp": "Nhớ một điều, một có tin, mà chúng ta chắc...",
+     "word_edits": 18,
+     "words": 27,
+     "time": 1.289
+    },
+    {
+     "id": 2224,
+     "ref": "tầm một giờ một ngày ba là mình đạp xe đạp và theo có quy luật mà trên thế giới là quy định là ba năm bảy là gì ba là ba chục phút",
+     "hyp": "Một giờ, một ngày, ba là mình đạt sẽ đạt. Và theo cái quy luật mà trên thế giới, người ta quy định là ba năm bảy là gì? Ba là ba chục phút.",
+     "word_edits": 7,
+     "words": 34,
+     "time": 2.629
+    },
+    {
+     "id": 2227,
+     "ref": "chúng ta đi ngược với lệ ra như như xu hướng nó chứ đúng chuẩn của nó là cái đó nó phải bớt",
+     "hyp": "Chúng ta đi ngược với lại như sư hướng của nó. Chứ đúng chúng nó là những cái đó nó phải bớt.",
+     "word_edits": 8,
+     "words": 23,
+     "time": 2.048
+    },
+    {
+     "id": 2250,
+     "ref": "chúng ta có thể là cao huyết áp này chúng ta có thể tăng phản xạ gân xương này chúng ta có thể là ai như bị co giật và rất rất rất",
+     "hyp": "Chúng ta có thể là cao hiếp áp, tăng phản xạ găng xương, bị co dạc và rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất rất",
+     "word_edits": 200,
+     "words": 33,
+     "time": 10.293
+    },
+    {
+     "id": 2257,
+     "ref": "quan trọng do đó để mà tránh trọng ý thức từ những người bác sĩ đến",
+     "hyp": "Do đó đệm và trắng tôn thụ lập ý thức từ những người bác sĩ",
+     "word_edits": 9,
+     "words": 16,
+     "time": 1.568
+    },
+    {
+     "id": 2267,
+     "ref": "mật độ xương là gì mật độ xương là chất nền và chất khoáng là khó là canxi đó thứ hai nữa là các cái vi",
+     "hyp": "Mặc đổ xương là chắc nền và chắc khoán, là khoán là căn sĩ đó.",
+     "word_edits": 20,
+     "words": 26,
+     "time": 2.193
+    },
+    {
+     "id": 2269,
+     "ref": "thì hơi hiếm gặp thì tôi nghĩ là lỗi loãng xương bệnh lý đi thì nếu mà bạn",
+     "hyp": "Thì tôi nghĩ là rõ xương mình lấy đây. Thì nếu mà bạn...",
+     "word_edits": 9,
+     "words": 18,
+     "time": 1.438
+    },
+    {
+     "id": 2275,
+     "ref": "không có cho ha còn bây giờ mình mình nói cái chuyện mà để khuyên bố mẹ bạn nhưng mẹ bạn",
+     "hyp": "Còn bây giờ mình nói cái chuyện để khuyên bố mẹ, bạn với mẹ bạn làm.",
+     "word_edits": 8,
+     "words": 21,
+     "time": 1.775
+    },
+    {
+     "id": 2276,
+     "ref": "ở trên màn hình mình cũng có nè vitamin d tất cả các [dạ]",
+     "hyp": "Ở trên bằng hình mình cũng có nè.",
+     "word_edits": 7,
+     "words": 14,
+     "time": 1.558
+    },
+    {
+     "id": 2280,
+     "ref": "thì nó cũng sẽ có là yếu tố nội tiết các tiếng cả tên tên các vitamin vitamin cấp các phụ gia để",
+     "hyp": "Vì vậy nó cũng sẽ có là yếu tố nổi tiếc, các tiến, các giáp, các tầm vinh, các các tầm vinh, các các trách phụ gia này nó.",
+     "word_edits": 17,
+     "words": 23,
+     "time": 2.872
+    },
+    {
+     "id": 2289,
+     "ref": "loãng xương mà nặng quá bác sĩ nói thì chúng ta phải nên uống những câu lọ thuốc để để để nó có hai",
+     "hyp": "Các sĩ đã nói thì chúng ta phải nên uống những lo thúc để nó có 2 gần.",
+     "word_edits": 13,
+     "words": 24,
+     "time": 1.69
+    },
+    {
+     "id": 2310,
+     "ref": "khi có đủ hết rồi nhưng mà chúng ta không có xin giấy phép thì cũng không thể xây nhà được cũng phải có người cấp phép thì",
+     "hyp": "Khi có đủ hết rồi, nhưng mà chúng ta không có sinh giấy phép thì chúng không sẽ xa nhà được. Cũng phải có người cấp phép.",
+     "word_edits": 5,
+     "words": 28,
+     "time": 2.328
+    },
+    {
+     "id": 2326,
+     "ref": "hút thuốc lá hút thuốc lá có ảnh hưởng rất nhiều ung thư phổi ung thư",
+     "hyp": "Hút thúc lá, hút thúc lá là ảnh hưởng rất nhiều. Ông thư phổi, ông thư...",
+     "word_edits": 5,
+     "words": 16,
+     "time": 1.824
+    },
+    {
+     "id": 2341,
+     "ref": "xương bệnh lý và loãng xương tự sinh lý tự nhiên là loãng xương do già",
+     "hyp": "bệnh lý và loãng xương, tự sinh lý tự nhiên là loãng xương do già.",
+     "word_edits": 1,
+     "words": 16,
+     "time": 2.149
+    },
+    {
+     "id": 2354,
+     "ref": "sữa là gì là một thực phẩm vừa cung cấp protid vừa cung cấp canxi vừa cung",
+     "hyp": "là một thực phẩm vừa công cấp đô tích, vừa công cấp canh xí, vừa công cấp đô tích.",
+     "word_edits": 13,
+     "words": 17,
+     "time": 2.014
+    },
+    {
+     "id": 2358,
+     "ref": "còn lại là cắt các chất khoáng hoạt động thì tất nhiên là chúng ta có phải như cái đó rồi",
+     "hyp": "Cảm ơn các bạn. Hẹn gặp lại.",
+     "word_edits": 20,
+     "words": 21,
+     "time": 1.359
+    },
+    {
+     "id": 2359,
+     "ref": "nhưng mà anh không có sắt thép là thua do đó phải có sắt thép collagen là một khung sắt thép để chúng ta xây lên",
+     "hyp": "Nhưng mà anh không có sát thép là thua. Do đó phải có sát thép. Colorane là 1 khung sát thép để chúng ta xay lên.",
+     "word_edits": 5,
+     "words": 26,
+     "time": 2.281
+    },
+    {
+     "id": 2367,
+     "ref": "vitamin d có phải liên quan tới đó làm ánh sáng mặt trời thiên nhiên là ưu đãi hả sáng",
+     "hyp": "Ví tìm bên đêm mà không cần phải liên quan phải nói đó là anh sáng mặt trời. Tuy nhiên là ưu đại hả?",
+     "word_edits": 14,
+     "words": 20,
+     "time": 1.866
+    },
+    {
+     "id": 2368,
+     "ref": "thấy được là bị bị đau đứng gì hết đến khi một ngày đẹp trời nói đẹp trời không đúng một ngày",
+     "hyp": "là bị đau đến khi một ngày đẹp trời. Nói đẹp trời thì không đúng một ngày.",
+     "word_edits": 7,
+     "words": 22,
+     "time": 1.746
+    },
+    {
+     "id": 2369,
+     "ref": "xương hai mươi tuổi thì cái chuyện đó rất là hiếm xảy ra khả năng cái người đó là chắc là là là bị loãng xương bệnh lý gì thôi còn",
+     "hyp": "Nó rất là hiến xảy ra. Khả năng người đó chắc là bị lõn xương bệnh lấy gì thôi.",
+     "word_edits": 16,
+     "words": 31,
+     "time": 2.034
+    },
+    {
+     "id": 2375,
+     "ref": "tìm cái lượng nó nhiều hơn tuy nhiên hấp thu nó khó hơn và nhưng mà nó rẻ hơn",
+     "hyp": "Nên cái lượng nó nhiều hơn, tuy nhiên nó hấp thu, nó khó hơn, nhưng mà nó rẻ hơn.",
+     "word_edits": 3,
+     "words": 19,
+     "time": 1.81
+    },
+    {
+     "id": 2380,
+     "ref": "nó sẽ yếu yếu đuối và vận động nó không không có tốt và xứ mục quan trọng của nó bảo vệ các cơ quan trong cơ thể của chúng ta",
+     "hyp": "nó sẽ yếu đuối và vặn động nó không có tốt. Và xương mục quan trọng nó sẽ bảo vệ các cùa quan trong cơ thể của chúng ta.",
+     "word_edits": 7,
+     "words": 31,
+     "time": 2.337
+    },
+    {
+     "id": 2401,
+     "ref": "thứ hai là vitamin d thứ ba là cắt cả tiền chất là có vitamin k vitamin e vitamin a và vân vân",
+     "hyp": "Thứ 2 là vitamin D, thứ 3 là cá cá tiền chắc là vitamin K, vitamin E, vitamin A và vong vang thơ.",
+     "word_edits": 7,
+     "words": 23,
+     "time": 1.806
+    },
+    {
+     "id": 2417,
+     "ref": "không tốt và có một số người ở là ta bị bệnh corticoid á điều trị corticoid",
+     "hyp": "và có một số người là người ta bị tộc tiếu ít, điều trị tộc tiếu ít.",
+     "word_edits": 10,
+     "words": 17,
+     "time": 1.718
+    },
+    {
+     "id": 2422,
+     "ref": "quan trọng là collagen có quan trọng không collagen vẫn quan trọng tuy nhiên canxi nó quan trọng là gì tại canxi nó sẽ mất đi theo thời gian",
+     "hyp": "Cô Lê Xém có quan tâm không? Cô Lê Xém vẫn quan tâm. Tuy nhiên, cân sĩ nó quan tâm là gì? Tại, cân sĩ nó sẽ mắc đi theo thời gian.",
+     "word_edits": 15,
+     "words": 29,
+     "time": 3.003
+    },
+    {
+     "id": 2450,
+     "ref": "thường người ta khuyến cáo là nên bổ sung canxi từ đầu chứ không phải là loãng xương từ đầu",
+     "hyp": "Thì thường người ta khuyến cáo là nên bổ sung canh xí từ đầu chứ không phải là lộn sương.",
+     "word_edits": 7,
+     "words": 20,
+     "time": 1.962
+    },
+    {
+     "id": 2457,
+     "ref": "rất là nặng chất dinh dưỡng cần cho xương thì không là canxi nhưng mà không phải chỉ có",
+     "hyp": "rất là nặng, chắc viên dưỡng càng cho sương, thì không là canh si, nhưng mà không phải chỉ...",
+     "word_edits": 7,
+     "words": 19,
+     "time": 1.74
+    },
+    {
+     "id": 2473,
+     "ref": "hiện mình mới phát hiện mình nó có thể ba mẹ mình loãng xương và bác sĩ điều trị mổ cho bà xong rồi cho về cũng không có",
+     "hyp": "Mình mới phát hiện ba mẹ mình loãng sư. Và bác sĩ điều trị mổ cho bà xong rồi cho về cũng không có...",
+     "word_edits": 6,
+     "words": 29,
+     "time": 2.275
+    },
+    {
+     "id": 2507,
+     "ref": "nhiều thứ ở gia đình này cơm áo gạo tiền con đi học đưa đi đưa về thì mình sẽ mất đi những có thời gian đó do đó chúng",
+     "hyp": "Cơm áo, gạo tiền, con đi học, đưa đi về thì mình sẽ mất đi những thời gian đó.",
+     "word_edits": 11,
+     "words": 30,
+     "time": 2.008
+    },
+    {
+     "id": 2510,
+     "ref": "hầu như người ta không khuyến cáo thường là đây nó có một cái lọ là raloxifene thì nó sẽ điều trị cho hoocmon liệu pháp nhưng mà bác sĩ",
+     "hyp": "Nhưng người ta không hiến cáo, thường là nó có một loại raloxifen thì nó sẽ điều trị cho học vô lý pháp nhưng mà bác sĩ",
+     "word_edits": 11,
+     "words": 30,
+     "time": 2.476
+    },
+    {
+     "id": 2543,
+     "ref": "hoặc là có những trường hợp mà sau quan hệ tình dục thô bạo thì bệnh nhân hay bị rách rách cuối cùng sau và gây chảy máu",
+     "hyp": "hoặc là có những truyền hợp mà sau quan hệ tình dập thô bạo thì bệnh nhân hay bị rất bối cùng sau.",
+     "word_edits": 9,
+     "words": 28,
+     "time": 2.492
+    },
+    {
+     "id": 2567,
+     "ref": "u xơ tử cung buồng trứng và những cái bệnh lý về ung thư phụ khoa còn nguyên nhân cơ",
+     "hyp": "tự công, ổ bồn trứng và những ký bệnh lý về ổng thư phụng khoa.",
+     "word_edits": 12,
+     "words": 20,
+     "time": 2.575
+    },
+    {
+     "id": 2593,
+     "ref": "liều rất là cao liều cao lắm vậy với mục đích đó là nó ngăn ngừa ức chế các động trứng để cho khi mà",
+     "hyp": "Điều rất là cao. Điều cao lắm. Để mơ mục đứt là nó ngăn người ức chế độc đứng để cho khi mà",
+     "word_edits": 10,
+     "words": 25,
+     "time": 2.937
+    },
+    {
+     "id": 2607,
+     "ref": "tử cung nhỏ thì nó có nguyên nhân như vậy rồi sau khi mà mình mình đặt mỏ vịt xong",
+     "hyp": "Mà mình đặt mỏ việc xa.",
+     "word_edits": 16,
+     "words": 20,
+     "time": 1.164
+    },
+    {
+     "id": 2616,
+     "ref": "progesterone đây là hcv và cho bệnh nhân đi đi siêu âm phụ khoa trong những",
+     "hyp": "Các bạn nhăn đi, đi xem phụng Khoa trong những video này.",
+     "word_edits": 13,
+     "words": 16,
+     "time": 1.592
+    },
+    {
+     "id": 2622,
+     "ref": "cảm giác là nó chạm vào đáy tử cung thì thôi mình đừng có cố gắng đưa tiếp nữa đó",
+     "hyp": "Cảm giác là nó chạm vào đái sự công. Thì thôi mình đừng có cố gắng đưa tiếp nữa.",
+     "word_edits": 4,
+     "words": 20,
+     "time": 2.181
+    },
+    {
+     "id": 2623,
+     "ref": "nhất là họ đã lập gia đình chưa và đã có con chưa và có quan hệ tình dục chưa đúng chưa đầu tiên nếu nhưng mà họ nói là",
+     "hyp": "Hãy subscribe cho kênh Ghiền Mì Gõ Để không bỏ lỡ những video hấp dẫn",
+     "word_edits": 30,
+     "words": 30,
+     "time": 1.829
+    },
+    {
+     "id": 2659,
+     "ref": "cái hình mình sẽ nói trước về u xơ tử cung sau này mình có một cái bài học riêng về u xơ tử cung được đây u xơ tử cung thì nó có",
+     "hyp": "Một bài học viên về ưu sơ tự công là đây.",
+     "word_edits": 29,
+     "words": 34,
+     "time": 1.52
+    },
+    {
+     "id": 2692,
+     "ref": "bệnh nhân là như vậy là đã trả lời với mình không không trung thực đúng không thôi kệ họ và mình sẽ cho em siêu âm siêu âm mà nếu như có những",
+     "hyp": "Vì vậy là đã trả lại với mình không trung thật, đúng không? Và mình sẽ cho xíu âm.",
+     "word_edits": 19,
+     "words": 34,
+     "time": 1.924
+    },
+    {
+     "id": 2697,
+     "ref": "nhóm tuổi dậy thì thường là rối loạn phóng noãn tức là lúc đó là buồng trứng",
+     "hyp": "Vậy thì thường là rấu rộng, hóng nỏ, lúc đó là buồn trực.",
+     "word_edits": 11,
+     "words": 17,
+     "time": 1.302
+    },
+    {
+     "id": 2709,
+     "ref": "những trường hợp khó khăn thì có thể cho thêm ct hoặc là mri còn lại những cái xác nghiệm khác",
+     "hyp": "Trường trường hợp khó khăn thì có thể chấp thêm CT hoặc là M-Ride.",
+     "word_edits": 10,
+     "words": 21,
+     "time": 1.994
+    },
+    {
+     "id": 2732,
+     "ref": "8 milimet còn cái hình máy này thì cái nội mạc tử cung làm em thấy nó mỏng hơn",
+     "hyp": "Nó mọng hơn",
+     "word_edits": 17,
+     "words": 19,
+     "time": 0.902
+    },
+    {
+     "id": 2770,
+     "ref": "còn cái viên thuốc ngừa thai mà khẩn cấp thì thành phần chính là progesterone",
+     "hyp": "Còn cái viên thuốc ngừa thai mà khẳng cách thì thành phần chính là rogeron.",
+     "word_edits": 3,
+     "words": 15,
+     "time": 1.841
+    },
+    {
+     "id": 2795,
+     "ref": "thì nó hay gây nên các triệu chứng là ra máu âm đạo ít ít một và một số trường hợp là bệnh nhân điều trị",
+     "hyp": "Một số tương hợp là bệnh nhân biểu trị.",
+     "word_edits": 19,
+     "words": 26,
+     "time": 1.535
+    },
+    {
+     "id": 2803,
+     "ref": "hoặc là những cái polyp nội mạc tử cung và những cái bệnh lý là tăng sản nội mạc",
+     "hyp": "và những bệnh lấy là tăng sản lọ mạc.",
+     "word_edits": 12,
+     "words": 19,
+     "time": 1.416
+    },
+    {
+     "id": 2809,
+     "ref": "à còn viên thuốc ngừa thai thích hợp thì tên trên thị trường thì có rất nhiều loại cũng vài chục loại loại nào cũng",
+     "hyp": "Còn viên thúc người 2 cái khách hạt thì tên trên thể trường thì có rất nhiều loại. Cũng vài chục loại, mình đủ loại nào cũng.",
+     "word_edits": 10,
+     "words": 25,
+     "time": 2.8
+    },
+    {
+     "id": 2831,
+     "ref": "trị à bệnh ung thư vú chẳng hạn bằng tamoxifen này kéo dài thì nó cũng hay gây nên ra máu âm đạo bất thường",
+     "hyp": "bệnh ông thư vũ chẳng hạt và người ta mua si fan này kéo dài thì nó cũng hay gây. Kệ niên ra máu âm đạo, bắt thường.",
+     "word_edits": 14,
+     "words": 25,
+     "time": 2.746
+    },
+    {
+     "id": 2864,
+     "ref": "cái này trung bình á bình thường là nội mạc tử cung tử từ ba bốn cho đến khoảng",
+     "hyp": "Cái này trông bênh thường là nọ mạc tử công từ 3, 4 cho đánh khoảng.",
+     "word_edits": 8,
+     "words": 19,
+     "time": 1.783
+    },
+    {
+     "id": 2883,
+     "ref": "bây giờ về mặt thăm khám á thì khi đứng trước một bệnh nhân rong kinh rong huyết á",
+     "hyp": "Bây giờ về mặt tham khám thì khi đứng tới một bạch nhân râm kinh đồng huyết",
+     "word_edits": 7,
+     "words": 19,
+     "time": 1.903
+    },
+    {
+     "id": 2884,
+     "ref": "trong tử cung nhưng mà không không lắng và buồng tử cung còn những cái nhân xơ này đây đây là nhân xơ dưới thanh mạc",
+     "hyp": "Công tự cung nhưng mà không, không lắng vào bụng tự cung. Còn những cái nhan sơ này đây, đây là nhan sơ dưới Thanh Mạc.",
+     "word_edits": 9,
+     "words": 26,
+     "time": 2.801
+    },
+    {
+     "id": 2888,
+     "ref": "cung, được chưa, như vậy là cái nội mạc tử cung ở bệnh nhân này là là ở mức độ trung bình",
+     "hyp": "Vậy là cái nội bạc của con mở bệnh nhân này là ở mức nội trong vệnh nhân.",
+     "word_edits": 13,
+     "words": 22,
+     "time": 1.397
+    },
+    {
+     "id": 2890,
+     "ref": "trị được tốt hơn và đặc biệt làm sao nó có cái gì nó có cái mà cái tác dụng sao tăng",
+     "hyp": "Chỉ được tốt hơn và đặc biệt làm sao, nó có cái tác dụng làm sao.",
+     "word_edits": 9,
+     "words": 22,
+     "time": 1.663
+    },
+    {
+     "id": 2909,
+     "ref": "ruột kích thích là phải điều trị vào thần kinh và hiện nay các nhà dược học người ta đã nghiên cứu đặc biệt làm sao có một cái hoạt chất",
+     "hyp": "và hiện nay các nhà dựa phọc người ta đã nghiên cứu đặc biệt làm sao có một kế hoạch chất",
+     "word_edits": 14,
+     "words": 31,
+     "time": 2.126
+    },
+    {
+     "id": 2929,
+     "ref": "làm sao nó bảo vệ được niêm mạc ruột không bị tác hại của các emzym hoặc là cái thức ăn ngoại lai tác",
+     "hyp": "Mà sao nó bảo vệ được niệm mạc ruột, không bị tác hải của các em gym hoặc là các thức ăn ngoại lai",
+     "word_edits": 7,
+     "words": 24,
+     "time": 2.21
+    },
+    {
+     "id": 2931,
+     "ref": "diệt khuẩn và gây mất cân bằng giữa vi khuẩn có lợi và vi khuẩn có hại tạo ra làm sao lại tạo thành thế bệnh lý khác là bệnh lý chính là bệnh",
+     "hyp": "Điệt khuẩn và gây mất cân bằng dưới, vi khuẩn có lợi và vi khuẩn có là hại, tạo ra làm sao, tạo thành cái bệnh ní khác là bệnh ní.",
+     "word_edits": 10,
+     "words": 34,
+     "time": 3.425
+    },
+    {
+     "id": 2966,
+     "ref": "nay chúng ta thấy trong hai năm vừa rồi có cái trường hợp covid thì các bệnh lý về đường tiêu hóa nhất là cái đại",
+     "hyp": "Lại, chúng ta thấy trong 2 năm vừa rồi có trường hợp Covid thì cái bệnh ní về đường tiêu hóa rất là cái đại trường.",
+     "word_edits": 6,
+     "words": 26,
+     "time": 2.47
+    },
+    {
+     "id": 2969,
+     "ref": "những cái ổ áp xe thậm chí là biến chứng của viêm đại tràng có thể giãn rồi nó thủng đại tràng thuộc áp xe đại tràng",
+     "hyp": "Hãy subscribe cho kênh La La School Để không bỏ lỡ những video hấp dẫn",
+     "word_edits": 27,
+     "words": 27,
+     "time": 1.625
+    },
+    {
+     "id": 2985,
+     "ref": "không dùng kháng sinh dùng kháng sinh thì sẽ ảnh hưởng như tôi nói và đặc biệt đều lâu dài chưa kể còn tác dụng phụ của kháng",
+     "hyp": "Nếu không dùng các sinh, dùng các sinh thì sẽ ảnh hưởng như tôi nói và đặc biệt nè, lâu dài chưa kể còn các dùng phụ của khả năng.",
+     "word_edits": 8,
+     "words": 28,
+     "time": 2.791
+    },
+    {
+     "id": 2996,
+     "ref": "cái đường tay rồi mà miệng rồi rau sống ăn thì bị lỵ thì gia đình đều bị hết và",
+     "hyp": "Đường tay, miệng, rau sống, ăn bị lị thì gia đình đã đều bị hết.",
+     "word_edits": 8,
+     "words": 20,
+     "time": 1.727
+    },
+    {
+     "id": 3024,
+     "ref": "thưa quý vị và các bạn đau quặn bụng âm ỉ chướng bụng đầy hơi khó chịu rối loạn chức năng đại tiện táo bón xen kẽ",
+     "hyp": "Chưa quý vị và các bạn, đau quận bụng, âm ỉ, trứng bụng đầy hơi khó chịu, dối loạn chức năng đại tiện, táo bón,",
+     "word_edits": 6,
+     "words": 27,
+     "time": 3.202
+    },
+    {
+     "id": 3026,
+     "ref": "đã được các ông cha ta sử dụng từ cách đây vài trăm năm rồi ví dụ tôi nãy hay sử dụng nhất trong cái vấn đề tiêu hóa là bạch",
+     "hyp": "Đã được các ông trai ta sử dụng từ cách đây vài chăm năm rồi. Ví dụ tôi nói hay sử dụng nhất là trong vấn đề tiêu hóa là",
+     "word_edits": 6,
+     "words": 31,
+     "time": 2.622
+    },
+    {
+     "id": 3049,
+     "ref": "dấu hiệu đầy hơi chướng bụng này cũng có cái đau này cũng có cái rối loạn đại tiện nhưng mà đi sâu vào chi tiết thì khác",
+     "hyp": "Cũng có cái đau này, cũng có cái dưới lạng đại tiện nhưng mà đi sau vào chi tiết thì khác",
+     "word_edits": 10,
+     "words": 28,
+     "time": 1.996
+    },
+    {
+     "id": 3050,
+     "ref": "ruột kích thích đem lại một kết quả rất là khả quan và như vậy là à",
+     "hyp": "Đang lại một quả rất khả quan.",
+     "word_edits": 11,
+     "words": 17,
+     "time": 1.014
+    },
+    {
+     "id": 3057,
+     "ref": "thì ở trong cái sản phẩm hôm nay tôi có bạch thược và bạch phục linh nó sẽ là rất tốt cho chị cho vấn đề táo bón đặc",
+     "hyp": "Thì ở trong sản phẩm hôm nay, nó có mạch thuật và mạch phục linh nó sẽ là rất tốt cho chị vấn đề ta bón đăng.",
+     "word_edits": 8,
+     "words": 29,
+     "time": 2.448
+    },
+    {
+     "id": 3061,
+     "ref": "làm sao ổn định thần kinh não bộ và đặc biệt là có tác dụng điều hòa hỗ trợ ở thần kinh",
+     "hyp": "và đặc biệt là có tác dụng điều hòa hỗ trợ Thần Kinh Đáo.",
+     "word_edits": 10,
+     "words": 22,
+     "time": 1.738
+    },
+    {
+     "id": 3064,
+     "ref": "đấy là theo tôi như vậy còn lại làm sao tránh mọi cái nhất là cái tuổi sáu mươi là nữ ở nam giới",
+     "hyp": "Đấy là theo tôi như vậy con lại năm sau tránh bòi cái nhất tại tuổi 60 ở nữ.",
+     "word_edits": 10,
+     "words": 24,
+     "time": 1.631
+    },
+    {
+     "id": 3072,
+     "ref": "à còn về riêng về vitamin mà hồi nãy em có nói về vitamin thì chắc là",
+     "hyp": "còn về riêng về vitamin mà hồi nãy em có nói về vitamin thì chắc là",
+     "word_edits": 1,
+     "words": 17,
+     "time": 1.489
+    },
+    {
+     "id": 3079,
+     "ref": "bị hóa chất nó gây tổn thương mà quan trọng nhất ở đây tôi muốn nói đó là những cái vấn đề như bên trong cơ thể bên ngoài",
+     "hyp": "Hãy subscribe cho kênh La La School Để không bỏ lỡ những video hấp dẫn",
+     "word_edits": 28,
+     "words": 29,
+     "time": 1.556
+    },
+    {
+     "id": 3080,
+     "ref": "học thì đâu sẽ là giải pháp hữu hiệu trong vấn đề chăm sóc và điều trị các bệnh lý trên mái tóc đầu tiên thì chúng ta sẽ nghe",
+     "hyp": "Đâu sẽ là dĩnh giải pháp hữu hiệu trong vấn đề chăm sóc và điều trị các bệnh lý trên máy tốc.",
+     "word_edits": 12,
+     "words": 30,
+     "time": 2.576
+    },
+    {
+     "id": 3085,
+     "ref": "trặc những bệnh lý trên mái tóc xuất hiện nào là gãy tóc rụng tóc thậm chí là",
+     "hyp": "trặc những bệnh lý trên máy tóc xuất hiện, nào là gãi rụng tóc, thậm chí là",
+     "word_edits": 3,
+     "words": 18,
+     "time": 1.704
+    },
+    {
+     "id": 3091,
+     "ref": "phẩm sử dụng nó ra ấy thì chúng ta nên sử dụng trong một lần đừng có tiếc bởi vì khi chúng ta khui ra rồi thì cái sản phẩm",
+     "hyp": "Đừng có tiếc bởi vì khi chúng ta khui ra rồi thì kế thẳng",
+     "word_edits": 18,
+     "words": 30,
+     "time": 1.649
+    },
+    {
+     "id": 3103,
+     "ref": "làm cho cơ thể của mình nó sinh ra những cái chất nội sinh mà những cái chất nội sinh đó nó có tác dụng tác hại",
+     "hyp": "Mà những chất nội sinh đó có phát hại.",
+     "word_edits": 19,
+     "words": 27,
+     "time": 1.322
+    },
+    {
+     "id": 3110,
+     "ref": "khi chải đầu hay gội đầu thì tóc bị rụng rất là nhiều xin hỏi phải chăng là ở cái tuổi này nó bị như vậy còn",
+     "hyp": "Vì chạy đầu hay gọi đầu thì tóc bị rụng rất là nhiều. Xin hỏi phải chăng là ở cái tuổi này nó bị như vậy.",
+     "word_edits": 4,
+     "words": 27,
+     "time": 2.215
+    },
+    {
+     "id": 3133,
+     "ref": "thương hiệu và có nguồn gốc có xuất xứ đặc biệt là hạn sử dụng và khi",
+     "hyp": "và có nguồn gốc có xuất sứ đặc biệt là hạng sử dụng.",
+     "word_edits": 6,
+     "words": 17,
+     "time": 1.725
+    },
+    {
+     "id": 3137,
+     "ref": "cái cái trong những cái nguồn mà động vật hay trong những cái gan nà huyết",
+     "hyp": "Hãy subscribe cho kênh La La School Để không bỏ lỡ những video hấp dẫn",
+     "word_edits": 15,
+     "words": 16,
+     "time": 1.439
+    },
+    {
+     "id": 3157,
+     "ref": "chúng ta làm đẹp tóc nữa chúng ta nhuộm nè rồi chúng ta sấy nè chúng ta ép",
+     "hyp": "Hãy subscribe cho kênh Ghiền Mì Gõ Để không bỏ lỡ những video hấp dẫn",
+     "word_edits": 18,
+     "words": 18,
+     "time": 1.12
+    },
+    {
+     "id": 3171,
+     "ref": "nhuộm do làm đẹp mà vì người ta tóc bạc nên người ta cũng cần phải nhuộm thế thì cái cách nhuộm như thế nào để",
+     "hyp": "Cái cách nhụm như thế nào đẹp?",
+     "word_edits": 21,
+     "words": 26,
+     "time": 1.123
+    },
+    {
+     "id": 3186,
+     "ref": "truyền thông cái vai trò của truyền thông trong cái cuộc sống ngày nay nè",
+     "hyp": "Tuyền thông, vãi trọ của Tuyền thông trong cuộc phóng ngày nay.",
+     "word_edits": 8,
+     "words": 15,
+     "time": 1.349
+    },
+    {
+     "id": 3194,
+     "ref": "tươi tốt à giống như những cái ước muốn mà chúng ta muốn thì có rất nhiều",
+     "hyp": "Hãy subscribe cho kênh Ghiền Mì Gõ Để không bỏ lỡ những video hấp dẫn",
+     "word_edits": 17,
+     "words": 17,
+     "time": 1.7
+    },
+    {
+     "id": 3204,
+     "ref": "đi sâu xuống lớp dưới để nuôi được cái nang tóc và cũng như là chỉ cho các bạn",
+     "hyp": "Vì sau xuống lớp dưới để nuôi được cái năng tóc và cũng như là chỉ cho các bạn",
+     "word_edits": 3,
+     "words": 19,
+     "time": 1.863
+    },
+    {
+     "id": 3221,
+     "ref": "đến với bác sĩ thì bác sĩ biết các bạn thiếu cái gì các bác sĩ sẽ bù cho các bạn nè tự",
+     "hyp": "Hãy subscribe cho kênh Ghiền Mì Gõ Để không bỏ lỡ những video hấp dẫn",
+     "word_edits": 23,
+     "words": 23,
+     "time": 1.742
+    },
+    {
+     "id": 3242,
+     "ref": "tóc cũng như nuôi dưỡng da rồi mặt khác á chúng ta ăn những cái chất mà có nhiều sắt đó đó ở đâu trong những",
+     "hyp": "Mà khét, chúng ta ăn những chất mà có nhiều sắc đó ở đâu.",
+     "word_edits": 15,
+     "words": 26,
+     "time": 1.514
+    },
+    {
+     "id": 3252,
+     "ref": "mà để một cái vật lạ gì đó vào trong đầu trong não của trẻ thì phụ huynh",
+     "hyp": "mà để một cái vật lạ gì đó vào trong đầu, trong ngão của trẻ thì phụ huynh xa.",
+     "word_edits": 2,
+     "words": 18,
+     "time": 1.24
+    },
+    {
+     "id": 3282,
+     "ref": "nhỏ thì bây giờ có thể cấy ốc tai điện tử được hay không và tuổi nào thì cấy ốc tai điện tử mới là hiệu quả nhất xin được",
+     "hyp": "thì bây giờ có thể cái óc tai điện tử được hay không và tuổi nào thì cái óc tai điện tử mới là hiệu quả nhất.",
+     "word_edits": 7,
+     "words": 30,
+     "time": 2.155
+    },
+    {
+     "id": 3284,
+     "ref": "một cái thành tựu mới đưa chất lượng cuộc sống trở về cho những người khiếm thính và diếc sâu ở tại việt nam và bây giờ thì",
+     "hyp": "một cái thành tự mới đưa chất lượng cuộc sống trở về cho những người kiếm thính và đích sâu ở tại Việt Nam.",
+     "word_edits": 7,
+     "words": 28,
+     "time": 2.334
+    },
+    {
+     "id": 3286,
+     "ref": "ờ rút ngắn thời gian rất nhiều và khi chúng ta đặt các thiết bị này thì bé phải có cái thời gian",
+     "hyp": "Rút ngắn thời gian rất nhiều. Và khi chúng ta đặt thiết bị này thì bé phải có thời gian.",
+     "word_edits": 3,
+     "words": 23,
+     "time": 1.873
+    },
+    {
+     "id": 3297,
+     "ref": "ta sẽ tiến hành với giai đoạn gọi là giai đoạn mapping tức là chúng ta sẽ tiến hành đo chủ yếu là hai cái tỷ số thứ nhất là cái à đo cái",
+     "hyp": "Chúng ta sẽ tiến hành cái giai đoạn, gọi là giai đoạn mapping. Chúng ta sẽ tiến hành đo chủ yếu là 2 cái tị số thứ nhất là đo...",
+     "word_edits": 8,
+     "words": 34,
+     "time": 2.975
+    },
+    {
+     "id": 3304,
+     "ref": "nổi tiếng thế giới người đức thì ông nói ông này cũng bị điếc và ông đã nói rằng tôi không có tuổi thơ tôi không có",
+     "hyp": "nổi tiếng thế giới người đức thì ông này cũng bị đít và ông đã nói rằng tôi không có tụi thơ, tôi không có tụi thơ.",
+     "word_edits": 6,
+     "words": 27,
+     "time": 2.532
+    },
+    {
+     "id": 3320,
+     "ref": "ngàn thì tính chung hàng năm cái số lượng mà để em cần phải can thiệp à",
+     "hyp": "thì tính chung hàng năm số lượng trẻ em cần phải căng thịp",
+     "word_edits": 7,
+     "words": 17,
+     "time": 0.938
+    },
+    {
+     "id": 3326,
+     "ref": "là được bởi vì công nghệ là hiện đại được nhập đến nước ngoài cho nên là",
+     "hyp": "và vào được bởi vì công nghệ là hiện đại và được nhập đến nước ngoài.",
+     "word_edits": 6,
+     "words": 17,
+     "time": 1.655
+    },
+    {
+     "id": 3328,
+     "ref": "có khả năng giao tiếp hòa nhập với xã hội không có thể tạo tự tạo được một nghề nghiệp",
+     "hyp": "có khả năng giao tiếp hòa nhập với xã hội không có thể tạo tự tạo được một nghi nghiệp.",
+     "word_edits": 1,
+     "words": 20,
+     "time": 2.092
+    },
+    {
+     "id": 3331,
+     "ref": "à những người khiếm thính ở tại Việt Nam thì ban biên tập chương trình cũng đã lại chân thành cảm ơn đến",
+     "hyp": "Những người kiếm thính ở tại Việt Nam thì 30 tập chương trình cũng gọi là chân thần cảm ơn",
+     "word_edits": 8,
+     "words": 23,
+     "time": 1.883
+    },
+    {
+     "id": 3339,
+     "ref": "mà để cái không xác định cái ngưỡng đau thì với âm thanh lớn quá thì bệnh nhân sẽ có dấu hiệu bị đau còn đối với ngưỡng",
+     "hyp": "Để không xác định ngưỡng đào thì với âm thanh lớn quá thì bệnh nhân sẽ có giấu hiệu bị đào còn đối với ngưỡng đào.",
+     "word_edits": 7,
+     "words": 28,
+     "time": 2.745
+    },
+    {
+     "id": 3344,
+     "ref": "à từ đó khi mà các cái và một bộ phận đeo ở ngoài một bộ phận đặt dưới",
+     "hyp": "Từ đó khi mà các cái và một bộ phận đeo vấn ngoài, một bộ phận đặt dưới",
+     "word_edits": 2,
+     "words": 19,
+     "time": 1.994
+    },
+    {
+     "id": 3357,
+     "ref": "chị hỏi là những dạng quyết nào sẽ thực hiện được giải pháp cấy ốc tai điện tử hiệu quả của giải pháp này về lâu",
+     "hyp": "Chị hỏi là những dạng biết nào sẽ thực hiện được giải pháp cái óc tai đình tử, hiệu quả của giải pháp này về lâu",
+     "word_edits": 4,
+     "words": 26,
+     "time": 2.492
+    },
+    {
+     "id": 3358,
+     "ref": "để mà ổn định cuộc sống từ đó trở thành một gánh nặng của xã hội và đối với cái những cái ảnh hưởng mà người điếc câm",
+     "hyp": "để ổng định cuộc sống, từ đó trở thành một gánh nặng của xã hội. Và đối với những ảnh hưởng mà người biết cầm",
+     "word_edits": 6,
+     "words": 28,
+     "time": 2.631
+    },
+    {
+     "id": 3363,
+     "ref": "nó kết nối có hoàn hảo hay không nó kết nối có hoàn hảo hay không ở xin cảm ơn xin cảm ơn tiến sĩ",
+     "hyp": "Nó kết nối có hoàn hảo hay không? Xin cảm ơn.",
+     "word_edits": 14,
+     "words": 25,
+     "time": 1.39
+    },
+    {
+     "id": 3376,
+     "ref": "công tác tại bệnh viện tai mũi họng thành phố hồ chí minh thì người anh đó cấy ở vào độ tuổi bốn mươi sáu",
+     "hyp": "Tại bệnh viện Tam Quân Hồng thành phố Chí Minh thì người anh đó kấy ở vào độ tuổi 46.",
+     "word_edits": 7,
+     "words": 25,
+     "time": 2.098
+    },
+    {
+     "id": 3384,
+     "ref": "khám bác sĩ cho biết là bé bị viêm tai ngoài ống uống thuốc thì khoảng là một tuần là hết",
+     "hyp": "Cám bác sẽ cho biết bé bị viêm tai ngoài ống thuốc khoảng 1 tuần là hơn.",
+     "word_edits": 7,
+     "words": 21,
+     "time": 1.793
+    },
+    {
+     "id": 3394,
+     "ref": "thì tôi nghĩ là cũng phải nên đưa đến những cơ sở có chuyên khoa tai mũi họng và",
+     "hyp": "thì tôi nghĩ là cũng phải nên đưa đến những cơ sở có chuyên khoa tài my học.",
+     "word_edits": 4,
+     "words": 19,
+     "time": 1.769
+    },
+    {
+     "id": 3409,
+     "ref": "thời gian qua thì thông tin về việc có thần y chữa trị tật điếc câm bằng phương pháp rất đơn giản này xem chương trình thì mới",
+     "hyp": "Thời gian qua thì thông tin về vì có thần y chữ trợi tật, đít căm bằng phương vấp rất đơn giản.",
+     "word_edits": 12,
+     "words": 28,
+     "time": 2.488
+    },
+    {
+     "id": 3429,
+     "ref": "dù đã đưa đi khám nhiều nơi nhưng vẫn không điều trị được và cũng không biết bị bệnh gì",
+     "hyp": "Dù đã đưa đi khám nhiều nơi nhưng vẫn không liệu trị được và cũng không biết bị bệnh gì.",
+     "word_edits": 1,
+     "words": 20,
+     "time": 1.942
+    },
+    {
+     "id": 3436,
+     "ref": "và chi phí có nhiều hay không điều trị ở đâu là tốt nhất tôi đang ở Bình Phước [vâng à]",
+     "hyp": "và chi phí có nhiều hay không, điều trị ở đâu là tốt nhất tôi đang ở Bình Phường?",
+     "word_edits": 3,
+     "words": 21,
+     "time": 1.792
+    }
+   ]
+  },
+  "ner": {
+   "summary": {
+    "n": 200,
+    "audio_seconds": 1263.0,
+    "wer": 0.4181,
+    "cer": 0.3462,
+    "rtf": 0.3235,
+    "term_recall": 0.4138
+   },
+   "items": [
+    {
+     "id": 2463,
+     "ref": "người lớn sau vài năm sau nữa cong chân bệnh lý chiếm khoảng dưới một phần trăm",
+     "hyp": "sau vài năm sau nữa. Công chân bệnh lý chiếm khoảng dưới 1 phần trăm.",
+     "word_edits": 3,
+     "words": 17,
+     "time": 2.122,
+     "terms": [
+      "cong chân"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 487,
+     "ref": "những người đó là sau này lớn lên là ta già ta sẽ khung xương rất yếu và người ta sẽ không làm được việc gì do đó",
+     "hyp": "Người đó là sau này lớn lên người ta già, người ta sẽ không khung sương, người ta rất yếu và người ta sẽ không làm được việc gì.",
+     "word_edits": 9,
+     "words": 28,
+     "time": 2.093,
+     "terms": [
+      "khung xương"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 715,
+     "ref": "trong y học thì phải đó là nó chen rễ thần kinh do thoát vị đĩa đệm hoặc là là là gai cột sống gì đó hoặc là",
+     "hyp": "Ở trong y học thì có đó là nó chàng vẽ thần kinh do thoát vị đê đệm hoặc là gai cuộc sống gì đó hoặc là viên thần.",
+     "word_edits": 10,
+     "words": 28,
+     "time": 2.524,
+     "terms": [
+      "rễ thần kinh",
+      "thoát vị đĩa đệm",
+      "gai cột sống"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2729,
+     "ref": "các xét nghiệm về các bệnh truyền nhiễm như hiv viêm gan siêu vi b viêm gan siêu",
+     "hyp": "làm các xét nghiệm về các bệnh truyền nhiễm như HIV, Vimgang-SUVB, Vimgang-SUVB.",
+     "word_edits": 9,
+     "words": 18,
+     "time": 2.187,
+     "terms": [
+      "xét nghiệm",
+      "hiv",
+      "viêm gan",
+      "siêu vi b",
+      "viêm gan"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 18,
+     "ref": "những cái polyp nội mạc tử cung và những cái bệnh lý là tăng sản nội mạc",
+     "hyp": "hoặc là những cái bolip nọ mạc tự công và những cái bệnh lấy là tăng sản nọ mạc",
+     "word_edits": 8,
+     "words": 17,
+     "time": 2.114,
+     "terms": [
+      "polyp nội mạc tử cung",
+      "tăng sản nội mạc"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2231,
+     "ref": "đưa thức ăn vào miệng đặc biệt khi đến gần chín tháng tuổi trẻ cũng bắt đầu thể",
+     "hyp": "tự đưa thức ăn vào miệng, đặc biệt khi đến gần 9 tháng tuổi.",
+     "word_edits": 6,
+     "words": 18,
+     "time": 2.03,
+     "terms": [
+      "miệng"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1706,
+     "ref": "vào cái phát triển về cái hình ảnh cũng như là những biện pháp mà mà ghép xương tái tạo khác nhau rồi cũng như là những",
+     "hyp": "và nhờ vào phát triển về hình ảnh, cũng như là những viện pháp mà ghép xương tài đại các nhau.",
+     "word_edits": 14,
+     "words": 27,
+     "time": 2.29,
+     "terms": [
+      "ghép xương",
+      "tái tạo"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 2341,
+     "ref": "chúng ta có thể làm là ôm ấp hỗ trợ bé để có thể giảm stress cho con mình điều",
+     "hyp": "điều chúng ta có thể làm là ôm ấp, hỗ trợ bé để có thể giảm stress cho con mình.",
+     "word_edits": 2,
+     "words": 20,
+     "time": 1.981,
+     "terms": [
+      "stress"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 16,
+     "ref": "vị trí khác trong cơ tử cung hoặc dưới với thân mạc thì nó ít gây nên cho một",
+     "hyp": "Công cơ tự công hòa dưới Thanh Mạc thì nó ít dây lên cái mục tiêu.",
+     "word_edits": 14,
+     "words": 19,
+     "time": 2.056,
+     "terms": [
+      "cơ tử cung",
+      "thân mạc"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 3301,
+     "ref": "tại bệnh viện nhé đầu tiên có thể kể đến là các gói tầm soát sức khỏe tại khoa khám sức khỏe theo yêu cầu để",
+     "hyp": "Đầu tiên có thể kể đến là các gói tầm soát sức khỏe tại khoa khám sức khỏe theo yêu cầu.",
+     "word_edits": 5,
+     "words": 26,
+     "time": 2.478,
+     "terms": [
+      "tầm soát sức khỏe",
+      "khám"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 3248,
+     "ref": "hóa bên cạnh đó thì thuyên tắc huyết khối tĩnh mạch là nguyên nhân gây tử vong hàng thứ hai ở các bệnh nhân ung",
+     "hyp": "Bên cạnh đó, thuyên tác khuối tỉnh mật là nguyên nhân ghi tử phong hàng thứ 2",
+     "word_edits": 14,
+     "words": 25,
+     "time": 2.329,
+     "terms": [
+      "thuyên tắc huyết khối tĩnh mạch",
+      "tử vong"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2593,
+     "ref": "đồng hành cùng nhau một cách hữu ích qua từng trang sách trong quá trình chăm sóc những thiên thần nhỏ trong sáu tháng",
+     "hyp": "có thể đồng hành cùng nhau một cách hữu ích qua từng trang sách trong quá trình chăm sóc những thiên thần nhỏ trong 6 tháng.",
+     "word_edits": 2,
+     "words": 24,
+     "time": 2.785,
+     "terms": [
+      "chăm sóc"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 84,
+     "ref": "ngừng tình trạng ra máu rồi thì bây giờ phải tái lập lại chu kỳ bình thường và",
+     "hyp": "Nhân tình đạn ra máu rồi thì bây giờ phải tái lập lại cái châu kỳ tình thường.",
+     "word_edits": 6,
+     "words": 18,
+     "time": 2.021,
+     "terms": [
+      "ra máu"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 911,
+     "ref": "nay người ta khẳng định làm sao hội chứng ruột kích thích như tôi nói định nghĩa trên là do rối loạn cơ năng tăng ở",
+     "hyp": "người ta khẳng định nhẳng trao. Hồi chính giữa kí kích như tôi nói định nghĩa trên là do giới loạn cơ năng tăng ở",
+     "word_edits": 9,
+     "words": 26,
+     "time": 2.632,
+     "terms": [
+      "hội chứng ruột kích thích",
+      "rối loạn cơ năng"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1461,
+     "ref": "muốn hỏi rồi có những cái người là bị những cái bệnh như là viêm gan b vân vân người ta muốn biết là có được tiêm ngừa",
+     "hyp": "Các bạn có thể biết là các bạn có thể biết là các bạn có thể biết là các bạn có thể",
+     "word_edits": 23,
+     "words": 28,
+     "time": 1.624,
+     "terms": [
+      "viêm gan b"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1221,
+     "ref": "loạn kinh rong kinh rong huyết hoặc là những trường hợp đặt vòng như ban đầu tôi",
+     "hyp": "dòng kinh, dòng huyết, hoặc là những trường hợp đặt vòng.",
+     "word_edits": 8,
+     "words": 17,
+     "time": 2.436,
+     "terms": [
+      "loạn kinh",
+      "rong kinh",
+      "rong huyết",
+      "đặt vòng"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 659,
+     "ref": "mà nếu mà gặp phụ nữ thì khả năng của mình đó là loãng xương là bệnh lý là",
+     "hyp": "Mà nếu mà gặp phụ nữ thì khả năng của mình là loãng xương là bệnh lý là nhiều hơn.",
+     "word_edits": 3,
+     "words": 19,
+     "time": 2.376,
+     "terms": [
+      "loãng xương"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 2809,
+     "ref": "quan trọng vitamin d đóng vai trò chính đảm bảo đủ canxi và phosphate cho quá",
+     "hyp": "rất quan trọng. Vitamin D đánh ngoài trò chính đã bảo đủ canh xì và phốt phát cho quá trình.",
+     "word_edits": 9,
+     "words": 16,
+     "time": 2.141,
+     "terms": [
+      "vitamin d",
+      "canxi",
+      "phosphate"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1823,
+     "ref": "như lúc nhỏ những cái bị sâu răng quá nhiều hay là những cái lý do nào đó mà không nhổ răng rất là sớm thì như vậy",
+     "hyp": "Mà như lúc nhỏ, những cái bị sâu răng quá nhiều hay là những cái lý do nào đó mà không nhổ răng rất là sơ",
+     "word_edits": 5,
+     "words": 28,
+     "time": 2.357,
+     "terms": [
+      "bị sâu",
+      "răng",
+      "nhổ răng"
+     ],
+     "term_hits": 3
+    },
+    {
+     "id": 483,
+     "ref": "ung thư dạ dày tắc mạch máu vân vân uống cà phê ăn mặn và thậm chí là rượu",
+     "hyp": "Ông Thư dạ dài, tắt mặt máu, văn văn, uống cà phê, ăn mạng và thậm chí là rượu bia.",
+     "word_edits": 8,
+     "words": 19,
+     "time": 2.643,
+     "terms": [
+      "ung thư dạ dày",
+      "tắc mạch máu"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 5,
+     "ref": "máu âm đạo bất thường không có đúng ngày kinh nhưng mà kéo dài thì gọi là là",
+     "hyp": "Đã bắt tương, không có đống này kinh, nhưng mà kéo dài thì gọi là rống miếng.",
+     "word_edits": 9,
+     "words": 18,
+     "time": 1.761,
+     "terms": [
+      "máu âm đạo"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1311,
+     "ref": "ví dụ như là có những cái bệnh phụ khoa kèm theo như là bệnh rong kinh rong",
+     "hyp": "Ví dụ như là có những bệnh phụ khoa kèm theo như là bệnh dong kinh nghiệm.",
+     "word_edits": 3,
+     "words": 18,
+     "time": 1.754,
+     "terms": [
+      "bệnh phụ khoa",
+      "rong kinh"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 768,
+     "ref": "tuổi thấy viên thuốc là thấy sợ có thể đem ném mất tiêu do đó là cái chuyện mà uống thuốc là nó khó khăn do đó điều trị",
+     "hyp": "Để lớn tuổi thấy duyên thuốc là thấy sợ, có khi đêm nén mắt tiêu. Do đó là cái chuyện mà uống thuốc là nó khó khăn. Do đó điều",
+     "word_edits": 8,
+     "words": 29,
+     "time": 2.711,
+     "terms": [
+      "thuốc",
+      "uống thuốc",
+      "điều trị"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 2668,
+     "ref": "tránh một số thức ăn nào đó dù là thức ăn có khả năng dị ứng cao có thể giúp",
+     "hyp": "việc tránh một số tức ăn nào đó, dù là tức ăn có khả năng diễn cao,",
+     "word_edits": 8,
+     "words": 20,
+     "time": 1.166,
+     "terms": [
+      "dị ứng"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2839,
+     "ref": "bị thiếu vitamin d trong lúc mang thai trẻ có mẹ có nguy cơ thiếu vitamin d",
+     "hyp": "Chẻ có mẹ bị thiếu vitamin D trong lúc mang thay. Chẻ có mẹ có nguy cơ thiếu vitamin D trong lúc mang thay.",
+     "word_edits": 9,
+     "words": 17,
+     "time": 1.978,
+     "terms": [
+      "vitamin d",
+      "vitamin d"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 26,
+     "ref": "rong kinh rong huyết kéo dài do không không cầm máu được ngoài ra thì do những",
+     "hyp": "Ngoài ra thì do những tương hợp",
+     "word_edits": 14,
+     "words": 17,
+     "time": 1.125,
+     "terms": [
+      "rong kinh",
+      "rong huyết",
+      "máu"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1042,
+     "ref": "kiện kinh tế công tác thì tôi dự định là tránh thai khoảng năm đến bảy năm nữa mới sinh cháu thứ hai tôi được nhận lời khuyên là",
+     "hyp": "Chính tế công tác thì tôi dự định là tránh tai khoảng 5 đến 7 năm nữa mới sinh cháo thứ 2. Tôi được nhận được lời khuyên là nên đi.",
+     "word_edits": 7,
+     "words": 29,
+     "time": 2.962,
+     "terms": [
+      "tránh thai"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 3216,
+     "ref": "lúc sợ không biết là tôi bị bệnh gì và phải tiếp tục điều trị như thế nào mới hết hẳn",
+     "hyp": "không biết là tôi bị bệnh gì và phải tiếp tục điều trị như thế nào mới hết thẳng.",
+     "word_edits": 3,
+     "words": 21,
+     "time": 1.907,
+     "terms": [
+      "điều trị"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 296,
+     "ref": "bây giờ cái vòng kinh nhân tạo là dùng như thế nào vòng kinh nhân tạo rất là dễ rất là mình uống uống cái vị thuốc ngừa",
+     "hyp": "Bây giờ, cái vòng kinh nhân vạo là giống như thế nào? Vòng kinh nhân vạo rất là dễ, tức là mình uống cái vị thúc người ta.",
+     "word_edits": 8,
+     "words": 28,
+     "time": 3.611,
+     "terms": [
+      "vòng kinh nhân tạo",
+      "vòng kinh nhân tạo",
+      "thuốc"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2001,
+     "ref": "không bao giờ có trong nhà của mình đó là cái máy sấy tóc không bao giờ có không bao giờ có bởi vì khi có thì chúng",
+     "hyp": "Còn qua mua giờ cũng không bao giờ có trong nhà của mình. Đó là cái mai xảy tốt. Không bao giờ có. Không bao giờ có.",
+     "word_edits": 14,
+     "words": 28,
+     "time": 2.238,
+     "terms": [
+      "máy sấy tóc"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1122,
+     "ref": "không thấy que ở vị trí chúng ta phải đến gặp bác sĩ để bác sĩ khám và đưa ra",
+     "hyp": "Chúng ta phải đến bác sĩ, để bác sĩ khám.",
+     "word_edits": 10,
+     "words": 20,
+     "time": 1.408,
+     "terms": [
+      "khám"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1621,
+     "ref": "xương thì đó cũng làm cho cái xương hàm nó bị bị teo đi và nó làm cho cái khuôn mặt chúng ta thường chúng ta sẽ đơn giản",
+     "hyp": "thì nó cũng làm cho cái cái xương hàm nó bị tèo đi và nó làm cho cái khung mặt chúng ta thường nó sẽ...",
+     "word_edits": 10,
+     "words": 29,
+     "time": 2.342,
+     "terms": [
+      "xương",
+      "cái xương"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 1678,
+     "ref": "chú mà có một số cái bệnh mãn tính đi kèm miễn là nó được phát hiện và được kiểm soát tốt trước cái thủ thuật ghép",
+     "hyp": "và có một số bệnh mạng tính DK, miễn là nó được phát hiện và được kiểm soát tốt trước thủ thuật.",
+     "word_edits": 8,
+     "words": 27,
+     "time": 2.459,
+     "terms": [
+      "bệnh mãn tính"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 502,
+     "ref": "dưỡng trong điều trị loãng xương là gì thứ nhất là loãng xương là phụ thuộc",
+     "hyp": "Đó là lãng sương là phụ thuộc.",
+     "word_edits": 12,
+     "words": 16,
+     "time": 1.205,
+     "terms": [
+      "điều trị loãng xương",
+      "loãng xương"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 41,
+     "ref": "những nguyên nhân là là ung thư ung thư đường sinh dục gây nên ra máu âm đạo bất thường",
+     "hyp": "Nguyên năng là ông Thư, ông Thư đường xinh dục, trai nang, trí mặt ra máu hàm đạo bắt chung.",
+     "word_edits": 13,
+     "words": 20,
+     "time": 2.706,
+     "terms": [
+      "ung thư",
+      "ung thư đường sinh dục",
+      "ra máu âm đạo"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 3207,
+     "ref": "chúng ta phải đi khám bác sĩ chuyên khoa về thần kinh cái đã nghĩa là chúng ta cho",
+     "hyp": "và tưởng pha phải đi khám bác sĩ Chiền va về thần Trinh, chứ đã, nhá là tưởng pha.",
+     "word_edits": 11,
+     "words": 19,
+     "time": 2.163,
+     "terms": [
+      "khám",
+      "thần kinh"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1969,
+     "ref": "làm giống hệt như cái răng bên cạnh thì về thẩm mỹ chắc chắn là nó sẽ cải thiện hơn so với cái cái tình trạng hiện giờ",
+     "hyp": "Vì vậy, thậm mỹ chắc chắn là nó sẽ cải thiện hơn so với cái",
+     "word_edits": 16,
+     "words": 28,
+     "time": 1.744,
+     "terms": [
+      "răng"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2650,
+     "ref": "lý tim mạch rối loạn mỡ máu tiểu đường và giảm cả nguy cơ ung thư ngực và ung",
+     "hyp": "tìm mặt, rối loạn mở máu, tiểu đường và giảm cả nguy cơ ung thương ngực.",
+     "word_edits": 7,
+     "words": 19,
+     "time": 2.067,
+     "terms": [
+      "tim mạch",
+      "rối loạn mỡ máu",
+      "tiểu đường",
+      "ung thư",
+      "ngực"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 3315,
+     "ref": "mỹ da từ cơ bản đến chuyên sâu phương châm chăm sóc điều trị cá thể hóa trên",
+     "hyp": "và tự cơ bản đến trị sầu. Phương Trâm chăm sóc điều trị cá thể hóa trên từng sân.",
+     "word_edits": 8,
+     "words": 18,
+     "time": 2.303,
+     "terms": [
+      "chăm sóc",
+      "điều trị"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 506,
+     "ref": "không thể điều trị khỏi và phải điều trị suốt đời một có tin là rất là buồn hôm",
+     "hyp": "nhưng không thể điều trị khóa và phải điều trị chúc đời.",
+     "word_edits": 11,
+     "words": 19,
+     "time": 1.488,
+     "terms": [
+      "điều trị",
+      "điều trị"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 870,
+     "ref": "và rất là tốt bởi vì làm sao đây là một tôi cũng xin chia sẻ cùng các quý khán giả đang theo dõi là điều trị hỗ trợ điều",
+     "hyp": "Các quý khán giả đang theo dõi là điều trị hộn.",
+     "word_edits": 20,
+     "words": 30,
+     "time": 1.515,
+     "terms": [
+      "điều trị"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 2974,
+     "ref": "cấy ốc tai điện tử thì trẻ phải được kiểm tra ra sao với sức khỏe như thế nào thì mới được cấy bởi vì chúng tôi biết",
+     "hyp": "Với sức khỏe như thế nào thì mới được cấy bởi vì chúng ta",
+     "word_edits": 15,
+     "words": 28,
+     "time": 2.158,
+     "terms": [
+      "cấy ốc tai điện tử",
+      "kiểm tra"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 104,
+     "ref": "máu tử cung thì mình phải giải quyết có thể họ bị quá sản cổ tử cung hoặc là ung thư",
+     "hyp": "Nếu mà ra máu của thư công thì mình phải giải quyết có thể họ bị quá phản của thư công hoặc là ông thứ cục.",
+     "word_edits": 13,
+     "words": 21,
+     "time": 1.973,
+     "terms": [
+      "máu",
+      "tử cung",
+      "cổ tử cung",
+      "ung thư"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 735,
+     "ref": "miligam là năm trăm miligam canxi thì hấp thu qua thu lại là ăn từ từ ngũ cốc ra ăn từ",
+     "hyp": "Cảm ơn các bạn. Hãy subscribe cho kênh La La School Để không bỏ lỡ những video hấp dẫn.",
+     "word_edits": 21,
+     "words": 21,
+     "time": 1.908,
+     "terms": [
+      "canxi"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2409,
+     "ref": "không thèm nhìn mặt đau lòng còn hơn bị thất tình nữa đấy mặc dù khá đau lòng",
+     "hyp": "còn không thèm nhìn mặt, đau lòng còn hơn bị thất tình nữa đấy. Mặt dù khá đau lắm.",
+     "word_edits": 3,
+     "words": 18,
+     "time": 1.946,
+     "terms": [
+      "đau",
+      "đau"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 59,
+     "ref": "hợp mà bệnh nhân đã quan hệ nhất thiết phải đặt bỏ việc để xem thử là máu thì nó chạy ra gì đâu bây giờ mình sẽ",
+     "hyp": "Mà bệnh nhân đã cao quan hệ, nhắc kích phải đặt bỏ việc để xem thử lập máu hay nó chạy ra.",
+     "word_edits": 12,
+     "words": 28,
+     "time": 2.343,
+     "terms": [
+      "quan hệ",
+      "máu"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 712,
+     "ref": "xuống chân thì nó không liên quan gì tới loãng xương thường đó là do thoát vị đĩa đệm thoái hóa cột sống gai gây ra loãng",
+     "hyp": "Thì nó không liên quan gì tới loạn sương ạ. Thường nó là do thốc ý đệm. Thái hoa cuộc sống nó gai. Đây ra loạn sương.",
+     "word_edits": 16,
+     "words": 27,
+     "time": 2.52,
+     "terms": [
+      "loãng xương",
+      "thoát vị đĩa đệm",
+      "thoái hóa cột sống"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 3400,
+     "ref": "cơ cao nguyên tắc cái khối tĩnh mạch hay không ạ có phân loại mức độ nguy cơ theo loại bệnh nhập khoa hay",
+     "hyp": "cũng đều có nguyên cơ cao thuyên tắc phía khói tỉnh mà hay không ạ? Có phân loại mức độ nguyên cơ theo loại bệnh nhập khoa hay không?",
+     "word_edits": 11,
+     "words": 24,
+     "time": 3.104,
+     "terms": [
+      "tĩnh mạch"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1114,
+     "ref": "với sử dụng que tránh thai thì cũng giống như là cái",
+     "hyp": "thì cũng giống như là cái...",
+     "word_edits": 6,
+     "words": 12,
+     "time": 0.912,
+     "terms": [
+      "que tránh thai"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2810,
+     "ref": "lâu dài vitamin d giúp tăng hấp thụ canxi và phosphate từ thức ăn một người",
+     "hyp": "lâu dài. Vitamin D giúp tăng hấp thụ canh si và phốt phát từ thức ăn. Một người",
+     "word_edits": 4,
+     "words": 16,
+     "time": 1.868,
+     "terms": [
+      "vitamin d",
+      "canxi",
+      "phosphate"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 2861,
+     "ref": "bú mẹ hoặc bú bình vì bé đã được cung cấp đủ nhu cầu canxi trong năm đầu tiên qua sữa mẹ hoặc sữa công thức và có ăn",
+     "hyp": "mẹ hoặc bố bình vì bé đã được cung cấp đủ nhu cầu can phi trong năm đầu tiên qua sử mẹ hoặc sử công thức.",
+     "word_edits": 9,
+     "words": 29,
+     "time": 2.314,
+     "terms": [
+      "bú bình",
+      "canxi",
+      "sữa mẹ"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 3074,
+     "ref": "năng đọc hình môi của cái người này chính là nếu mà người lớn mà người ta quen với cái đọc hình môi ta hiểu được",
+     "hyp": "Cái khả năng độc hình môi của người này. Nếu người lớn và người ta quen với độc hình môi, người ta hiểu được",
+     "word_edits": 11,
+     "words": 26,
+     "time": 2.224,
+     "terms": [
+      "môi",
+      "môi"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 1386,
+     "ref": "đầu chóng mặt và sau đó thì tôi đã ngừng thuốc tránh thai vậy thì với cái biện pháp cấy",
+     "hyp": "và sau đó thì tôi đã nguyên bước sánh thai. Vậy thì với cái niện tráp của tôi...",
+     "word_edits": 10,
+     "words": 20,
+     "time": 1.797,
+     "terms": [
+      "chóng mặt",
+      "thuốc tránh thai"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1145,
+     "ref": "thì chúng ta thực hiện cái quy trình đặt vòng tránh thai cũng như cấy que đảm bảo",
+     "hyp": "các y tế thế giới thì chúng ta thực hiện cái quy trình đạt phòng sánh thai cũng như kế quê đảm bảo.",
+     "word_edits": 10,
+     "words": 18,
+     "time": 2.108,
+     "terms": [
+      "đặt vòng",
+      "tránh thai",
+      "cấy que"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 3249,
+     "ref": "thư trong đó ung thư liên quan đến đường tiêu hóa là một trong những loại ung thư có nguy cơ hình thành huyết khối cao",
+     "hyp": "trong đó ung thư liên quan đến đường tiêu hóa là một trong những ung thư có nguy cơ hình thành viết khối.",
+     "word_edits": 4,
+     "words": 26,
+     "time": 1.909,
+     "terms": [
+      "ung thư",
+      "đường tiêu hóa",
+      "ung thư",
+      "huyết"
+     ],
+     "term_hits": 3
+    },
+    {
+     "id": 661,
+     "ref": "loãng xương bệnh lý và loãng xương tự sinh lý tự nhiên là loãng xương do già",
+     "hyp": "bệnh lý và loãng xương tự sinh lý tự nhiên là loãng xương do gạc.",
+     "word_edits": 3,
+     "words": 17,
+     "time": 1.879,
+     "terms": [
+      "loãng xương",
+      "loãng xương",
+      "loãng xương"
+     ],
+     "term_hits": 3
+    },
+    {
+     "id": 2702,
+     "ref": "ngực mẹ quá căng cứng dòng sữa chảy quá nhanh gây khó khăn cho trẻ trong vấn đề",
+     "hyp": "mẹ quá căng cứng, trong sữa chạy quá nhanh, ghê khó khăn cho trẻ trong vấn đề.",
+     "word_edits": 4,
+     "words": 18,
+     "time": 1.586,
+     "terms": [
+      "ngực"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 3221,
+     "ref": "thường gặp chỉ sau nhồi máu cơ tim cấp tính và đột quỵ phần lớn trường hợp người mắc bệnh thuyên tắc huyết khối",
+     "hyp": "giống mẫu thường gặp chỉ sau nhờ mẫu cơ tim cấp tính và độc quỷ. Phần lớn trường hợp người mắt bệnh thuyên tắc với khu",
+     "word_edits": 9,
+     "words": 24,
+     "time": 2.868,
+     "terms": [
+      "nhồi máu cơ tim",
+      "đột quỵ",
+      "bệnh thuyên tắc huyết khối"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 718,
+     "ref": "xương vừa điều trị bệnh lý của rất bố bạn có nguy cơ là đau như vậy thì",
+     "hyp": "Vừa điều trị bệnh lý của xong, nghĩa là bố bạn có nguy cơ là đau như vậy.",
+     "word_edits": 5,
+     "words": 18,
+     "time": 1.672,
+     "terms": [
+      "xương",
+      "điều trị bệnh lý",
+      "đau"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 1139,
+     "ref": "tránh thai có thể di chuyển không đúng vị trí ví dụ như là vào phổi hoặc là lên",
+     "hyp": "quay trình thai có thể di chuyển không đúng vị trí, ví dụ như vào phổi này hoặc là lên những cái",
+     "word_edits": 6,
+     "words": 19,
+     "time": 1.96,
+     "terms": [
+      "tránh thai",
+      "phổi"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1919,
+     "ref": "định nhổ tại vì những răng đó trong cùng mà nhiều khi chịu chữa tủy nó sẽ khó còn",
+     "hyp": "Chỉ đình nhỏ. Tại vì những răng nói trong cùng mình nhiều khi chịu chử tụy nó sẽ khó.",
+     "word_edits": 8,
+     "words": 19,
+     "time": 1.864,
+     "terms": [
+      "răng"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 412,
+     "ref": "tim của chúng ta thường nó sẽ nằm trong được bảo vệ mà khung xương do đó là xương là rất là quan trọng và dự trữ và",
+     "hyp": "Các trái tim của chúng ta thường sẽ nằm trong lần được bảo vệ và khung sương. Do đó là sương là rất là quan tạm và giữ trữ và mùa sương.",
+     "word_edits": 11,
+     "words": 28,
+     "time": 2.785,
+     "terms": [
+      "tim",
+      "khung xương",
+      "xương"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1873,
+     "ref": "sau đó khi mà cái phần xương ghép và cái phần phần xương nền của mình nó tích hợp với nhau thành một rồi khi đó mình mới",
+     "hyp": "rồi sau đó khi phần sương ghép và phần sương nền của mình tức thập với nhau thành mộng.",
+     "word_edits": 16,
+     "words": 28,
+     "time": 1.843,
+     "terms": [
+      "xương",
+      "xương"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2302,
+     "ref": "cạy răng trẻ hoặc đưa bất kỳ vật gì chất gì vào miệng trẻ cả đồng thời không nên",
+     "hyp": "để răng trẻ hoặc đưa bất kỳ vật gì chất gì vào miệng trẻ cả. Đồng thời,",
+     "word_edits": 3,
+     "words": 19,
+     "time": 1.885,
+     "terms": [
+      "răng",
+      "miệng"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 2502,
+     "ref": "cho trẻ khi đang tắm thay tả lâu người massage mặc đồ cho trẻ mô tả những gì",
+     "hyp": "đang làm cho trẻ khi đang tắm, thay tả, lông người, mắt xa, mặc đồ cho trẻ, mô tả những gì",
+     "word_edits": 5,
+     "words": 18,
+     "time": 2.282,
+     "terms": [
+      "mô"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 3380,
+     "ref": "tĩnh mạch sau khi xuất viện hồi sức tích cực nhưng tôi chưa hiểu lắm với bệnh này bác sĩ cho tôi hỏi dấu hiệu của",
+     "hyp": "cho khói tỉnh mạnh sau khi xuất viện hồi xuất tích cực, nhưng tôi chưa hiểu lắm về bệnh này.",
+     "word_edits": 14,
+     "words": 26,
+     "time": 2.8,
+     "terms": [
+      "tĩnh mạch",
+      "hồi sức tích cực"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2165,
+     "ref": "bản và áp dụng đơn giản hữu hiệu trực tiếp trong việc chăm sóc con trẻ của",
+     "hyp": "cân bản và áp dụng đơn giản, hữu hiệu, trực tiếp trong việc chăm sóc con trẻ của 90",
+     "word_edits": 3,
+     "words": 17,
+     "time": 1.968,
+     "terms": [
+      "chăm sóc"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 2965,
+     "ref": "trạng này của tôi có sao không sắp tới có bị lây qua tai trái thì không và có liên quan gì có ảnh hưởng gì đến cái",
+     "hyp": "Cái này của tôi có sao không? Sắp tới có bị lây qua tay trái hay không và có liên quan gì? Có ảnh hưởng gì?",
+     "word_edits": 5,
+     "words": 28,
+     "time": 2.143,
+     "terms": [
+      "tai"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2262,
+     "ref": "và nên được chích lại mỗi năm thông thường trong lần đầu tiên chích cúm",
+     "hyp": "tuổi trở lên và nên được chít lại mỗi năm. Không thường trong lần đầu tiên chít cúng.",
+     "word_edits": 7,
+     "words": 15,
+     "time": 1.786,
+     "terms": [
+      "cúm"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 241,
+     "ref": "kéo dài thì cảm mình đã chia ra làm làm hai trường trường hợp đã có quan hệ rồi",
+     "hyp": "Hãy subscribe cho kênh Ghiền Mì Gõ Để không bỏ lỡ những video hấp dẫn",
+     "word_edits": 19,
+     "words": 19,
+     "time": 1.835,
+     "terms": [
+      "quan hệ"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 130,
+     "ref": "những cái phần này tức là đầu tiên là họ sẽ đó dap dap tức là ngang tử cung như",
+     "hyp": "Những các phần này, tức là đầu tiên là họ phải đó, DAB. DAB, tức là các được thứng ngàn.",
+     "word_edits": 8,
+     "words": 20,
+     "time": 2.105,
+     "terms": [
+      "dap",
+      "dap",
+      "tử cung"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 211,
+     "ref": "giác là nó chạm vào đáy tử cung thì thôi mình đừng có cố gắng đưa tiếp nữa đó nếu",
+     "hyp": "Cảm giác là nó chạm vào đáy sự công. Thì thôi mình đừng có cố gắng đưa tiếp nữa.",
+     "word_edits": 5,
+     "words": 20,
+     "time": 1.984,
+     "terms": [
+      "đáy tử cung"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2345,
+     "ref": "loạn giấc ngủ hoặc có những cơn ngưng thở khi ngủ nếu bạn lo bé bị co giật",
+     "hyp": "hoặc có những cân ngưng thở khi ngủ. Nếu bạn là bé bị co dựng,",
+     "word_edits": 6,
+     "words": 18,
+     "time": 1.655,
+     "terms": [
+      "loạn giấc ngủ",
+      "ngưng thở",
+      "co giật"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 2099,
+     "ref": "gia những cái chuyên ngành về tóc về da để chúng ta hiểu được rõ nó có một cái gói kiến thức để chúng ta phục vụ cho",
+     "hyp": "Nhưng các chuyên nằm về bóc về da để chúng ta hiểu được rõ, nó có một cái gói chiến thức.",
+     "word_edits": 12,
+     "words": 28,
+     "time": 2.066,
+     "terms": [
+      "tóc"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 3258,
+     "ref": "chủ đề tối ưu hóa quản lý huyết khối cho bệnh nhân ngoại trú sau xuất viện và xin",
+     "hyp": "đến với chủ đề tối ưu hóa quản lý phía khối cho bệnh nhân ngoại trú sau xuất viện.",
+     "word_edits": 5,
+     "words": 19,
+     "time": 2.208,
+     "terms": [
+      "huyết"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 3243,
+     "ref": "cũng được biết rằng là có rất nhiều những trường hợp mà người bệnh mắc thuyên tắc huyết khối tĩnh mạch nhưng mà không được chẩn đoán và điều trị vì họ",
+     "hyp": "Chuyện rằng là có rất nhiều những trường hợp mà người bệnh mắt tuyên tác khối tỉnh mạch, nhưng mà không được chẳng ván và điều trị.",
+     "word_edits": 12,
+     "words": 32,
+     "time": 2.761,
+     "terms": [
+      "thuyên tắc huyết khối tĩnh mạch",
+      "chẩn đoán",
+      "điều trị"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 2996,
+     "ref": "khám vừa tai mũi họng thế là nội soi tai xong chuẩn đoán xem mũi họng có vấn đề",
+     "hyp": "khám vừa tai mũi hậu, tức là nội xoay tai xong chuyển đoán xem mũi hậu có vấn đề.",
+     "word_edits": 5,
+     "words": 19,
+     "time": 2.369,
+     "terms": [
+      "khám",
+      "tai",
+      "mũi",
+      "họng",
+      "nội soi",
+      "tai",
+      "mũi",
+      "họng"
+     ],
+     "term_hits": 5
+    },
+    {
+     "id": 2081,
+     "ref": "oxy hóa thì lần sau chúng ta mở ra nó đã có cái không khí đi vô do đó nó sẽ ảnh hưởng nhiều cũng tác động trên chân tóc",
+     "hyp": "Cảm ơn các bạn.",
+     "word_edits": 30,
+     "words": 30,
+     "time": 1.154,
+     "terms": [
+      "oxy",
+      "chân tóc"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 361,
+     "ref": "tổ không tốt cho nên nó gây ra chảy máu chứ không phải là cái ra máu là biến chứng của u xơ tử cung mà mình vẫn phải",
+     "hyp": "Nó làm tổ không tốt, nên nó dây ra chạy máu. Chứ không phải là cái ra máu hay là biến chứng của ôn sơ tự tông.",
+     "word_edits": 14,
+     "words": 29,
+     "time": 2.591,
+     "terms": [
+      "chảy máu",
+      "ra máu",
+      "biến chứng",
+      "u xơ tử cung"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 842,
+     "ref": "thành bụng của bệnh nhân nó mỏng đấy còn lại sao đầy hơi chướng bụng thì đầy hơi",
+     "hyp": "Còn làm sao, đầy hơi trứng bụng thì đầy hơi trứng bụng.",
+     "word_edits": 12,
+     "words": 18,
+     "time": 1.733,
+     "terms": [
+      "thành bụng",
+      "đầy hơi chướng bụng",
+      "đầy hơi"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 3348,
+     "ref": "chương trình hôm nay sẽ cung cấp những thông tin hữu ích về quy tắc huyết khối tĩnh mạch trên người bệnh hồi sức",
+     "hyp": "Chính trình ngày hôm nay sẽ cung cấp những thông tin hữu ích về thuyên sắc phí khối tỉnh mặt trên người bệnh hội sức tích.",
+     "word_edits": 9,
+     "words": 24,
+     "time": 1.67,
+     "terms": [
+      "huyết",
+      "tĩnh mạch"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1382,
+     "ref": "thì một tháng với hai lần bị như thế thì tôi cũng rất là mệt mỏi và thường xuyên",
+     "hyp": "Vì đó thì 1 tháng với 2 lần bị như thế thì tôi cũng rất mệt mỏi và thường trên đau bộ.",
+     "word_edits": 6,
+     "words": 19,
+     "time": 1.871,
+     "terms": [
+      "mệt mỏi"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1994,
+     "ref": "do làm đẹp mà vì người ta tóc bạc nên người ta cũng cần phải nhuộm thế thì cái cách nhuộm như thế nào để có thể giữ",
+     "hyp": "Vì người ta tóc bạc nên ta cũng cần phải nhụn, thế thì cái cách nhụn như thế nào đẹp?",
+     "word_edits": 11,
+     "words": 28,
+     "time": 1.971,
+     "terms": [
+      "tóc"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 2874,
+     "ref": "công thức lại chỉ cung cấp đủ natri căn bản cho cơ thể chính vì vậy xảy ra hiện tượng mất cân",
+     "hyp": "Lại chỉ khung cấp đủ Nazi căng bản cho cơ thể. Vì vậy, xảy ra hiện tượng mất.",
+     "word_edits": 7,
+     "words": 22,
+     "time": 2.026,
+     "terms": [
+      "natri",
+      "cơ thể"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 3040,
+     "ref": "vào một bộ phận đeo ở sau tay thì bộ phận đeo sau tai có nhiệm vụ là tiếp",
+     "hyp": "Bộ phần đeo sau tai có nhiệm vụ tiếp nhận.",
+     "word_edits": 12,
+     "words": 19,
+     "time": 1.518,
+     "terms": [
+      "tai"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 3255,
+     "ref": "ngay từ lúc nhập viện là vô cùng quan trọng trong việc giúp người bệnh được bảo vệ toàn diện tránh các biến chứng",
+     "hyp": "ní từ lúc nhập viện là vô cùng quan trọng trong việc giúp người bệnh được bảo vệ toàn diện, chảnh các biến trứng nguyên.",
+     "word_edits": 4,
+     "words": 24,
+     "time": 2.737,
+     "terms": [
+      "nhập viện",
+      "biến chứng"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 2477,
+     "ref": "nặng trẻ được hơn ba tuổi và vẫn còn bị cong chân trẻ chỉ bị cong chân một bên",
+     "hyp": "sẽ được hơn ba tuổi và vẫn còn bị công chân, sẽ chỉ bị công chân.",
+     "word_edits": 7,
+     "words": 19,
+     "time": 1.551,
+     "terms": [
+      "cong chân",
+      "cong chân"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1578,
+     "ref": "phẫu thuật ghép xương thì liệu còn giải pháp nào khác hay không để mà cấy ghép implant câu hỏi của cô cũng rất là hay thì đương",
+     "hyp": "Câu hỏi cô cũng rất là hay.",
+     "word_edits": 21,
+     "words": 28,
+     "time": 0.961,
+     "terms": [
+      "phẫu thuật",
+      "ghép xương",
+      "cấy ghép",
+      "implant"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2632,
+     "ref": "số trường hợp tử vong ở trẻ em toàn cầu giúp trẻ thông minh hơn nghiên cứu cho",
+     "hyp": "giúp trẻ thông minh hơn, nghiên cứu cho thấy.",
+     "word_edits": 11,
+     "words": 18,
+     "time": 1.324,
+     "terms": [
+      "tử vong",
+      "nghiên cứu"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 2425,
+     "ref": "sự sợ hãi của con là vô lý mà không thèm để tâm đến bé bỏ rơi bé không giúp đỡ bé",
+     "hyp": "sợ hãi của con là phu lý mà không thèm để tâm đến bé. Bỏ rơi bé không giúp đỡ",
+     "word_edits": 3,
+     "words": 22,
+     "time": 1.964,
+     "terms": [
+      "sợ hãi"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1552,
+     "ref": "tượng là tiêu xương ảnh hưởng không nhỏ đến chất lượng tiêu hóa và đặc biệt là chức năng thẩm mỹ của mỗi con người và",
+     "hyp": "một hình tượng là tiêu xương, ảnh hưởng không nhỏ đến chất lượng tiêu quá và đặc biệt là chức năng thẳm mỹ của mọi con người.",
+     "word_edits": 6,
+     "words": 26,
+     "time": 2.802,
+     "terms": [
+      "tiêu xương"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1526,
+     "ref": "chích vắcxin lưu động được thì chúng ta phải có những cơ sở y tế để chúng ta tiêm chích cho tốt thì để làm được cái",
+     "hyp": "Chúng ta phải có những cơ sở y tế để chúng ta tiêm chích cho tốt.",
+     "word_edits": 11,
+     "words": 27,
+     "time": 1.778,
+     "terms": [
+      "tiêm"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1140,
+     "ref": "những cái vị trí nó khác mình cấy thế thì đúng là các phương pháp tránh thai",
+     "hyp": "Vậy trí nó khác, mình tấy, thì đúng là các",
+     "word_edits": 9,
+     "words": 17,
+     "time": 1.203,
+     "terms": [
+      "phương pháp tránh thai"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1626,
+     "ref": "thì mình thấy là như vậy là tiêu xương nó sẽ có nhiều cái hệ lụy chẳng hạn về cái chức năng về cái thẩm mỹ rồi nó cũng",
+     "hyp": "Vì vậy, tiêu sư sẽ có nhiều hề lùi chẳng hạn về chích năng, thẩm mỹ.",
+     "word_edits": 18,
+     "words": 29,
+     "time": 1.193,
+     "terms": [
+      "tiêu xương"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1422,
+     "ref": "mũi hai khi tiêm vắc xin thì hiệu quả của nó như thế nào và những người đã tiêm đủ hai mũi vắc xin thì có thể trở lại",
+     "hyp": "1 và mũi 2 khi tiêm vắc xin thì hiệu quả của nó như thế nào? Và những người đã tiêm đủ 2 mũi vắc xin thì có thể trở lại những",
+     "word_edits": 3,
+     "words": 29,
+     "time": 2.693,
+     "terms": [
+      "tiêm",
+      "vắc xin"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 957,
+     "ref": "là ổn định và kết hợp với các cái hoạt chất của y học hiện đại ví dụ như",
+     "hyp": "rất là ổn định và kết hợp với các hoạt chất của y học hiện đại.",
+     "word_edits": 5,
+     "words": 19,
+     "time": 1.684,
+     "terms": [
+      "hoạt chất"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 2697,
+     "ref": "phòng lên đầu vú vì xà phòng làm mất các chất bôi trơn tự nhiên của ngực làm cho",
+     "hyp": "xa phòng lên đầu vũ, vì xa phòng làm mất các chất bôi trơn tự nhiên của ngực, làm cho nấm vụ.",
+     "word_edits": 5,
+     "words": 19,
+     "time": 2.345,
+     "terms": [
+      "đầu vú",
+      "xà phòng",
+      "chất bôi trơn",
+      "ngực"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 1558,
+     "ref": "méo một bên hay là bị mớm một bên hay là bị xấu đi gì đó thì bà con cũng không biết là cái hiện tượng tiêu xương nó",
+     "hyp": "Một mớm một bên hay là bị xấu đi gì đó, thì bà con cũng không biết là cái hiện tiền từ tiêu sương.",
+     "word_edits": 9,
+     "words": 29,
+     "time": 2.001,
+     "terms": [
+      "méo một bên",
+      "bị mớm một bên",
+      "tiêu xương"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 53,
+     "ref": "nhiều hơn ví dụ bây giờ bệnh nhân này đúng ra là phải điều trị estrogen thì mấy em lại cho cholesterol cả thì nó sẽ",
+     "hyp": "Bây giờ bệnh nhân này đóng ra là phải điều trị ít cho ren thì mấy em lại cho bộ rô xa rôn chẳng hạ.",
+     "word_edits": 14,
+     "words": 26,
+     "time": 2.337,
+     "terms": [
+      "điều trị",
+      "estrogen",
+      "cholesterol"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1675,
+     "ref": "ăn uống phù hợp kiểm soát được thì cái đó thì vẫn có thể tiến hành những cái thủ thuật về làm ghép xương đi kèm hay",
+     "hyp": "Cái đồ ăn uống phù hợp, phải kiểm soát được, thì vẫn có thể tiến hành những thủ thuật về làm giếp xương đi kèm.",
+     "word_edits": 9,
+     "words": 27,
+     "time": 2.501,
+     "terms": [
+      "ghép xương"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2618,
+     "ref": "số đồng thời khi trẻ đang bú mẹ và được cho ăn dặm sau sáu tháng tuổi các thức ăn",
+     "hyp": "đồng thời khi trẻ đang bố mẹ và được cho ăn dằm sau 6 tháng tuổi.",
+     "word_edits": 6,
+     "words": 20,
+     "time": 1.752,
+     "terms": [
+      "ăn dặm"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 60,
+     "ref": "nói kỹ hơn ở cái phân tiếp cận bệnh nhân bị rong kinh rong huyết về xác định",
+     "hyp": "Nói cậy hơn ở phần tiếp cận bệnh nhan bị răm kinh răm huyết.",
+     "word_edits": 9,
+     "words": 18,
+     "time": 1.951,
+     "terms": [
+      "rong kinh",
+      "rong huyết"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1204,
+     "ref": "thường gặp khi các bạn muốn sử dụng biện pháp tránh thai đấy là nỗi băn khoăn của",
+     "hyp": "rất là thường gặp khi các bạn muốn sử dụng biện phát tránh 2, đấy là nỗi ban khoan của...",
+     "word_edits": 6,
+     "words": 18,
+     "time": 2.04,
+     "terms": [
+      "tránh thai"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1412,
+     "ref": "đang phân vân nửa muốn là đặt vòng một nửa muốn là cái cái cái que tránh thai",
+     "hyp": "Cái quen. Cái quen.",
+     "word_edits": 16,
+     "words": 18,
+     "time": 0.934,
+     "terms": [
+      "đặt vòng",
+      "que tránh thai"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 929,
+     "ref": "biệt đã làm sao là cái thần kinh ruột nó không tăng co bóp không do lưu động nữa kết hợp với làm sao kết hợp với năm cái bốn",
+     "hyp": "Cái thần chính rượt không tăng có bóp, không nhu động nữa. Kết hợp VN làm sao? Kết hợp VN gây.",
+     "word_edits": 16,
+     "words": 30,
+     "time": 2.159,
+     "terms": [
+      "thần kinh ruột"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1335,
+     "ref": "các cơ sở y tế để khám và tư vấn",
+     "hyp": "Cô sợ y tế để khám và tư vấn",
+     "word_edits": 3,
+     "words": 10,
+     "time": 1.182,
+     "terms": [
+      "khám"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 3238,
+     "ref": "tĩnh mạch nhưng không được chẩn đoán và điều trị vì không có triệu chứng lâm sàng và dễ nhầm lẫn với các bệnh khác vì",
+     "hyp": "Tuyên tắc khối thỉnh mạch, nhưng không được trận đoán và điều trị vì không có triệu chứng lâm sàng và dễ nhằm lẫn với các bệnh khác.",
+     "word_edits": 7,
+     "words": 26,
+     "time": 2.51,
+     "terms": [
+      "tĩnh mạch",
+      "chẩn đoán",
+      "điều trị",
+      "triệu chứng"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 67,
+     "ref": "ba vấn đề quan trọng thứ nhất là xác định là nguồn gốc chảy máu thứ hai là phải tìm tìm nguyên nhân và thứ ba là",
+     "hyp": "là có 3 vấn đề quan cộng, thứ nhất là xác định là vụng gấp chạy máu. Cái 2 là phải tìm, tìm với nhanh và thứ 3 là",
+     "word_edits": 9,
+     "words": 27,
+     "time": 2.76,
+     "terms": [
+      "chảy máu"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2760,
+     "ref": "vắt sữa mẹ ra và trữ đông để có thể sử dụng cho con về lâu dài để làm được điều",
+     "hyp": "sửa mẹ ra và trữ đông để có thể sử dụng cho con về lâu dài.",
+     "word_edits": 6,
+     "words": 21,
+     "time": 1.632,
+     "terms": [
+      "vắt sữa",
+      "trữ đông"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 2279,
+     "ref": "hề chi vì bạn nghĩ trẻ cố tình làm đau bạn bạn cũng tự mình đưa vào tròng luôn",
+     "hyp": "bạn không hề chi vì bạn nghĩ trẻ cố tình làm đau bạn, bạn cũng tự mình đưa vào trọng luôn nhé.",
+     "word_edits": 4,
+     "words": 19,
+     "time": 2.113,
+     "terms": [
+      "đau"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 34,
+     "ref": "một số trường hợp bệnh nhân dùng những thuốc thuốc chống đông",
+     "hyp": "Một số trường hợp là bệnh nhân dùng những thú thúc chống rong.",
+     "word_edits": 4,
+     "words": 12,
+     "time": 1.614,
+     "terms": [
+      "thuốc",
+      "thuốc chống đông"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2610,
+     "ref": "viêm tiểu phế quản do rsv một loại virus phổ biến gây bệnh cho trẻ nhỏ dưới",
+     "hyp": "bị viên tiểu phía quản do RSV, một loài virus cổ biến gây bệnh cho trẻ nhỏ dưới",
+     "word_edits": 5,
+     "words": 17,
+     "time": 2.25,
+     "terms": [
+      "viêm",
+      "virus"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 2645,
+     "ref": "pháp tránh thai khá hiệu quả đối với các bà mẹ không bị tiểu đường trong thai kỳ",
+     "hyp": "trong những phương pháp tránh thai khá hiệu quả. Đối với các bà mẹ không bị tiểu đường",
+     "word_edits": 6,
+     "words": 18,
+     "time": 2.03,
+     "terms": [
+      "tránh thai",
+      "tiểu đường"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 679,
+     "ref": "xương vô mình mới biết được nhưng mà nếu chúng ta biết trước đó mà tôi tầm soát thì ra điều trị trước khi các khả năng",
+     "hyp": "Nhưng mà nếu chúng ta biết trước đó mà tầm xuất thì đều trị thức.",
+     "word_edits": 15,
+     "words": 27,
+     "time": 1.201,
+     "terms": [
+      "xương",
+      "điều trị"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2887,
+     "ref": "việc uống nước thêm ngoại trừ nguy cơ ngộ độc nước kể trên còn có một tác dụng khác ở lại giảm thèm ăn của trẻ trẻ giảm bú",
+     "hyp": "Ngoại trường nguy cơ ngộ độc nước kể trên, còn có một tác dụng khác không mong muốn là giảm thèm ăn của trẻ.",
+     "word_edits": 12,
+     "words": 29,
+     "time": 3.043,
+     "terms": [
+      "ngộ độc",
+      "thèm ăn"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 2252,
+     "ref": "được thăm khám đánh giá nếu trong giai đoạn này trẻ có một trong những dấu hiệu",
+     "hyp": "đánh giá nếu trong giai đoạn này trẻ có một trong những dấu hiệu sau.",
+     "word_edits": 4,
+     "words": 17,
+     "time": 1.615,
+     "terms": [
+      "khám"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2282,
+     "ref": "đi xa giữ khoảng cách hoặc không bồng bé nữa bỏ xuống đất hoặc xuống giường phản",
+     "hyp": "đi xa, giữ khoảng cách hoặc không bồng bé nữa, bỏ xuống đất hoặc xuống dường.",
+     "word_edits": 2,
+     "words": 17,
+     "time": 1.971,
+     "terms": [
+      "giữ khoảng cách"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 854,
+     "ref": "nhân là không có những cái như là của hội chứng ruột kích tóm lại với cái",
+     "hyp": "Vệnh nhân là không có những cái như là của hộ trưởng rượt ký thích tóm lại.",
+     "word_edits": 8,
+     "words": 17,
+     "time": 1.892,
+     "terms": [
+      "ruột"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 824,
+     "ref": "tiền nếu quý vị không giảm triệu chứng viêm đại tràng và hội chứng ruột kích thích sau hai tháng sử dụng đặc biệt trong",
+     "hyp": "nếu quý vị không giảm triệu chứng viêm đại tràng và hỗ trứng rượt kích tích sau 2 tháng sử dụng.",
+     "word_edits": 8,
+     "words": 25,
+     "time": 2.546,
+     "terms": [
+      "triệu chứng",
+      "viêm đại tràng",
+      "hội chứng ruột kích thích"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 1920,
+     "ref": "cái răng số bảy làm răng số tám mà bị sâu nhổ rồi thì nên trồng lại mà một khi răng số tám mà mà nhổ rồi thì ở vị trí này",
+     "hyp": "Còn cái răng số 7 và răng số 8 bị sâu nhỏ rồi thì nên trọng lại Mà một khi răng số 8 mà nhỏ rồi thì",
+     "word_edits": 11,
+     "words": 32,
+     "time": 2.217,
+     "terms": [
+      "răng",
+      "răng số tám",
+      "bị sâu",
+      "răng số tám"
+     ],
+     "term_hits": 4
+    },
+    {
+     "id": 2136,
+     "ref": "thức mà nhìn ở bên trong là người ta cái nội tiết tố nam rất là đầy đủ đó điều đó là bạn cái cái mất tóc cái cái ít tóc đó",
+     "hyp": "Mà nhìn bên trong là người ta thấy nụ tiết tố Nam rất đầy đủ. Điều đó là mạng cái mắc tóc",
+     "word_edits": 14,
+     "words": 32,
+     "time": 2.406,
+     "terms": [
+      "nội tiết tố",
+      "tóc",
+      "tóc"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 337,
+     "ref": "nhưng mà liều rất là cao và dùng sau khi là quan hệ mà mình không có dự",
+     "hyp": "nhưng mà điều rất là cao và dùng sau thi là quan hệ mà mình không có dựng.",
+     "word_edits": 3,
+     "words": 18,
+     "time": 1.685,
+     "terms": [
+      "quan hệ"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 2320,
+     "ref": "tạo âm thanh rất bất an một số bé lớn hơn ngồi được có thể ngồi yên đung đưa",
+     "hyp": "tạo âm thanh rất bất an. Một số bé lớn hơn ngồi được có thể ngồi yên đung đưa cá",
+     "word_edits": 1,
+     "words": 19,
+     "time": 2.364,
+     "terms": [
+      "bất an"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 915,
+     "ref": "chúng ta thấy trong hai năm vừa rồi có cái trường hợp covid thì các bệnh lý về đường tiêu hóa nhất là cái đại tràng",
+     "hyp": "Lại, chúng ta thấy trong 2 năm vừa rồi có trường hợp Covid thì cái bệnh ní về đường tiêu hóa rất là cái đại.",
+     "word_edits": 6,
+     "words": 26,
+     "time": 2.426,
+     "terms": [
+      "covid",
+      "đường tiêu hóa",
+      "đại tràng"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 2854,
+     "ref": "sản phụ hiện nay có khuyến cáo nên thử nồng độ vitamin d đặc biệt khi bắt đầu",
+     "hyp": "Với với sáng phụ, hiện nay có khuyến cáo nên thử nồng độ vitamin D, đặc biệt khi bắt đầu",
+     "word_edits": 3,
+     "words": 18,
+     "time": 2.074,
+     "terms": [
+      "vitamin d"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 2907,
+     "ref": "hẵng làm thì làm sớm quá có thể làm dễ giảm thèm ăn giảm bú trẻ trên sáu tháng có",
+     "hyp": "Vì làm sớm quá, có thể làm trẻ giảm thèm ăn, giảm bú. Trẻ trên 6 tháng, có thể giảm bú.",
+     "word_edits": 7,
+     "words": 20,
+     "time": 2.429,
+     "terms": [
+      "thèm ăn"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1057,
+     "ref": "biệt là khi mà chúng ta sử dụng những cái phương pháp tránh thai mà thấy có những cái biểu hiện của các cái tác",
+     "hyp": "khi chúng ta sử dụng những cái phương pháp tránh thai mà thấy có những cái biểu hiện của các cái tác dụ phim.",
+     "word_edits": 5,
+     "words": 25,
+     "time": 2.101,
+     "terms": [
+      "phương pháp tránh thai"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1834,
+     "ref": "sĩ mới đưa ra quy trình điều trị được sau khi làm xong thì đương nhiên thì cô chú cũng theo những lời dặn của bác sĩ",
+     "hyp": "Lúc đó bác sĩ mới đưa ra quý trình điều trị được. Sau khi làm xong thì đương nhiên cô chú cũng theo những lời dạng của bác sĩ.",
+     "word_edits": 6,
+     "words": 27,
+     "time": 2.869,
+     "terms": [
+      "điều trị"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 2817,
+     "ref": "rất cần lưu ý là thiếu vitamin d ở trẻ đa số rất âm thầm không gây triệu chứng",
+     "hyp": "Nhiều rất cần lưu ý là thiếu vitamin D ở trẻ đa số rất âm thầm, không gây triệu chứng diệt.",
+     "word_edits": 2,
+     "words": 19,
+     "time": 2.152,
+     "terms": [
+      "vitamin d",
+      "triệu chứng"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 2631,
+     "ref": "biện pháp hữu hiệu nhất trong việc giảm tỷ lệ tử vong ở trẻ nhũ nhi nói chung ước tính cho thấy nếu mỗi người mẹ trên",
+     "hyp": "trong những biện pháp hữu hiệu nhất trong việc giảm tỷ lệ tử vong ở trẻ Nhủ Nhi nói chung. Ước tính cho thấy nếu mỗi người mẹ trên thế giới",
+     "word_edits": 5,
+     "words": 27,
+     "time": 3.4,
+     "terms": [
+      "tử vong"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 733,
+     "ref": "gì thứ nhất là bổ sung như đầy đủ thực phẩm canxi uống sữa bác sĩ khuyến cáo",
+     "hyp": "Thứ nhất là bổ sung như đài đủ thật phẩm, càng xì uống sữa, bác sĩ khuyến cao uống sữa.",
+     "word_edits": 8,
+     "words": 18,
+     "time": 2.568,
+     "terms": [
+      "canxi"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 281,
+     "ref": "bệnh nhân uống từ năm đến bảy ngày sau khi bệnh nhân uống thuốc hai ba ngày thì bệnh nhân hết ra máu nhưng mà vẫn",
+     "hyp": "cho bệnh nhân uống từ 5 đến 10 bệnh ngày. Sau khi bệnh nhân uống từ 2-3 ngày thì bệnh nhân hết, hết ra máu nhưng mà vặn",
+     "word_edits": 6,
+     "words": 26,
+     "time": 2.753,
+     "terms": [
+      "uống thuốc",
+      "ra máu"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 13,
+     "ref": "tế ở tử cung hoặc âm đạo hoặc là cổ của tử cung thì tí nữa mình sẽ sang cái phần thăm khám",
+     "hyp": "Vì tí nữa mình sẽ xa nhé.",
+     "word_edits": 19,
+     "words": 23,
+     "time": 1.235,
+     "terms": [
+      "tử cung",
+      "âm đạo",
+      "cổ của tử cung",
+      "khám"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 446,
+     "ref": "có thể canxi nó sẽ mất đi chứ không phải là ai nó nói nó giữ lại được đúng là chúng ta không thể tạo được mà cần là nó",
+     "hyp": "Chứ không phải là ai dữ lại được. Chúng ta không thể tạo được.",
+     "word_edits": 17,
+     "words": 30,
+     "time": 1.547,
+     "terms": [
+      "canxi"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2406,
+     "ref": "lớn có thể đau lòng và đố kỵ bà cô dưới quê mấy tháng trước lên chơi muốn bồng",
+     "hyp": "cho người lớn có thể đau lòng và đố kị. Bà cô dưới quê mấy tháng trước lên chơi muốn bỏ",
+     "word_edits": 4,
+     "words": 19,
+     "time": 2.287,
+     "terms": [
+      "đau"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 2961,
+     "ref": "tuổi rồi từ nhỏ tôi đã tìm hiểu và đi điều trị nhiều nơi nhưng không khỏi xin hỏi với tình trạng của hai con tôi hiện",
+     "hyp": "Từ nhỏ tôi đã tìm hiểu và đi điều trị nhiều nơi nhưng không khỏi. Xin hỏi vất tình trạng của hai con tôi hiện tại.",
+     "word_edits": 4,
+     "words": 27,
+     "time": 2.537,
+     "terms": [
+      "điều trị"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 728,
+     "ref": "sóng siêu âm thì thường có độ chính xác đó nó có những cách tầm soát hơn để chẩn đoán chính xác là người ta không có",
+     "hyp": "Đóng siêu âm thì thường độ chính xác tầm xót để chẳng đón chính xác.",
+     "word_edits": 16,
+     "words": 27,
+     "time": 1.971,
+     "terms": [
+      "sóng siêu âm",
+      "chẩn đoán"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1455,
+     "ref": "thực hiện các việc xét nghiệm trước khi vào các cơ sở y tế học tập trung thủ theo những cách hướng dẫn của ngành y tế",
+     "hyp": "thực hiện việc xét nghiệm trước khi vào cơ xảy tế và tương thủ theo những bứng dặng của ngành tế.",
+     "word_edits": 11,
+     "words": 27,
+     "time": 2.333,
+     "terms": [
+      "xét nghiệm"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1180,
+     "ref": "bạn sẽ lại phải dùng phương pháp tránh thai khác chứ bạn không nên tự bỏ thuốc",
+     "hyp": "bạn sẽ lại phải dùng phương pháp chính thay khác chứ bạn không nên tự bỏ thuộc.",
+     "word_edits": 3,
+     "words": 17,
+     "time": 1.871,
+     "terms": [
+      "phương pháp tránh thai",
+      "thuốc"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 983,
+     "ref": "dày đến kinh nghiệm trước kia tôi xin nói là trước cách đây vài chục năm ấy là dạ dày là hay được cung cấp là ăn gì",
+     "hyp": "Để kinh nghiệm trước kia, tôi xin nói trước các đê vài trở trục năm, là sản giày nó hay được cung cấp là ăn",
+     "word_edits": 12,
+     "words": 28,
+     "time": 2.64,
+     "terms": [
+      "dạ dày"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1584,
+     "ref": "mất răng lâu giờ thấy nuốt chỗ đó bị teo lại vậy hiện tượng của em có phải đang bị tiêu xương hay không có cách nào khắc",
+     "hyp": "và bị mất răng lâu, giờ thấy nú chỗ đó bị teo lại. Vậy hiện tượng của em có phải đang bị tiêu sương hay không?",
+     "word_edits": 8,
+     "words": 28,
+     "time": 2.357,
+     "terms": [
+      "mất răng",
+      "bị teo lại",
+      "bị tiêu",
+      "xương"
+     ],
+     "term_hits": 3
+    },
+    {
+     "id": 1028,
+     "ref": "có nên đặt vòng tránh thai không và rất là nhiều người là cũng chưa có muốn có",
+     "hyp": "thì có nên đặt phòng chánh thai không và rất nhiều người là cũng chưa có",
+     "word_edits": 6,
+     "words": 18,
+     "time": 1.474,
+     "terms": [
+      "đặt vòng",
+      "tránh thai"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1927,
+     "ref": "từ nhỏ liệu xương có bị bị hủy hết không rồi khi điều trị ghép xương thì người",
+     "hyp": "Mất trang từ nhỏ để xương bị quỷ hết. Khi điều trị ghép xương...",
+     "word_edits": 10,
+     "words": 18,
+     "time": 1.025,
+     "terms": [
+      "xương",
+      "điều trị",
+      "ghép xương"
+     ],
+     "term_hits": 3
+    },
+    {
+     "id": 2476,
+     "ref": "vấn đề cong chân của con mình và cho đi khám bác sĩ khi trẻ bị cong chân sức",
+     "hyp": "vấn đề công chân của con mình và cho trẻ đi khám bác sĩ khi trẻ bị công chân rất",
+     "word_edits": 4,
+     "words": 19,
+     "time": 1.778,
+     "terms": [
+      "cong chân",
+      "khám",
+      "cong chân"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 2660,
+     "ref": "toàn đi nhé bú mẹ những kiến thức cơ bản cần biết sữa mẹ là nguồn thức ăn tốt",
+     "hyp": "bố mẹ những kiến thức cơ bản cần biết. Sửa mẹ là nguồn thức ăn tốt nhất",
+     "word_edits": 6,
+     "words": 19,
+     "time": 2.17,
+     "terms": [
+      "sữa mẹ"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 949,
+     "ref": "không dùng kháng sinh dùng kháng sinh thì sẽ ảnh hưởng như tôi nói và đặc biệt đều lâu dài chưa kể còn tác dụng phụ của",
+     "hyp": "Nếu không dùng các sinh, dùng các sinh thì sẽ ảnh hưởng như tôi nói, và đặc biệt nè, lâu dài chưa kể còn các dùng phụ của khả năng.",
+     "word_edits": 8,
+     "words": 27,
+     "time": 3.081,
+     "terms": [
+      "kháng sinh",
+      "kháng sinh"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1594,
+     "ref": "bảy tám cái răng nhờ bác sĩ tư vấn giúp là tôi muốn gây mê nhổ hết mấy cái răng còn lại rồi làm lại nguyên cái hàm răng giả",
+     "hyp": "Cảm ơn các bạn.",
+     "word_edits": 30,
+     "words": 30,
+     "time": 1.329,
+     "terms": [
+      "gây mê",
+      "răng",
+      "hàm răng"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 55,
+     "ref": "phụ thuộc vào tuổi thuộc nào kia độ dày mỏng của của nội mạc tử cung nữa",
+     "hyp": "nó phộng thuộc vào, tổ ý phộng thuộc vào cái tổ dài mỏng của nội mạc bên gông ná.",
+     "word_edits": 13,
+     "words": 17,
+     "time": 2.225,
+     "terms": [
+      "nội mạc tử cung"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 3090,
+     "ref": "hình con ốc ở trong ốc tai đó là hai cái giai đoạn trong và sau phẫu thuật về",
+     "hyp": "Còn con óc ở trong óc tai, đó là 2 cái dây đạn trong và sau phụ thuật.",
+     "word_edits": 7,
+     "words": 19,
+     "time": 2.094,
+     "terms": [
+      "ốc tai",
+      "phẫu thuật"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1718,
+     "ref": "phải phải phải nhổ đi thì như vậy răng của cô lý đã nhổ lâu rồi nhưng mà vẫn",
+     "hyp": "Thì khi đó bắt buộc là phải phải phải nhổ đi. Thì như vậy rằng của cô Lý đã nhổ lâu rồi.",
+     "word_edits": 10,
+     "words": 19,
+     "time": 1.109,
+     "terms": [
+      "răng"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 937,
+     "ref": "hơi chướng bụng và cùng làm sau rối loạn thì làm sao cái cái giải pháp mà chính là",
+     "hyp": "Cùng đầy hơi chứng bụng và cùng làm sao dối lạn, khi làm sao cái giải pháp mà chính là...",
+     "word_edits": 8,
+     "words": 19,
+     "time": 2.217,
+     "terms": [
+      "rối loạn"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2707,
+     "ref": "khác cho con mình hiện nay tầm quan trọng và chất lượng vượt trội của sữa mẹ",
+     "hyp": "cho con mình. Hiện nay tầm quan trọng và chất lượng vượt trội của sứa mẹ.",
+     "word_edits": 2,
+     "words": 17,
+     "time": 2.096,
+     "terms": [
+      "sữa mẹ"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 268,
+     "ref": "phải đo kích thước cả hai buồng trứng sau đó xem thử buồng trứng có u cục gì không và xem từ",
+     "hyp": "Cảm ơn các bạn đã gặp lại video này. Hẹn gặp lại!",
+     "word_edits": 22,
+     "words": 22,
+     "time": 1.775,
+     "terms": [
+      "buồng trứng",
+      "buồng trứng"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 522,
+     "ref": "đậu hũ dầu mè vân vân một trong những các thức ăn có thể là tạo nên cho mình canxi rất là nhiều mà mình cũng",
+     "hyp": "Một trong những thức ăn có thể là tạo cho mình con si rất là nhiều, mà mình cũng không cảm thấy.",
+     "word_edits": 13,
+     "words": 26,
+     "time": 1.894,
+     "terms": [
+      "canxi"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 3150,
+     "ref": "lượng và cách sử dụng thuốc như thế nào là an toàn nhất á thì vừa nãy giờ mình không nhắc đi nhắc lại",
+     "hyp": "Cách sử dụng thuốc như thế nào là an toàn nhất?",
+     "word_edits": 13,
+     "words": 24,
+     "time": 1.364,
+     "terms": [
+      "thuốc"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 386,
+     "ref": "xương đốt sống này gãy xương cổ tay nè gãy xương khớp háng nè gãy cổ xương đùi này để nhập viện quá điều trị là một",
+     "hyp": "Dạy xương lúc xong, dạy xương cổ tay, dạy xương hấp tháng, dạy cổ xương nuôi để nhập tiện và điều trị.",
+     "word_edits": 17,
+     "words": 27,
+     "time": 2.491,
+     "terms": [
+      "xương đốt sống",
+      "gãy xương cổ tay",
+      "gãy xương khớp háng",
+      "gãy cổ xương đùi",
+      "nhập viện",
+      "điều trị"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 943,
+     "ref": "không được phải dùng ở không được phép dùng kháng sinh bởi vì dùng kháng sinh sao sẽ mất cân bằng giữa cái lợi khuẩn",
+     "hyp": "Vì dùng kháng sinh làm sao sẽ mất cân bằng dưới lợi khuẩn.",
+     "word_edits": 15,
+     "words": 25,
+     "time": 1.927,
+     "terms": [
+      "kháng sinh",
+      "kháng sinh",
+      "lợi khuẩn"
+     ],
+     "term_hits": 3
+    },
+    {
+     "id": 515,
+     "ref": "cùng khó là bằng thuốc là gì bác sĩ đây mà còn quên thuốc bệnh nhân bác sĩ đang bệnh",
+     "hyp": "bằng thuốc là gì? Bác sĩ đây mà còn quên thuốc là gì? Bác sĩ đây bệnh.",
+     "word_edits": 6,
+     "words": 20,
+     "time": 1.99,
+     "terms": [
+      "thuốc",
+      "thuốc"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 2800,
+     "ref": "lắng câu hỏi chính xác hơn là bác sĩ ơi con em có bị thiếu vitamin d không vậy",
+     "hyp": "Câu hỏi chính xác hơn là, Tác sĩ ơi, còn em có bị thiếu vitamin D không hổ?",
+     "word_edits": 4,
+     "words": 19,
+     "time": 2.074,
+     "terms": [
+      "vitamin d"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 143,
+     "ref": "nội mạc mỏng này á thì thường là bệnh nhân đã bị dính buồng tử cung là đây",
+     "hyp": "Vì những tư hợp nội mạc mỏng này thì thường là bệnh nhân đã bị dính buồn tự công vào đây.",
+     "word_edits": 9,
+     "words": 18,
+     "time": 2.414,
+     "terms": [
+      "nội mạc",
+      "buồng tử cung"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1668,
+     "ref": "những bệnh này chẳng hạn nhiều khi chúng ta bị một cái bệnh về huyết áp mình không để ý hoặc là về bị tiểu đường",
+     "hyp": "Chẳng hạn nhiều khi chúng ta bị 1 cái bệnh về khích áp mà mình không để ý hoặc là về bị tiền.",
+     "word_edits": 7,
+     "words": 26,
+     "time": 2.182,
+     "terms": [
+      "huyết áp",
+      "tiểu đường"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 597,
+     "ref": "khám suốt tiểu đường nó vẫn mệt mỏi vô khám tai biến bộ não vô khám nhưng mà xương thì nó loãng xương rất là nhiều",
+     "hyp": "Khoan, kìa. Khoan, kìa. Khoan, kìa.",
+     "word_edits": 26,
+     "words": 26,
+     "time": 1.747,
+     "terms": [
+      "khám",
+      "tiểu đường",
+      "mệt mỏi",
+      "khám tai biến",
+      "bộ não",
+      "khám",
+      "xương",
+      "loãng xương"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1488,
+     "ref": "khăn trong việc đi khám bệnh rất khó khăn trong việc được cung cấp dinh dưỡng rất khó khăn trong vấn đề là an sinh xã",
+     "hyp": "rất khó khăn trong việc đi khám bệnh, rất khó khăn trong việc được thương cấp riêng dưỡng, rất khó khăn trong vấn đề là an sinh xã hội.",
+     "word_edits": 5,
+     "words": 26,
+     "time": 2.933,
+     "terms": [
+      "khám"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1860,
+     "ref": "cái răng nó đó nhưng mà xương bên dưới chân răng nó đã bị tiêu nhiều ha thì khi nhổ răng ra thì bản thân là ngay chỗ đó",
+     "hyp": "Cái răng ở đó, nhưng mà xương bên dưới chân răng đã bị tiêu nhiều, thì khi nhổ răng ra thì bản thân là",
+     "word_edits": 6,
+     "words": 29,
+     "time": 2.45,
+     "terms": [
+      "răng",
+      "xương",
+      "chân răng",
+      "bị tiêu",
+      "nhổ răng"
+     ],
+     "term_hits": 5
+    },
+    {
+     "id": 2865,
+     "ref": "thử nồng độ vitamin d để quyết định điều trị nếu thiếu vitamin d mẹ trong thời",
+     "hyp": "nên thử nồng độ vitamin D để quyết định điều trị nếu thiếu vitamin D.",
+     "word_edits": 4,
+     "words": 17,
+     "time": 1.8,
+     "terms": [
+      "vitamin d",
+      "điều trị",
+      "vitamin d"
+     ],
+     "term_hits": 3
+    },
+    {
+     "id": 422,
+     "ref": "hai mươi ba mươi phần trăm còn lại là protein và cụ thể là collagen nó cực kỳ quan trọng ví",
+     "hyp": "30% còn lại là rotate và củ thể là color change, nó cũng cực kì quan tọng.",
+     "word_edits": 10,
+     "words": 21,
+     "time": 1.875,
+     "terms": [
+      "protein",
+      "collagen"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1778,
+     "ref": "cái răng mất cũng như là có thể giữ cho cái khung xương nó không có bị tiêu đi nữa thì tôi nghĩ là nó một cái chi phí",
+     "hyp": "và phục hồi là những răng mất, cũng như là có thể giữ cho khung sương không bị tiêu đi nữa.",
+     "word_edits": 18,
+     "words": 29,
+     "time": 2.069,
+     "terms": [
+      "răng",
+      "khung xương",
+      "bị tiêu"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 941,
+     "ref": "một số diễn trường hợp mà chúng thấy không phải chỉ riêng hội chứng ruột kích thích mà nhiều bệnh lý khác chỉ chữa",
+     "hyp": "Đó chính trường hợp mà chúng thấy không phải chỉ diêng, hoặc chính là kĩ thích mà nhiều bệnh lý khác, chỉ",
+     "word_edits": 9,
+     "words": 24,
+     "time": 2.393,
+     "terms": [
+      "hội chứng ruột kích thích"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1482,
+     "ref": "tốt được cái tình trạng dịch bệnh và từng bước đang được là nới lỏng bớt những cái biện pháp giãn cách để có",
+     "hyp": "kiểm soát tốt được tình trạng diệt bệnh và từng bước ăn được là nới lọc bớt những biện pháp giảm cách đẹp.",
+     "word_edits": 10,
+     "words": 24,
+     "time": 2.792,
+     "terms": [
+      "giãn cách"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 2326,
+     "ref": "người ta thấy rằng những hành động rung lắc đập các bộ phận cơ thể nhịp nhàng",
+     "hyp": "người ta thấy rằng những hành động rung lắc đập các bộ phận cơ thể nhịp nhàng như",
+     "word_edits": 1,
+     "words": 17,
+     "time": 1.839,
+     "terms": [
+      "cơ thể"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 200,
+     "ref": "giải phẫu bệnh lý coi thử có bị quá sản nội mạc tử cung hay không hay là coi tuổi thọ có bị bị ung thư nội mạc tử",
+     "hyp": "Hãy subscribe cho kênh La La School Để không bỏ lỡ những video hấp dẫn",
+     "word_edits": 28,
+     "words": 29,
+     "time": 1.74,
+     "terms": [
+      "giải phẫu",
+      "quá sản nội mạc tử cung",
+      "ung thư",
+      "nội mạc"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1652,
+     "ref": "dung thì đầu tiên là mình sẽ dùng một cái cái khối xương mình ghép cho là mình thị trường thì dùng cái khối xương nó đắp vào chỗ cái phần lép đó và giữ cho",
+     "hyp": "Mình sẽ dùng khối xương để đắp vào phần láp.",
+     "word_edits": 28,
+     "words": 36,
+     "time": 1.455,
+     "terms": [
+      "khối xương",
+      "khối xương"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 3076,
+     "ref": "thì nó phù hợp với những đợt hồi viêm của một cái viêm tai giữa hoặc viêm tai",
+     "hyp": "thì nó phù hợp với những đợt hồi viêm của một viêm tai giữa hoặc viêm này.",
+     "word_edits": 2,
+     "words": 18,
+     "time": 1.976,
+     "terms": [
+      "viêm",
+      "viêm tai",
+      "viêm tai"
+     ],
+     "term_hits": 3
+    },
+    {
+     "id": 2937,
+     "ref": "thành tựu mới đưa chất lượng cuộc sống trở về cho những người khiếm thính và diếc sâu ở tại việt nam và bây giờ thì",
+     "hyp": "một cái thành tự mới đưa chất lượng cuộc sống trở về cho những người kiếm thính và đích sâu ở tại Việt Nam.",
+     "word_edits": 9,
+     "words": 26,
+     "time": 1.426,
+     "terms": [
+      "khiếm thính"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 574,
+     "ref": "là tăng đào thải canxi qua thận và hết thức ăn nhiều đạm là cũng không tốt dinh",
+     "hyp": "và tăng đảo thải công suy qua thẳng và khớ thức ăn nhiều đạm là cũng không tốt.",
+     "word_edits": 7,
+     "words": 18,
+     "time": 1.203,
+     "terms": [
+      "canxi",
+      "thận"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 490,
+     "ref": "làm giảm cái hấp thu canxi ở ruột và ăn nhiều đạm quá thì nó cũng phải gây ăn",
+     "hyp": "Họ có thể làm làm giảm hấp thu cơ sĩ ở Rủ và ăn nhiều làm quá. Thì nó cũng thể ăn thiết.",
+     "word_edits": 12,
+     "words": 19,
+     "time": 2.06,
+     "terms": [
+      "canxi",
+      "ruột"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 762,
+     "ref": "tắm nắng giống nhau đó chúng ta làm với những giống nhau hết do đó chúng tôi khám thường và hai vợ chồng không có liên quan gì trên đó mà ở trong nhà bệnh",
+     "hyp": "Đi tâm nắng giống nhau thì chúng ta làm cái chuyện giống nhau hết, vô đó chúng ta khám thường là 2 vợ chồng, không có liên quan hệ trên đó, mà ở trong nhà bệnh giống nhau.",
+     "word_edits": 11,
+     "words": 35,
+     "time": 3.482,
+     "terms": [
+      "khám"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1307,
+     "ref": "đến khám với bác sĩ chuyên khoa sản và được tư vấn lựa chọn những phương",
+     "hyp": "Đến khám với bác sĩ trên khoa sản và được phư vấn lựa chọn những phương",
+     "word_edits": 2,
+     "words": 16,
+     "time": 1.768,
+     "terms": [
+      "khám"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1006,
+     "ref": "vòng tránh thai cũng có thể đi lạc vào ổ bụng hay là mắc kẹt ở một cái vị trí nào đó thì không khiến nhiều người cảm",
+     "hyp": "Vòng tránh thai cũng có thể đi lạc và ổ bụng, mắc kẹt ở vị trí nào đó, không khiến nhiều người cả",
+     "word_edits": 7,
+     "words": 28,
+     "time": 2.427,
+     "terms": [
+      "vòng tránh thai",
+      "ổ bụng"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 1716,
+     "ref": "xương nó trở nên là ít xâm lấn hơn và nhẹ nhàng hơn rất là nhiều xin được cảm ơn phần tư vấn vừa rồi của",
+     "hyp": "và nhảy nhàng hơn rất là nhiều.",
+     "word_edits": 20,
+     "words": 26,
+     "time": 1.095,
+     "terms": [
+      "xương",
+      "ít xâm lấn"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 257,
+     "ref": "thể là bị săn trắng này bị dị vật này nó bị viêm loét hoặc là nhìn thấy khối u âm",
+     "hyp": "Bị xan cắn, bị dị vặt, bị niêm lết, những khối ồn.",
+     "word_edits": 16,
+     "words": 21,
+     "time": 1.607,
+     "terms": [
+      "săn trắng",
+      "bị dị vật",
+      "viêm loét"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 320,
+     "ref": "là đo chỗ nào một số hình ảnh về để nạo buồng tử cung và nhân xơ tử cung",
+     "hyp": "Một số hình ảnh vẽ để nạ bùng vụ công, để nhanh sơ tự công.",
+     "word_edits": 14,
+     "words": 19,
+     "time": 2.023,
+     "terms": [
+      "nạo buồng tử cung",
+      "nhân xơ",
+      "tử cung"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 793,
+     "ref": "thư thì nó gây hoại tử xương hàm có khi ra liều cao quá có thể giải chỉ còn thật sự",
+     "hyp": "Thì nó gây hoài tự sinh hàng, có khi liệu cao quá, có thể dạy.",
+     "word_edits": 12,
+     "words": 21,
+     "time": 1.622,
+     "terms": [
+      "hoại tử xương hàm"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 935,
+     "ref": "các bệnh lý không những điều trị tốt cho cả ở những cái trường hợp tức là ở hội chứng ruột kích thích mà cả đại tràng đều đem lại",
+     "hyp": "không những điều trị tốt cho cả những trường hợp, tức là hội chính giật kinh thích mà cả đại trạng đều đem lại một cái",
+     "word_edits": 12,
+     "words": 30,
+     "time": 2.202,
+     "terms": [
+      "điều trị",
+      "hội chứng ruột kích thích",
+      "đại tràng"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 3422,
+     "ref": "mỹ từ chỉ định điều trị cho đến chế độ dinh dưỡng chăm sóc tập luyện cụ thể",
+     "hyp": "từ chỉ định điều trị cho đến chỉ độ dinh dưỡng chăm sóc tập luyện.",
+     "word_edits": 4,
+     "words": 18,
+     "time": 2.007,
+     "terms": [
+      "điều trị",
+      "chăm sóc"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 2090,
+     "ref": "phải cần che chắn rồi luôn đối với tóc nhuộm là luôn phải giữ ẩm tóc một tuần phải giữ ẩm một lần lần nói chung là",
+     "hyp": "Một tuần phải giữ ẩm một lần",
+     "word_edits": 20,
+     "words": 27,
+     "time": 1.232,
+     "terms": [
+      "tóc",
+      "giữ ẩm",
+      "tóc",
+      "giữ ẩm"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 923,
+     "ref": "không được đảm bảo do đó dẫn đến tình trạng làm sao nó mất ổn định bởi vậy làm sao điều trị hội chứng ruột kích",
+     "hyp": "Thực phẩm cũng không được đảm bảo do đó dẫn đến trình trạng làm sao. Nó mất đồn định bởi vậy làm sao.",
+     "word_edits": 11,
+     "words": 26,
+     "time": 2.34,
+     "terms": [
+      "điều trị",
+      "ruột"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1856,
+     "ref": "hành giả mà mang như vậy là cái lực tác động lên cái xương và nướu ở chỗ đó nó làm tiêu xương rất là là nhiều và nhanh",
+     "hyp": "Khi hàm giả mà mang như vậy là lực tác động trên cái xương và nú ở chỗ đó làm tiêu xương rất là nhiều.",
+     "word_edits": 9,
+     "words": 29,
+     "time": 1.183,
+     "terms": [
+      "cái xương",
+      "nướu",
+      "tiêu xương"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 2538,
+     "ref": "cấp thông tin hỗ trợ hàng ngàn ba mẹ về vấn đề hàng ngày qua các kiến thức chăm sóc trẻ căn bản cách cho ăn và các vấn",
+     "hyp": "tình hỗ trợ hàng ngàn ba mẹ về vấn đề hàng ngày qua các kiến thức chăm sóc trẻ càng bản khắp cho ăn và",
+     "word_edits": 7,
+     "words": 29,
+     "time": 2.298,
+     "terms": [
+      "chăm sóc"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 428,
+     "ref": "ba mươi phần trăm là protein canh collagen để tạo thành khung và còn lại",
+     "hyp": "30% là protein, căn, collagen để tạo thành khung.",
+     "word_edits": 4,
+     "words": 15,
+     "time": 1.016,
+     "terms": [
+      "protein",
+      "collagen"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 3347,
+     "ref": "sức sau phẫu thuật lớn có biến chứng hoặc nhiều bệnh lý kết hợp nguy cơ tử vong cao thạc sĩ bác sĩ",
+     "hyp": "Hồi sức sợ phẫu thuật lớn, có biến chứng hoặc nhiều bệnh lý kết hợp, nguy cư tử phong cao, thặc sĩ bác sĩ buồn thị hành duyên.",
+     "word_edits": 9,
+     "words": 23,
+     "time": 3.247,
+     "terms": [
+      "phẫu thuật",
+      "biến chứng",
+      "tử vong"
+     ],
+     "term_hits": 2
+    },
+    {
+     "id": 2304,
+     "ref": "hơn một phút hoặc nếu bạn thấy có biểu hiện co giật tay chân hoặc người kèm",
+     "hyp": "chạy hơn 1 phút, hoặc nếu bạn thấy có biểu hiện co giật tay chân hoặc ngược.",
+     "word_edits": 3,
+     "words": 17,
+     "time": 1.505,
+     "terms": [
+      "co giật"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1438,
+     "ref": "giành lấy mạng sống cho những f0 nặng này vô cùng khốc liệt như vậy mà bán thân mỗi người dân cần phải trang bị",
+     "hyp": "dành lấy mạng sống cho những ép không nặng là vô cùng khóc liệt. Dù vậy mà bán thân mỗi người dân cần phải trang đoàn.",
+     "word_edits": 6,
+     "words": 26,
+     "time": 2.429,
+     "terms": [
+      "f0"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 1745,
+     "ref": "mà ghép xương như là tôi đề cập lúc đầu thì tăng thể tích xương lên trước khi mà",
+     "hyp": "Nhiều miệng pháp mà ghép sương. Như là tôi đã cặp lúc đầu thì thăng thở tới sương mình trước.",
+     "word_edits": 13,
+     "words": 19,
+     "time": 2.007,
+     "terms": [
+      "ghép xương",
+      "xương"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 818,
+     "ref": "viêm đại tràng và hội chứng ruột kích thích là hai bệnh thường gặp phải nhất vậy thì nhưng mà nhiều người vẫn hay",
+     "hyp": "giả viêm đại tràng và hội chứng xuất kích thích là 2 bệnh thường gặp phải nhất.",
+     "word_edits": 10,
+     "words": 24,
+     "time": 1.763,
+     "terms": [
+      "viêm đại tràng",
+      "hội chứng ruột kích thích"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1727,
+     "ref": "nhiễm trùng hay có những cái bệnh lý bên dưới của xương hàm có hay không thì cái đó bác sĩ mới có thể là là có một cái",
+     "hyp": "có những cái năng nhiễm trùng hay có những cái bệnh lý bên dưới của xương hàng, có ai không? Thì cái đó, bác sĩ mới có thể là có một cái",
+     "word_edits": 7,
+     "words": 29,
+     "time": 2.242,
+     "terms": [
+      "nhiễm trùng",
+      "xương hàm"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1741,
+     "ref": "trong tình huống này đó thì cái nguyên nhân thì có thể là của bé là trước đây là không có cái mầm răng vĩnh viễn cho",
+     "hyp": "Chuyện này không có mầm răng bệnh viễn",
+     "word_edits": 21,
+     "words": 27,
+     "time": 1.24,
+     "terms": [
+      "mầm răng"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 1556,
+     "ref": "vậy thì cái tỷ lệ hiện nay người dân việt nam đi người dân lớn tuổi của việt nam mà bị tiêu xương chắc không phải là",
+     "hyp": "Cái tỷ lệ hiện nay người dân Việt Nam, người dân lớn tuổi của Việt Nam bị tiêu",
+     "word_edits": 9,
+     "words": 27,
+     "time": 1.908,
+     "terms": [
+      "bị tiêu",
+      "xương"
+     ],
+     "term_hits": 1
+    },
+    {
+     "id": 157,
+     "ref": "những cái nhân xơ tử cung những trường hợp này có thể là dap bình thường nhưng mà nó phát bệnh nhân xơ như thế này thì",
+     "hyp": "Những thường hợp này có thể là DAD bình thường nhưng mà nếu có thể nhăn sơ như thế này thì họ sẽ",
+     "word_edits": 15,
+     "words": 27,
+     "time": 1.956,
+     "terms": [
+      "nhân xơ",
+      "tử cung",
+      "dap"
+     ],
+     "term_hits": 0
+    },
+    {
+     "id": 286,
+     "ref": "uống progesterone như duphaston nữa mà ngược lại sẽ uống viên ngừa thai kết hợp trong trái viên thuốc ngừa thai kết hợp",
+     "hyp": "Vì trong viên thúc ngựa 2 cái chợp.",
+     "word_edits": 21,
+     "words": 23,
+     "time": 1.222,
+     "terms": [
+      "progesterone",
+      "duphaston",
+      "viên ngừa thai",
+      "thuốc ngừa thai"
+     ],
+     "term_hits": 0
+    }
+   ]
+  }
+ },
+ "peak_rss_mb": 2909
+}
