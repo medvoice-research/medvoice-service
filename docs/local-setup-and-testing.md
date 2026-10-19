@@ -143,6 +143,26 @@ Medical fields (SOAP/entities/PHI) populate only when LM Studio is running
 (see repo README "Medical RAG with LM Studio"). Without it they degrade to
 empty — by design.
 
+### Medical-term guard (Vietnamese)
+
+Vietnamese uploads go through `app/services/term_guard.py`: words Whisper is
+unsure of are checked by SemIf, a decision model running locally (no transcript
+leaves the machine). Misheard drug/disease names are corrected only when
+Whisper's own rescoring of the audio clearly agrees; otherwise they're flagged.
+The result is `transcript.term_review` and the app's "Medical terms to check" card.
+
+```bash
+# once: SemIf in its own venv (pins its own torch/MLX), next to this repo
+git clone https://github.com/TheoLeeCJ/SemIf-OpenJev ../semif
+(cd ../semif && uv venv -p 3.12 && uv pip install -e '.[mlx]')   # Apple Silicon
+
+# every session: first start downloads Qwen3.5-4B (~9 GB); ~5 GB RAM at 8-bit
+../semif/.venv/bin/python scripts/semif_server.py   # 127.0.0.1:8765
+```
+
+Docker reaches it via `SEMIF_URL=http://host.docker.internal:8765` (compose
+default). Thresholds and languages: `term_guard:` in `config.yaml`.
+
 ## 2. Backend integration test
 
 ```bash
@@ -274,6 +294,7 @@ option; offline recognition is stubbed on web). For real mobile testing:
 | Integration test prints `Skip: backend integration...` | expected — run with `--run-skipped` (step 4) |
 | WhisperX SIGSEGV (exit 139) when running `make server` on macOS | libomp conflict (torch/faiss/sklearn). Workaround: `OMP_NUM_THREADS=1 KMP_DUPLICATE_LIB_OK=TRUE`. Docker/Linux unaffected |
 | SOAP/entities/PHI empty in results | LM Studio not running — expected degradation |
+| "Medical term check unavailable" in the app / `term_review.status: unavailable` | SemIf server not running — start `scripts/semif_server.py` |
 | `flutter` command fails in app repo | use `fvm flutter` (SDK pin 3.19.5) |
 | `requirements/dev.txt: File not found` in CI | stale workflow — fixed; uv-managed repo uses `uv sync --group dev` |
 | Upload >200 MB rejected | 413 — streamed cap in the API (by design) |

@@ -8,6 +8,18 @@ whisperx:
   models_by_language:        # per-language override of `model`; results in benchmarks/asr/README.md
     vi: mad1999/pho-whisper-small-ct2
 
+# Medical-term guard: flags/corrects misheard medicine, symptom, disease and test names
+# (app/services/term_guard.py). Needs the local SemIf server (scripts/semif_server.py, SEMIF_URL).
+# Thresholds were set on one synthetic dictation; tune them on labelled recordings.
+term_guard:
+  languages: [vi]            # empty = off
+  timeout_seconds: 60        # SemIf request
+  low_word_prob: 0.5         # Whisper word probability below which a word is suspect
+  flag_prob: 0.5             # SemIf P(misheard medical name) at which a suspect span is reviewed
+  candidates: 5              # sound-alike lexicon terms rescored per span
+  max_loss: 5.0              # replace only if the term costs at most this many nats vs the decoded words...
+  min_gap: 5.0               # ...and beats the next term by at least this many
+
 # Temporal Orchestration
 temporal:
   # server_url can be overridden via TEMPORAL_SERVER_URL env var for Docker (temporal:7233)

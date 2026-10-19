@@ -89,6 +89,15 @@ class Config:
     WHISPER_MODEL = _get_yaml("whisperx", "model", "base")
     # Per-language model override (see benchmarks/asr/README.md); others use WHISPER_MODEL.
     WHISPER_MODELS_BY_LANGUAGE = _get_yaml("whisperx", "models_by_language", None) or {}
+    # Medical-term guard (app/services/term_guard.py); thresholds documented in config.yaml
+    TERM_GUARD_LANGUAGES = _get_yaml("term_guard", "languages", None) or []
+    SEMIF_URL = os.getenv("SEMIF_URL", "http://127.0.0.1:8765")
+    TERM_GUARD_TIMEOUT_SECONDS = _get_yaml("term_guard", "timeout_seconds", 60)
+    TERM_GUARD_LOW_WORD_PROB = _get_yaml("term_guard", "low_word_prob", 0.5)
+    TERM_GUARD_FLAG_PROB = _get_yaml("term_guard", "flag_prob", 0.5)
+    TERM_GUARD_CANDIDATES = _get_yaml("term_guard", "candidates", 5)
+    TERM_GUARD_MAX_LOSS = _get_yaml("term_guard", "max_loss", 5.0)
+    TERM_GUARD_MIN_GAP = _get_yaml("term_guard", "min_gap", 5.0)
     DEVICE = os.getenv("DEVICE", "cpu")
     COMPUTE_TYPE = os.getenv("COMPUTE_TYPE", "int8")
 

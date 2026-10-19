@@ -1,0 +1,499 @@
+abacavir
+abiraterone
+acamprosate calcium
+acetazolamide
+acetic acid
+acetylcysteine
+acetylsalicylic acid
+aciclovir
+adalimumab
+albendazole
+alcohol based hand rub
+all-trans retinoic acid
+allopurinol
+alprostadil
+alteplase
+amidotrizoate
+amikacin
+amiloride
+amiodarone
+amitriptyline
+amlodipine
+amodiaquine
+amoxicillin
+amphotericin b
+ampicillin
+anastrozole
+ansuvimab
+anti-d immunoglobulin
+anti-rabies immunoglobulin
+anti-tetanus immunoglobulin
+antivenom immunoglobulin
+aprepitant
+arsenic trioxide
+artemether
+artesunate
+ascorbic acid
+asparaginase
+atazanavir
+atenolol
+atoltivimab
+atorvastatin
+atracurium
+atropine
+avibactam
+azathioprine
+azithromycin
+baclofen
+barium sulfate
+bcg vaccine
+bedaquiline
+bendamustine
+benzathine benzylpenicillin
+benznidazole
+benzoyl peroxide
+benzyl benzoate
+benzylpenicillin
+beractant
+betamethasone
+bevacizumab
+bicalutamide
+biperiden
+bisoprolol
+bleomycin
+blinatumomab
+bortezomib
+budesonide
+bupivacaine
+bupropion
+cabergoline
+caffeine citrate
+calamine
+calcipotriol
+calcium
+calcium folinate
+calcium gluconate
+capecitabine
+carbamazepine
+carbetocin
+carbidopa
+carboplatin
+cefalexin
+cefazolin
+cefiderocol
+cefixime
+cefotaxime
+ceftazidime
+ceftolozane
+ceftriaxone
+cefuroxime
+chlorambucil
+chloramphenicol
+chlorhexidine
+chlorine base compound
+chloroquine
+chloroxylenol
+cholecalciferol
+cholera vaccine
+ciclosporin
+ciprofloxacin
+cisplatin
+cladribine
+clarithromycin
+clavulanic acid
+clindamycin
+clofazimine
+clomifene
+clomipramine
+clopidogrel
+clotrimazole
+cloxacillin
+clozapine
+coal tar
+codeine
+colistin
+condom
+copper-containing device
+cryoprecipitate
+cyclizine
+cyclophosphamide
+cycloserine
+cytarabine
+cytisine
+dabigatran
+dacarbazine
+daclatasvir
+dactinomycin
+dapsone
+darunavir
+dasatinib
+daunorubicin
+deferasirox
+deferoxamine
+delamanid
+dengue vaccine
+desmopressin
+dexamethasone
+dextran 70
+diaphragms
+diazepam
+diazoxide
+diethylcarbamazine
+digoxin
+dihydroartemisinin
+diloxanide
+dimercaprol
+diphtheria antitoxin
+diphtheria vaccine
+docetaxel
+docusate sodium
+dolutegravir
+dopamine
+doxorubicin
+doxycycline
+ebola vaccine
+efavirenz
+eflornithine
+elexacaftor
+emicizumab
+empagliflozin
+emtricitabine
+enalapril
+enoxaparin
+entecavir
+ephedrine
+epinephrine
+equine rabies immunoglobulin
+ergocalciferol
+ergometrine
+erlotinib
+erythromycin
+erythropoiesis-stimulating agent
+estradiol cypionate
+ethambutol
+ethanol
+ethinylestradiol
+ethionamide
+ethosuximide
+etonogestrel
+etonogestrel-releasing implant
+etoposide
+everolimus
+fentanyl
+ferrous salt
+fexinidazole
+filgrastim
+fluconazole
+flucytosine
+fludarabine
+fludrocortisone
+fluorescein
+fluoride
+fluorouracil
+fluoxetine
+fluphenazine
+folic acid
+fomepizole
+formoterol
+fosfomycin
+fresh frozen plasma
+furosemide
+gemcitabine
+gentamicin
+glass ionomer cement
+glatiramer acetate
+glecaprevir
+gliclazide
+glucagon
+glucose
+glucose with sodium chloride
+glutaral
+glycerol
+glyceryl trinitrate
+griseofulvin
+haemophilus influenzae type b vaccine
+haloperidol
+heparin sodium
+hepatitis a vaccine
+hepatitis b vaccine
+hepatitis e vaccine
+human papilloma virus vaccine
+hydralazine
+hydrochlorothiazide
+hydrocortisone
+hydroxocobalamin
+hydroxycarbamide
+hydroxychloroquine
+hydroxyurea
+hyoscine butylbromide
+hyoscine hydrobromide
+hypochlorous acid
+ibrutinib
+ibuprofen
+ifosfamide
+imatinib
+indapamide
+influenza vaccine
+insulin
+intraperitoneal dialysis solution
+iodine
+iodine + potassium iodide
+iohexol
+ipratropium bromide
+irinotecan
+isoflurane
+isoniazid
+isosorbide dinitrate
+itraconazole
+ivacaftor
+ivermectin
+japanese encephalitis vaccine
+ketamine
+lactulose
+lamivudine
+lamotrigine
+latanoprost
+ledipasvir
+lenalidomide
+letrozole
+leuprorelin
+levamisole
+levetiracetam
+levodopa
+levofloxacin
+levonorgestrel
+levonorgestrel-releasing implant
+levonorgestrel-releasing intrauterine system
+levothyroxine
+lidocaine
+linezolid
+lisinopril
+lithium carbonate
+loperamide
+lopinavir
+loratadine
+lorazepam
+losartan
+lumefantrine
+maftivimab
+magnesium sulfate
+malaria vaccine
+mannitol
+measles vaccine
+mebendazole
+medroxyprogesterone acetate
+mefloquine
+meglumine antimoniate
+meglumine iotroxate
+melarsoprol
+melphalan
+meningococcal meningitis vaccine
+mercaptopurine
+meropenem
+mesna
+metformin
+methadone
+methimazole
+methotrexate
+methyldopa
+methylprednisolone
+methylthioninium chloride
+metoclopramide
+metronidazole
+micafungin
+miconazole
+midazolam
+mifepristone
+miltefosine
+misoprostol
+morphine
+moxifloxacin
+mpox vaccine
+multiple micronutrient powder
+multiple micronutrient supplement
+mumps vaccine
+mupirocin
+naloxone
+naltrexone
+natamycin
+neostigmine
+nevirapine
+niclosamide
+nicotinamide
+nicotine replacement therapy
+nifedipine
+nifurtimox
+nilotinib
+nitrofurantoin
+nitrous oxide
+norethisterone
+norethisterone enantate
+normal immunoglobulin
+nystatin
+octreotide
+odesivimab
+ofloxacin
+olanzapine
+omeprazole
+ondansetron
+oral rehydration salts
+oseltamivir
+oxaliplatin
+oxamniquine
+oxygen
+oxytocin
+p-aminosalicylic acid
+paclitaxel
+paliperidone
+pancreatic enzymes
+paracetamol
+paromomycin
+pegaspargase
+pegfilgrastim
+pembrolizumab
+penicillamine
+pentamidine
+perindopril
+permethrin
+pertussis vaccine
+phenobarbital
+phenoxymethylpenicillin
+phenytoin
+phytomenadione
+pibrentasvir
+pilocarpine
+piperacillin
+piperaquine phosphate
+platelets
+plazomicin
+pneumococcal vaccine
+podophyllum resin
+poliomyelitis vaccine
+polymyxin b
+poractant alfa
+potassium chloride
+potassium iodide
+potassium permanganate
+povidone iodine
+praziquantel
+prednisolone
+pretomanid
+primaquine
+procaine benzylpenicillin
+procarbazine
+progesterone vaginal ring
+propofol
+propranolol
+propylthiouracil
+protamine sulfate
+pyrantel
+pyrazinamide
+pyridostigmine
+pyridoxine
+pyrimethamine
+pyronaridine tetraphosphate
+quetiapine
+quinine
+rabies vaccine
+raltegravir
+ramipril
+ranitidine
+rasburicase
+ravidasvir
+ready-to-use therapeutic food
+realgar ''indigo naturalis''
+red blood cells
+resin-based composite
+respiratory syncytial virus vaccine
+retinol
+ribavirin
+riboflavin
+rifabutin
+rifampicin
+rifapentine
+risperidone
+ritonavir
+rituximab
+rotavirus vaccine
+rubella vaccine
+salbutamol
+salicylic acid
+selenium sulfide
+semaglutide
+senna
+sevoflurane
+silver diamine fluoride
+silver sulfadiazine
+simvastatin
+sodium calcium edetate
+sodium chloride
+sodium hydrogen carbonate
+sodium nitrite
+sodium nitroprusside
+sodium stibogluconate
+sodium thiosulfate
+sofosbuvir
+spectinomycin
+spironolactone
+streptokinase
+streptomycin
+succimer
+sulfadiazine
+sulfadoxine
+sulfamethoxazole
+sulfasalazine
+sumatriptan
+suramin sodium
+suxamethonium
+tacrolimus
+tamoxifen
+tazobactam
+telmisartan
+tenofovir
+tenofovir disoproxil fumarate
+terbinafine
+testosterone
+tetanus vaccine
+tetracaine
+tetracycline
+tezacaftor
+thalidomide
+thiamine
+tick-borne encephalitis vaccine
+timolol
+tioguanine
+tiotropium
+tranexamic acid
+trastuzumab
+tretinoin
+triamcinolone hexacetonide
+triclabendazole
+trimethoprim
+tropicamide
+tuberculin
+typhoid vaccine
+ulipristal
+urea
+ustekinumab
+vaborbactam
+valganciclovir
+valproic acid
+valsartan
+vancomycin
+varenicline
+varicella vaccine
+vecuronium
+velpatasvir
+verapamil
+vinblastine
+vincristine
+vinorelbine
+voriconazole
+warfarin
+water for injection
+whole blood
+xylometazoline
+yellow fever vaccine
+zidovudine
+zinc sulfate
+zoledronic acid
