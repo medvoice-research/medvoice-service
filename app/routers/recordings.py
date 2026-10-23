@@ -1,4 +1,4 @@
-"""Recordings API — the mobile-app contract (see docs/superpowers/specs/2026-08-16-mobile-api-contract-design.md)."""
+"""Recordings API — the mobile-app contract."""
 
 import asyncio
 from pathlib import Path
