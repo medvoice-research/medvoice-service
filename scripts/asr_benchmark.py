@@ -1,4 +1,4 @@
-"""Vietnamese ASR benchmark (spec: docs/superpowers/specs/2026-10-17-vietnamese-asr-accuracy-design.md).
+"""Vietnamese ASR benchmark.
 
     python scripts/asr_benchmark.py fetch                     # seeded VietMed / VietMed-NER subsets
     python scripts/asr_benchmark.py run --model base          # one model per process
@@ -21,12 +21,13 @@ import urllib.parse
 import urllib.request
 from collections import Counter
 from datetime import date
+from itertools import chain
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from app.services.asr_metrics import cer, entity_spans, term_hits, wer  # noqa: E402
+from app.services.asr_metrics import cer, entity_spans, normalize, term_hits, wer  # noqa: E402
 
 SEED = 17
 AUDIO_DIR = ROOT / "datasets" / "vietmed"
@@ -106,16 +107,26 @@ def cmd_fetch(args) -> None:
     kept = sorted(_all_labels() - NON_CLINICAL)
     print("medical labels kept:", kept)
 
-    vm_idx = sorted(rng.sample(range(_num_rows(VIETMED, "test")), args.n_vietmed))
+    total = _num_rows(VIETMED, "test")
+    vm_idx = sorted(rng.sample(range(total), args.n_vietmed))
+    selected = set(vm_idx)
+    remaining = [idx for idx in range(total) if idx not in selected]
+    random.Random(SEED + 1).shuffle(remaining)
     vietmed = []
-    for i, idx in enumerate(vm_idx):
+    for idx in chain(vm_idx, remaining):
+        if len(vietmed) == args.n_vietmed:
+            break
         row = _row_at(VIETMED, "test", idx)
+        if not row.get("audio"):
+            continue
         path = _download_audio(row, AUDIO_DIR / "vietmed" / str(idx))
         vietmed.append(
             {"id": idx, "path": str(path.relative_to(ROOT)), "text": row["text"], "duration": row["duration"]}
         )
-        print(f"\rvietmed {i + 1}/{len(vm_idx)}", end="", flush=True)
+        print(f"\rvietmed {len(vietmed)}/{args.n_vietmed}", end="", flush=True)
     print()
+    if len(vietmed) != args.n_vietmed:
+        raise ValueError(f"Only {len(vietmed)} VietMed rows have audio; requested {args.n_vietmed}")
 
     # NER subset: only utterances with at least one medical entity carry term-recall signal.
     ner_total = _num_rows(NER, "test")
@@ -126,7 +137,7 @@ def cmd_fetch(args) -> None:
         if len(ner) == args.n_ner:
             break
         row = _row_at(NER, "test", idx)
-        terms = entity_spans(row["words"], row["labels"], set(kept))
+        terms = [term for term in entity_spans(row["words"], row["labels"], set(kept)) if normalize(term)]
         # The rows API returns audio=None for some rows; they carry no usable sample.
         if not terms or not row.get("audio"):
             continue
@@ -320,18 +331,18 @@ def _table(rows: list) -> str:
 
 
 def cmd_report(args) -> None:
-    full, limited = [], []
+    full, limited = {}, {}
     for f in sorted(OUT_DIR.glob("*.json")):
         if f.name == "manifest.json":
             continue
         r = json.loads(f.read_text(encoding="utf-8"))
         vm, ner = r["sets"].get("vietmed", {}).get("summary", {}), r["sets"].get("ner", {}).get("summary", {})
         row = (r["model"] + (f" ({r['tag']})" if r.get("tag") else ""), vm, ner, r.get("peak_rss_mb"))
-        (limited if f.stem.endswith("-limit") else full).append(row)
-    table = f"### Full subset (VietMed 300, NER 200)\n\n{_table(full)}\n"
+        (limited if f.stem.endswith("-limit") else full)[(r["model"], r.get("tag"))] = row
+    table = f"### Full subset (VietMed 300, NER 200)\n\n{_table(list(full.values()))}\n"
     if limited:
-        n = limited[0][1].get("n")
-        table += f"\n### Accuracy ceiling (first {n} utterances per set; ΔWER vs base on the same {n})\n\n{_table(limited)}\n"
+        n = next(iter(limited.values()))[1].get("n")
+        table += f"\n### Accuracy ceiling (first {n} utterances per set; ΔWER vs base on the same {n})\n\n{_table(list(limited.values()))}\n"
     print(table)
     readme = OUT_DIR / "README.md"
     header = (

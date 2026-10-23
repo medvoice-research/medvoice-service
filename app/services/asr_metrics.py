@@ -96,4 +96,4 @@ def entity_spans(words: list[str], labels: list[str], keep: set[str]) -> list[st
 def term_hits(terms: list[str], hyp: str) -> int:
     """How many reference terms appear as whole-word sequences in the hypothesis."""
     padded = f" {normalize(hyp)} "
-    return sum(f" {normalize(t)} " in padded for t in terms)
+    return sum(f" {normal} " in padded for term in terms if (normal := normalize(term)))
