@@ -56,3 +56,4 @@ def test_term_hits_matches_whole_words_only():
     # "kinh" alone is present as a word; "ong" is only a substring of "rong".
     assert term_hits(["ong"], hyp) == 0
     assert term_hits(["Rong Kinh"], hyp) == 1
+    assert term_hits(["-"], "") == 0

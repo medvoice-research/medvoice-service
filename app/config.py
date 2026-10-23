@@ -87,7 +87,7 @@ class Config:
     # WhisperX
     LANG = _get_yaml("whisperx", "language", "en")
     WHISPER_MODEL = _get_yaml("whisperx", "model", "base")
-    # Per-language model override (see benchmarks/asr/README.md); others use WHISPER_MODEL.
+    # /recordings model override; other ASR routes accept their model per request.
     WHISPER_MODELS_BY_LANGUAGE = _get_yaml("whisperx", "models_by_language", None) or {}
     # Medical-term guard (app/services/term_guard.py); thresholds documented in config.yaml
     TERM_GUARD_LANGUAGES = _get_yaml("term_guard", "languages", None) or []

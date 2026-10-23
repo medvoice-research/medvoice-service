@@ -1,5 +1,8 @@
 # ASR benchmark results
 
+The CLI keeps per-utterance references and hypotheses in ignored local JSON; do not commit them.
+`fetch` replaces rows without audio, and `report` retains the newest dated run per model/tag.
+
 <!-- results -->
 ### Full subset (VietMed 300, NER 200)
 

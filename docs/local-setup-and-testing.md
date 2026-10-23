@@ -313,6 +313,3 @@ DELETE /recordings/{id}         -> 204
 Errors: flat `{"detail": ..., "error_code": ...}` envelope
 (e.g. 415 `unsupported_format`, 413 upload too large, 504 processing timeout,
 401 `invalid_credentials`).
-Specs (local): `docs/superpowers/specs/2026-08-16-mobile-api-contract-design.md`,
-`docs/superpowers/specs/2026-08-23-mock-auth-login-design.md`,
-`docs/superpowers/specs/2026-08-23-audio-replay-design.md`.

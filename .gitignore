@@ -190,4 +190,5 @@ data/recordings/
 datasets/kaggle-simulated-patient-physician-interviews/
 datasets/vietmed/
 # ASR benchmark manifest + per-utterance results (regenerate: scripts/asr_benchmark.py fetch/run; summary in benchmarks/asr/README.md)
-benchmarks/asr/*.jsondocs/superpowers/
+benchmarks/asr/*.json
+docs/superpowers/
