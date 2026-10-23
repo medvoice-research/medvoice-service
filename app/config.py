@@ -87,7 +87,7 @@ class Config:
     # WhisperX
     LANG = _get_yaml("whisperx", "language", "en")
     WHISPER_MODEL = _get_yaml("whisperx", "model", "base")
-    # Per-language model override (see benchmarks/asr/README.md); others use WHISPER_MODEL.
+    # /recordings model override; other ASR routes accept their model per request.
     WHISPER_MODELS_BY_LANGUAGE = _get_yaml("whisperx", "models_by_language", None) or {}
     DEVICE = os.getenv("DEVICE", "cpu")
     COMPUTE_TYPE = os.getenv("COMPUTE_TYPE", "int8")
