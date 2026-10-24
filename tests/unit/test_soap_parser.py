@@ -62,6 +62,15 @@ def test_headers_are_case_insensitive(parse):
         "plan": "rest",
     }
 
+def test_vietnamese_headers_map_to_soap_sections(parse):
+    response = "**Chủ quan:** đau đầu\n**Khách quan:** huyết áp ổn\n**Đánh giá:** đau nửa đầu\n**Kế hoạch:** nghỉ ngơi"
+    assert parse(response) == {
+        "subjective": "đau đầu",
+        "objective": "huyết áp ổn",
+        "assessment": "đau nửa đầu",
+        "plan": "nghỉ ngơi",
+    }
+
 
 def test_regression_bold_colon_inside_header_leaks_asterisks(parse):
     response = (
@@ -83,6 +92,10 @@ def test_content_inline_bold_is_unwrapped_and_bullets_kept(parse):
     response = "**Plan:** **Aspirin** 81 mg daily\n- ECG today\n* **Echo** within a week\n__Follow-up in 1 week__"
 
     assert parse(response)["plan"] == "Aspirin 81 mg daily\n- ECG today\n* Echo within a week\nFollow-up in 1 week"
+
+def test_nested_and_unbalanced_emphasis_markers_are_removed(parse):
+    response = "**Plan:**\nTake **dose **two** daily** and __aspirin__ with **an unclosed phrase"
+    assert parse(response)["plan"] == "Take dose two daily and aspirin with an unclosed phrase"
 
 
 def test_word_starting_a_content_line_is_not_a_header(parse):
