@@ -11,6 +11,23 @@ from ..config import Config
 
 logger = logging.getLogger(__name__)
 
+# Optional bold/Markdown heading and colon; English and Vietnamese SOAP section names.
+_SOAP_HEADER = re.compile(
+    r"^#*\s*(\*\*|__)?\s*(subjective|objective|assessment|plan|chủ quan|khách quan|đánh giá|kế hoạch)\s*(:)?\s*(?(1)\1)\s*(:)?\s*(.*)$",
+    re.IGNORECASE,
+)
+_SOAP_SECTION_NAMES = {
+    "chủ quan": "subjective",
+    "khách quan": "objective",
+    "đánh giá": "assessment",
+    "kế hoạch": "plan",
+}
+
+
+def _strip_emphasis(text: str) -> str:
+    """Remove bold delimiters, including unmatched markers, while preserving single-star bullets."""
+    return text.replace("**", "").replace("__", "").strip()
+
 
 class MedicalLLMService:
     """High-level medical LLM operations using LM Studio."""
@@ -601,56 +618,28 @@ Use professional medical language and be clinically precise.""",
     def _parse_soap_response(self, response: str) -> Dict[str, str]:
         """Parse SOAP note sections."""
         sections = {"subjective": "", "objective": "", "assessment": "", "plan": ""}
-
-        # Parse sections using both markdown and plain text patterns
         current_section = None
-        lines = response.split("\n")
 
-        for line in lines:
+        for line in response.split("\n"):
             line_stripped = line.strip()
 
-            # Pattern 1: Standalone section headers (on their own line)
-            if re.match(r"^(?:\*\*|#+\s*)?subjective(?:\*\*)?:?\s*$", line_stripped, re.IGNORECASE):
-                current_section = "subjective"
-                continue
-            elif re.match(r"^(?:\*\*|#+\s*)?objective(?:\*\*)?:?\s*$", line_stripped, re.IGNORECASE):
-                current_section = "objective"
-                continue
-            elif re.match(r"^(?:\*\*|#+\s*)?assessment(?:\*\*)?:?\s*$", line_stripped, re.IGNORECASE):
-                current_section = "assessment"
-                continue
-            elif re.match(r"^(?:\*\*|#+\s*)?plan(?:\*\*)?:?\s*$", line_stripped, re.IGNORECASE):
-                current_section = "plan"
+            # Header forms: "Subjective:", "**Subjective**:", "**Subjective:**", "## Subjective", "### Subjective:".
+            # Content on the same line needs a colon, so "Plan to repeat ..." stays content.
+            header = _SOAP_HEADER.match(line_stripped)
+            if header and (header.group(3) or header.group(4) or not header.group(5)):
+                section = header.group(2).lower()
+                current_section = _SOAP_SECTION_NAMES.get(section, section)
+                content = _strip_emphasis(header.group(5))
+            elif current_section:
+                content = _strip_emphasis(re.sub(r"^#+\s*", "", line_stripped))
+            else:
                 continue
 
-            # Pattern 2: Inline headers with content on the same line (e.g., **Subjective**: content)
-            inline_match = re.match(
-                r"^(?:\*\*|#+\s*)?(subjective|objective|assessment|plan)(?:\*\*)?:\s*(.+)$",
-                line_stripped,
-                re.IGNORECASE,
-            )
-            if inline_match:
-                section_name = inline_match.group(1).lower()
-                content = inline_match.group(2).strip()
-                current_section = section_name
-                if content:
-                    # Append to existing content instead of overwriting
-                    if sections[current_section]:
-                        sections[current_section] += "\n" + content
-                    else:
-                        sections[current_section] = content
-                continue
-
-            # Add content to current section
-            if current_section and line_stripped:
-                # Clean up markdown formatting
-                clean_line = re.sub(r"^\*\*([^*]+)\*\*:\s*", r"\1: ", line_stripped)
-                clean_line = re.sub(r"^#+\s*", "", clean_line)
-
+            if content:
                 if sections[current_section]:
-                    sections[current_section] += "\n" + clean_line
+                    sections[current_section] += "\n" + content
                 else:
-                    sections[current_section] = clean_line
+                    sections[current_section] = content
 
         return sections
 

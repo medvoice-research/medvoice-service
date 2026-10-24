@@ -90,6 +90,9 @@ term. `words[]` timestamps keep the original tokens.
 On CUDA, Whisper's encoder result is copied to CPU before NumPy batches
 candidate texts for CTranslate2 alignment; a GPU StorageView has no NumPy view.
 
+SOAP parsing accepts English and Vietnamese section labels and removes paired or
+unmatched `**`/`__` emphasis markers from section content.
+
 ## Contract: `transcript.term_review`
 
 | Field | Values | Consumer behaviour (app) |
