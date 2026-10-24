@@ -87,6 +87,9 @@ Lexicon: `data/vocab/vi_medical.txt` (VietMed-NER terms) + `data/vocab/drugs_who
 Corrections edit `segments[*].text` before `run_medical`, so the SOAP note sees the fixed
 term. `words[]` timestamps keep the original tokens.
 
+On CUDA, Whisper's encoder result is copied to CPU before NumPy batches
+candidate texts for CTranslate2 alignment; a GPU StorageView has no NumPy view.
+
 ## Contract: `transcript.term_review`
 
 | Field | Values | Consumer behaviour (app) |

@@ -163,6 +163,10 @@ git clone https://github.com/TheoLeeCJ/SemIf-OpenJev ../semif
 Docker reaches it via `SEMIF_URL=http://host.docker.internal:8765` (compose
 default). Thresholds and languages: `term_guard:` in `config.yaml`.
 
+The bundled SemIf server requires Apple Silicon; Linux/GPU Compose reports
+`term_review.status: unavailable` until a compatible local server is supplied.
+Keep `SEMIF_URL` local: each request contains the full transcript.
+
 ## 2. Backend integration test
 
 ```bash
