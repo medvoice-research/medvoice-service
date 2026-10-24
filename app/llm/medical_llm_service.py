@@ -11,18 +11,22 @@ from ..config import Config
 
 logger = logging.getLogger(__name__)
 
-# Optional leading "#"s, optional bold opener (its closer is required when present), optional colon inside/after.
+# Optional bold/Markdown heading and colon; English and Vietnamese SOAP section names.
 _SOAP_HEADER = re.compile(
-    r"^#*\s*(\*\*|__)?\s*(subjective|objective|assessment|plan)\s*(:)?\s*(?(1)\1)\s*(:)?\s*(.*)$",
+    r"^#*\s*(\*\*|__)?\s*(subjective|objective|assessment|plan|chủ quan|khách quan|đánh giá|kế hoạch)\s*(:)?\s*(?(1)\1)\s*(:)?\s*(.*)$",
     re.IGNORECASE,
 )
-_BOLD = re.compile(r"\*\*(?=\S)(.+?)(?<=\S)\*\*")
-_EDGE_EMPHASIS = re.compile(r"^(?:\*\*|__)\s*|\s*(?:\*\*|__)$")
+_SOAP_SECTION_NAMES = {
+    "chủ quan": "subjective",
+    "khách quan": "objective",
+    "đánh giá": "assessment",
+    "kế hoạch": "plan",
+}
 
 
 def _strip_emphasis(text: str) -> str:
-    """Unwrap **bold** and drop stray leading/trailing **/__; list bullets ("- ", "* ") are kept."""
-    return _EDGE_EMPHASIS.sub("", _BOLD.sub(r"\1", text)).strip()
+    """Remove bold delimiters, including unmatched markers, while preserving single-star bullets."""
+    return text.replace("**", "").replace("__", "").strip()
 
 
 class MedicalLLMService:
@@ -623,7 +627,8 @@ Use professional medical language and be clinically precise.""",
             # Content on the same line needs a colon, so "Plan to repeat ..." stays content.
             header = _SOAP_HEADER.match(line_stripped)
             if header and (header.group(3) or header.group(4) or not header.group(5)):
-                current_section = header.group(2).lower()
+                section = header.group(2).lower()
+                current_section = _SOAP_SECTION_NAMES.get(section, section)
                 content = _strip_emphasis(header.group(5))
             elif current_section:
                 content = _strip_emphasis(re.sub(r"^#+\s*", "", line_stripped))
