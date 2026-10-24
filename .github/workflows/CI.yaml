@@ -4,7 +4,7 @@ on:
     branches:
       - main
       - dev
-    # ponytail: Docker image build only when its inputs change; app/test changes get lint + unit tests from lint.yaml (push trigger)
+    # Docker image build only when its inputs change; lint.yaml gates app/test PRs.
     paths:
       - "Dockerfile"
       - "docker-compose.yaml"

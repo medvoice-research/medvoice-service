@@ -163,6 +163,10 @@ git clone https://github.com/TheoLeeCJ/SemIf-OpenJev ../semif
 Docker reaches it via `SEMIF_URL=http://host.docker.internal:8765` (compose
 default). Thresholds and languages: `term_guard:` in `config.yaml`.
 
+The bundled SemIf server requires Apple Silicon; Linux/GPU Compose reports
+`term_review.status: unavailable` until a compatible local server is supplied.
+Keep `SEMIF_URL` local: each request contains the full transcript.
+
 ## 2. Backend integration test
 
 ```bash
@@ -313,6 +317,3 @@ DELETE /recordings/{id}         -> 204
 Errors: flat `{"detail": ..., "error_code": ...}` envelope
 (e.g. 415 `unsupported_format`, 413 upload too large, 504 processing timeout,
 401 `invalid_credentials`).
-Specs (local): `docs/superpowers/specs/2026-08-16-mobile-api-contract-design.md`,
-`docs/superpowers/specs/2026-08-23-mock-auth-login-design.md`,
-`docs/superpowers/specs/2026-08-23-audio-replay-design.md`.
