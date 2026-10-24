@@ -15,7 +15,7 @@ from app.audio import process_audio_file
 from app.config import Config
 from app.logger import logger
 from app.schemas import ASROptions, AlignmentParams, DiarizationParams, VADOptions, WhisperModelParams
-from app.whisperx_services import align_whisper_output, diarize, transcribe_with_whisper
+from app.whisperx_services import align_whisper_output, diarize, get_transcription_model, transcribe_with_whisper
 
 
 def _defaults(model_cls: Type[BaseModel]) -> Dict[str, Any]:
@@ -34,11 +34,13 @@ def _run_stt_sync(audio_path: str, language: str, model: str) -> Dict[str, Any]:
     """Blocking WhisperX work. Runs in a worker thread; see run_stt."""
     audio = process_audio_file(audio_path)
     mp = WhisperModelParams(**{**_defaults(WhisperModelParams), "language": language, "model": model})
+    asr_options = ASROptions(**_defaults(ASROptions)).model_dump()
+    vad_options = VADOptions(**_defaults(VADOptions)).model_dump()
     result = transcribe_with_whisper(
         audio=audio,
         task=mp.task.value,
-        asr_options=ASROptions(**_defaults(ASROptions)).model_dump(),
-        vad_options=VADOptions(**_defaults(VADOptions)).model_dump(),
+        asr_options=asr_options,
+        vad_options=vad_options,
         language=mp.language,
         batch_size=mp.batch_size,
         chunk_size=mp.chunk_size,
@@ -68,6 +70,25 @@ def _run_stt_sync(audio_path: str, language: str, model: str) -> Dict[str, Any]:
         logger.warning(f"Diarization unavailable, falling back to a single speaker: {e}")
     for seg in result.get("segments", []):
         seg.setdefault("speaker", "SPEAKER_00")
+    if language in Config.TERM_GUARD_LANGUAGES and result.get("segments"):
+        from app.services.term_guard import guard_terms
+
+        # Same cache key as transcribe_with_whisper, so this is the already-loaded model.
+        pipeline = get_transcription_model(
+            model_name=mp.model.value,
+            device_param=mp.device,
+            device_index=mp.device_index,
+            compute_type_param=mp.compute_type,
+            asr_options=asr_options,
+            vad_options=vad_options,
+            language=mp.language,
+            task=mp.task.value,
+        )
+        try:
+            result["term_review"] = guard_terms(result["segments"], audio, pipeline.model, language)
+        except Exception:
+            logger.exception("Term guard failed; transcript left unchecked")
+            result["term_review"] = {"status": "error", "terms": []}
     return result
 
 
@@ -146,4 +167,7 @@ async def run_recording_pipeline(audio_path: str, language: str = "en") -> Tuple
     stt = await run_stt(audio_path, language=language)
     segments = stt.get("segments", [])
     medical = await run_medical(stt)
-    return {"full_text": _full_text(segments), "segments": segments}, medical
+    transcript = {"full_text": _full_text(segments), "segments": segments}
+    if "term_review" in stt:
+        transcript["term_review"] = stt["term_review"]
+    return transcript, medical

@@ -63,6 +63,8 @@ services:
       - LM_STUDIO_BASE_URL=${LM_STUDIO_BASE_URL:-http://host.docker.internal:1234/v1}
       - LM_STUDIO_MODEL=${LM_STUDIO_MODEL:-}
       - LM_STUDIO_MAX_TOKENS=${LM_STUDIO_MAX_TOKENS:-8192}
+      # Local SemIf server for the medical-term guard (scripts/semif_server.py)
+      - SEMIF_URL=${SEMIF_URL:-http://host.docker.internal:8765}
       - EMBEDDING_MODEL=${EMBEDDING_MODEL:-text-embedding-bge-reranker-v2-m3}
       - EMBEDDING_DIMENSION=${EMBEDDING_DIMENSION:-1024}
     volumes:
