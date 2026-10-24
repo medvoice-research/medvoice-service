@@ -1,6 +1,12 @@
 """Decision rules of the medical-term guard, with Whisper and SemIf replaced by fakes."""
 
+import math
+from types import SimpleNamespace
+
 import pytest
+import numpy as np
+from ctranslate2 import StorageView
+
 
 from app.services import term_guard
 
@@ -73,5 +79,37 @@ def test_semif_down_leaves_text_and_reports_unavailable(run, monkeypatch):
     assert segments[0]["text"] == " " + TEXT
 
 
+def test_unknown_suspect_is_flagged_without_candidates(run, monkeypatch):
+    monkeypatch.setattr(term_guard, "_lexicon", lambda: {})
+    segments, review = run({})
+    assert segments[0]["text"] == " " + TEXT
+    assert review["status"] == "ok"
+    assert review["terms"][0]["action"] == "flagged"
+    assert review["terms"][0]["suggestions"] == []
+
+
 def test_low_runs_skip_the_first_word_and_merge_neighbours():
     assert term_guard._low_runs([0.0, 0.9, 0.2, 0.3, 0.9, 0.1], 0.5) == [(2, 4), (5, 6)]
+
+
+def test_segment_rescoring_accepts_cuda_encoder_output():
+    def encode(features, to_cpu=False):
+        if not to_cpu:
+            return np.array(object())  # GPU StorageView has no NumPy array interface.
+        return StorageView.from_array(np.zeros((1, 2, 2), dtype=np.float32))
+
+    whisper = SimpleNamespace(
+        hf_tokenizer=SimpleNamespace(
+            token_to_id=lambda token: 1,
+            encode=lambda text, add_special_tokens: SimpleNamespace(ids=[1]),
+        ),
+        feature_extractor=lambda audio: np.zeros((80, 4), dtype=np.float32),
+        model=SimpleNamespace(
+            encode=encode,
+            align=lambda features, start, ids, frames: [
+                SimpleNamespace(text_token_probs=[0.75]) for _ in ids
+            ],
+        ),
+    )
+    scorer = term_guard._SegmentScorer(whisper, np.zeros(16000, dtype=np.float32), 0, 1, "vi")
+    assert scorer.logprobs(["metformin", "methadone"]) == pytest.approx([math.log(0.75)] * 2)
