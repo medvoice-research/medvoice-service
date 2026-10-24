@@ -62,7 +62,7 @@ class _SegmentScorer:
         feats = whisper.feature_extractor(audio[int(start * SAMPLE_RATE) : int(end * SAMPLE_RATE)])[:, :N_FRAMES]
         self.frames = feats.shape[-1]
         feats = np.pad(feats, ((0, 0), (0, N_FRAMES - self.frames)))[None].astype(np.float32)
-        self.encoded = np.asarray(whisper.model.encode(StorageView.from_array(feats)))
+        self.encoded = np.asarray(whisper.model.encode(StorageView.from_array(feats), to_cpu=True))
         self.sot = [
             self.tokenizer.token_to_id(t)
             for t in ("<|startoftranscript|>", f"<|{language}|>", "<|transcribe|>", "<|notimestamps|>")
