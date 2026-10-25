@@ -4,10 +4,11 @@ Production-ready REST API for audio processing using WhisperX with Temporal work
 
 ## Features
 
-- **Audio Transcription** - State-of-the-art speech-to-text with WhisperX
+- **Audio Transcription** - State-of-the-art speech-to-text with WhisperX; per-language model override (Vietnamese: PhoWhisper)
 - **Speaker Diarization** - Multi-speaker identification and segmentation
 - **Temporal Workflows** - Asynchronous job processing with retry logic
-- **Medical Processing** - PHI detection, SOAP notes, entity extraction
+- **Medical Processing** - PHI detection, SOAP notes (English/Vietnamese section headers), entity extraction
+- **Medical-Term Guard** - Corrects or flags misheard drug, symptom, disease and test names using Whisper audio rescoring plus a local SemIf gate (Vietnamese by default)
 - **Web Interface** - Streamlit UI for live recording and transcription
 - **Local LLM Integration** - LM Studio support for medical AI
 
@@ -19,6 +20,7 @@ Production-ready REST API for audio processing using WhisperX with Temporal work
 **Software Dependencies:**
 - Docker Desktop - Container runtime ([download](https://www.docker.com/products/docker-desktop/))
 - LM Studio - Local LLM server for medical AI features ([download](https://lmstudio.ai/))
+- SemIf server (optional, Apple Silicon) - Local decision model for the medical-term guard, run in its own venv; without it `term_review.status` is `unavailable` and transcripts are left unchanged. Setup: [local setup guide](docs/local-setup-and-testing.md)
 
 ## Dataset
 
@@ -107,32 +109,51 @@ flowchart TD
     subgraph Backend["medvoice-service (FastAPI, whisperx-api :8000)"]
         Router["Routers<br/>recordings / stt / medical / admin"]
         Store["RecordingStore<br/>./data/recordings/{id}/"]
-        Sync["Sync pipeline<br/>transcribe → align → diarize<br/>(asyncio.to_thread)"]
-        Medical["Medical LLM stage<br/>PHI → entities → SOAP<br/>(per-step graceful degradation)"]
+        subgraph STT["run_stt (asyncio.to_thread)"]
+            ASR["faster-whisper<br/>whisperx.models_by_language<br/>(vi: PhoWhisper-small CT2)"]
+            Align["wav2vec2 alignment"]
+            Diar["pyannote diarization<br/>(fallback SPEAKER_00)"]
+            Guard{"Medical-term guard<br/>term_guard.languages"}
+        end
+        subgraph LLM["run_medical (per-step graceful degradation)"]
+            Dialog["TranscriptionTransformer<br/>speaker dialogue"]
+            Steps["PHI → entities → SOAP"]
+            Parse["SOAP parser<br/>Markdown/bold + EN/VI headers"]
+        end
         Temp["Temporal workflow<br/>/speech-to-text path"]
     end
 
-    subgraph Infra
-        HF["Hugging Face Hub<br/>WhisperX + pyannote models<br/>(HF_TOKEN for gated)"]
+    subgraph Infra["Host-local models and storage"]
+        HF["Hugging Face Hub<br/>WhisperX / PhoWhisper / pyannote<br/>(HF_TOKEN for gated)"]
+        SemIf["SemIf server :8765<br/>scripts/semif_server.py<br/>Qwen3.5-4B 8-bit (own venv)"]
+        Lex[("data/vocab<br/>vi_medical + WHO EML drugs")]
         LMS["LM Studio :1234<br/>(optional, local LLM)"]
         DB[("SQLite<br/>patients / tasks")]
         Disk[("Local disk<br/>audio + transcript.json + medical.json")]
     end
 
     App -->|"POST /recordings (multipart)"| Router
-    App -->|"GET/DELETE /recordings[/{id}]"| Router
+    App -->|"GET/DELETE /recordings[/{id}]<br/>audio: Cache-Control no-store"| Router
     Web -->|"upload + monitor"| Router
     Curl -->|"REST"| Router
 
     Router --> Store
-    Router --> Sync
-    Sync --> Medical
-    Sync --> HF
-    Medical --> LMS
+    Router --> ASR
+    ASR --> Align --> Diar --> Guard
+    ASR -.-> HF
+    Guard -->|"low-probability spans"| SemIf
+    Guard -->|"forced rescoring of sound-alikes"| ASR
+    Guard -.-> Lex
+    Guard -->|"corrected segments + term_review"| Dialog
+    Dialog --> Steps --> Parse
+    Steps --> LMS
     Store --> Disk
     Router --> Temp
     Temp --> DB
 ```
+
+Every model runs on the host; no audio or transcript leaves the machine. Design and
+thresholds: [ADR 010](docs/adr/010-local-semif-medical-gate.md).
 
 ### Recordings flow (mobile app contract, synchronous)
 
@@ -142,16 +163,24 @@ sequenceDiagram
     participant API as FastAPI /recordings
     participant ST as RecordingStore
     participant WX as WhisperX (worker thread)
+    participant SF as SemIf :8765
     participant LLM as LM Studio (optional)
 
     App->>API: POST /recordings (file, patient_name?, language?)
     API->>API: validate extension + size (415 / 413)
     API->>ST: create_recording() → recording_id
     API->>ST: stream upload → audio file
-    API->>WX: run_stt() — transcribe → align → diarize (speakers)
-    WX-->>API: transcript {full_text, segments[]}
+    API->>WX: run_stt() — model by language → transcribe → align → diarize
+    opt language in term_guard.languages (default: vi)
+        WX->>WX: score words, runs below low_word_prob = suspect spans
+        WX->>SF: POST /decide (transcript + one row per span)
+        SF-->>WX: P(misheard medical name) per span
+        WX->>WX: rescore lexicon sound-alikes → correct or flag
+    end
+    WX-->>API: transcript {full_text, segments[], term_review?}
     API->>LLM: run_medical() — PHI / entities / SOAP
-    LLM-->>API: medical_document (or empty when offline)
+    LLM-->>API: SOAP parsed from EN/VI, Markdown/bold headers
+    Note over API,LLM: each step degrades to empty when offline
     API->>ST: save transcript.json + medical.json + finalize
     API-->>App: 201 {recording_id, transcript, medical_document}
 
@@ -159,6 +188,9 @@ sequenceDiagram
     App->>API: GET /recordings/{id} → full detail
     App->>API: DELETE /recordings/{id} → 204
 ```
+
+`term_review.status` is `ok`, `unavailable` (SemIf down; transcript unchanged), or `error`.
+Each term is `corrected` (replaced in `segments[*].text`) or `flagged` for clinician review.
 
 The `/speech-to-text` endpoints use the Temporal worker for async processing;
 the recordings API is self-contained and does not require Temporal.
@@ -171,7 +203,7 @@ the recordings API is self-contained and does not require Temporal.
 - `GET /tasks/{task_id}` - Check workflow status
 
 ### Recordings (mobile app contract)
-- `POST /recordings` - Upload audio (multipart: `file`, optional `patient_name`, `language`), returns `201` with `transcript` (`full_text` + speaker segments) and `medical_document` (`soap`, `entities`, `phi`)
+- `POST /recordings` - Upload audio (multipart: `file`, optional `patient_name`, `language`), returns `201` with `transcript` (`full_text` + speaker segments, plus `term_review` for guarded languages) and `medical_document` (`soap`, `entities`, `phi`)
 - `GET /recordings` - List recordings, newest first
 - `GET /recordings/{recording_id}` - Recording detail (meta + transcript + medical document)
 - `DELETE /recordings/{recording_id}` - Delete a recording, returns `204`
@@ -293,6 +325,11 @@ make temporal-fresh  # Clean restart
 **LM Studio not responding**
 ```bash
 curl http://localhost:1234/v1/models
+```
+
+**`term_review.status: unavailable`** (SemIf server not running)
+```bash
+../semif/.venv/bin/python scripts/semif_server.py   # serves 127.0.0.1:8765
 ```
 
 ## Related Projects
