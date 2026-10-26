@@ -7,15 +7,44 @@ medical LLM service, but runs inline (no Temporal dependency).
 import asyncio
 from typing import Any, Dict, List, Tuple, Type
 
+import numpy as np
 from pydantic import BaseModel
 from pydantic.fields import FieldInfo
 from whisperx import assign_word_speakers
+from whisperx.audio import SAMPLE_RATE
 
 from app.audio import process_audio_file
 from app.config import Config
 from app.logger import logger
 from app.schemas import ASROptions, AlignmentParams, DiarizationParams, VADOptions, WhisperModelParams
 from app.whisperx_services import align_whisper_output, diarize, get_transcription_model, transcribe_with_whisper
+
+
+class NoSpeechError(Exception):
+    """The upload contains no usable speech; nothing is sent to Whisper or the LLM.
+
+    Silent audio otherwise makes Whisper hallucinate filler ("Thank you very much.")
+    and the medical LLM then invents a complete SOAP note from it.
+    """
+
+
+def audio_level_dbfs(audio: np.ndarray) -> float:
+    """Peak level in dBFS of float audio in [-1, 1] (-120 for empty / all-zero audio)."""
+    if audio.size == 0:
+        return -120.0
+    peak = float(np.max(np.abs(audio)))
+    return 20 * np.log10(peak) if peak > 0 else -120.0
+
+
+def _check_has_signal(audio: np.ndarray) -> None:
+    seconds = len(audio) / SAMPLE_RATE
+    if seconds < Config.RECORDINGS_MIN_SECONDS:
+        raise NoSpeechError(f"No speech detected: the recording is too short ({seconds:.1f} s)")
+    peak = audio_level_dbfs(audio)
+    if peak < Config.RECORDINGS_MIN_PEAK_DBFS:
+        raise NoSpeechError(
+            f"No speech detected: the recording is silent (peak {peak:.0f} dBFS) - check the microphone"
+        )
 
 
 def _defaults(model_cls: Type[BaseModel]) -> Dict[str, Any]:
@@ -33,6 +62,7 @@ def _defaults(model_cls: Type[BaseModel]) -> Dict[str, Any]:
 def _run_stt_sync(audio_path: str, language: str, model: str) -> Dict[str, Any]:
     """Blocking WhisperX work. Runs in a worker thread; see run_stt."""
     audio = process_audio_file(audio_path)
+    _check_has_signal(audio)
     mp = WhisperModelParams(**{**_defaults(WhisperModelParams), "language": language, "model": model})
     asr_options = ASROptions(**_defaults(ASROptions)).model_dump()
     vad_options = VADOptions(**_defaults(VADOptions)).model_dump()
@@ -166,6 +196,9 @@ async def run_medical(whisperx_result: Dict[str, Any]) -> Dict[str, Any]:
 async def run_recording_pipeline(audio_path: str, language: str = "en") -> Tuple[Dict[str, Any], Dict[str, Any]]:
     stt = await run_stt(audio_path, language=language)
     segments = stt.get("segments", [])
+    if not _full_text(segments).strip():
+        # Never let the LLM write a document from nothing.
+        raise NoSpeechError("No speech detected: the transcript has no words")
     medical = await run_medical(stt)
     transcript = {"full_text": _full_text(segments), "segments": segments}
     if "term_review" in stt:

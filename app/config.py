@@ -165,6 +165,10 @@ class Config:
     RECORDINGS_STORAGE_DIR = _get_yaml("recordings", "storage_dir", "./data/recordings")
     RECORDINGS_SYNC_TIMEOUT_SECONDS = int(_get_yaml("recordings", "sync_timeout_seconds", 300))
     RECORDINGS_MAX_UPLOAD_BYTES = int(_get_yaml("recordings", "max_upload_mb", 200)) * 1024 * 1024
+    # No-speech guard: uploads below either limit are rejected (422 no_speech) before Whisper.
+    # Every real take measured peaks at -24 dBFS or louder; failed iOS takes were -91 dBFS / <= 0.3 s.
+    RECORDINGS_MIN_PEAK_DBFS = float(_get_yaml("recordings", "min_peak_dbfs", -45))
+    RECORDINGS_MIN_SECONDS = float(_get_yaml("recordings", "min_seconds", 0.5))
 
     @classmethod
     def validate_medical_config(cls) -> list[str]:

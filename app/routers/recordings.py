@@ -8,7 +8,7 @@ from fastapi import APIRouter, File, Form, HTTPException, Request, UploadFile
 from fastapi.responses import FileResponse, Response
 
 from app.config import Config
-from app.services.recording_pipeline import run_recording_pipeline
+from app.services.recording_pipeline import NoSpeechError, run_recording_pipeline
 from app.services.recording_store import RecordingStore, is_valid_recording_id
 
 router = APIRouter(tags=["Recordings"])
@@ -102,6 +102,8 @@ async def create_recording(
         store.delete_recording(recording_id)
         if isinstance(e, RecordingError):
             raise
+        if isinstance(e, NoSpeechError):
+            raise RecordingError(422, str(e), "no_speech") from e
         if isinstance(e, asyncio.TimeoutError):
             raise RecordingError(504, "Processing timed out", "processing_timeout") from e
         raise RecordingError(500, f"Processing failed: {e}", "processing_failed") from e

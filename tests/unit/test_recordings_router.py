@@ -150,6 +150,21 @@ def test_pipeline_failure_returns_500_and_leaves_no_orphan(client):
     assert store.recordings == {}
 
 
+def test_regression_silent_audio_returns_422_no_speech_and_leaves_no_orphan(client):
+    """Silent audio used to come back as a hallucinated transcript + invented SOAP note."""
+    from app.services.recording_pipeline import NoSpeechError
+
+    c, store = client
+    with patch(
+        "app.routers.recordings.run_recording_pipeline",
+        new=AsyncMock(side_effect=NoSpeechError("No speech detected: the recording is silent")),
+    ):
+        resp = c.post("/recordings", files={"file": ("a.m4a", io.BytesIO(b"fake"), "audio/mp4")})
+    _assert_flat_envelope(resp, 422, "no_speech")
+    assert "No speech detected" in resp.json()["detail"]
+    assert store.recordings == {}
+
+
 def test_store_failure_after_pipeline_leaves_no_orphan(client):
     """Persistence errors must not strand a permanent `processing` phantom."""
     c, store = client

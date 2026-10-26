@@ -76,3 +76,6 @@ recordings:
   storage_dir: ./data/recordings
   sync_timeout_seconds: 300
   max_upload_mb: 200
+  # Reject silent / near-empty uploads (422 no_speech) instead of transcribing them
+  min_peak_dbfs: -45
+  min_seconds: 0.5
