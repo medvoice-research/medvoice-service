@@ -32,7 +32,9 @@ jobs:
             found && /^## \[/ { exit }
             found && /^\[[^]]+\]: / { exit }
             found { print }
-          ' CHANGELOG.md > release-notes.md
+          ' CHANGELOG.md > release-notes.raw.md
+          # Release bodies render every newline as a break: join the CHANGELOG's wrapped lines.
+          python3 .github/scripts/unwrap_md.py < release-notes.raw.md > release-notes.md
           if ! grep -q '[^[:space:]]' release-notes.md; then
             echo "::error::No '## [$version]' section in CHANGELOG.md"
             exit 1
